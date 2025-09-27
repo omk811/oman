@@ -29,13 +29,13 @@
 
   <style>
     :root {
-      --bg: #0b1020;
-      --panel: #0f172a;
-      --soft: #111827;
-      --text: #e5e7eb;
-      --muted: #94a3b8;
-      --brand: #0ea5e9;
-      --brand-2: #22c55e;
+      --bg: #0b1020;           /* خلفية داكنة أنيقة */
+      --panel: #0f172a;        /* حاويات */
+      --soft: #111827;         /* بطاقات داكنة */
+      --text: #e5e7eb;         /* نص أساسي */
+      --muted: #94a3b8;        /* نص ثانوي */
+      --brand: #0ea5e9;        /* سماوي */
+      --brand-2: #22c55e;      /* أخضر */
       --danger: #ef4444;
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --radius: 16px;
@@ -212,7 +212,7 @@
   </style>
 </head>
 <body>
-  <div id="notification" class="notification" aria-live="polite"></div>
+  <div id="notification" class="notification"></div>
 
   <header class="nav">
     <div class="container nav-inner">
@@ -349,7 +349,7 @@
     };
 
     // ======== الدوال المساعدة ========
-    const formatDate = (date, includeTime = false) => {
+    function formatDate(date, includeTime = false) {
       const options = {
         weekday: 'long',
         year: 'numeric',
@@ -368,9 +368,9 @@
       }
 
       return new Date(date).toLocaleDateString('ar-EG', options);
-    };
+    }
 
-    const getNextSaturday = () => {
+    function getNextSaturday() {
       const today = new Date();
       const nextSaturday = new Date(today);
 
@@ -382,9 +382,9 @@
       nextSaturday.setHours(11, 0, 0, 0);
 
       return nextSaturday;
-    };
+    }
 
-    const assignLessonDates = () => {
+    function assignLessonDates() {
       const today = new Date();
       let nextDate = getNextSaturday();
 
@@ -394,15 +394,21 @@
           nextDate.setDate(nextDate.getDate() + 7); // أسبوع واحد
         }
       });
-    };
+    }
 
-    const getCurrentLesson = () => lessons.find(lesson => !lesson.completed);
+    function getCurrentLesson() {
+      return lessons.find(lesson => !lesson.completed);
+    }
 
-    const getCompletedLessons = () => lessons.filter(lesson => lesson.completed);
+    function getCompletedLessons() {
+      return lessons.filter(lesson => lesson.completed);
+    }
 
-    const getUpcomingLessons = () => lessons.filter(lesson => !lesson.completed);
+    function getUpcomingLessons() {
+      return lessons.filter(lesson => !lesson.completed);
+    }
 
-    const updatePageContent = () => {
+    function updatePageContent() {
       // تحديث الدرس الحالي
       const currentLesson = getCurrentLesson();
       if (currentLesson) {
@@ -450,9 +456,9 @@
       if (nextLesson) {
         document.getElementById('nextLessonInfo').textContent = `${nextLesson.title} - ${formatDate(nextLesson.date)}`;
       }
-    };
+    }
 
-    const updateStructuredData = () => {
+    function updateStructuredData() {
       const currentLesson = getCurrentLesson();
       if (!currentLesson) return;
 
@@ -489,9 +495,9 @@
       };
 
       document.getElementById('structuredData').textContent = JSON.stringify(structuredData);
-    };
+    }
 
-    const showNotification = (message, duration = 3000) => {
+    function showNotification(message, duration = 3000) {
       const notification = document.getElementById('notification');
       notification.textContent = message;
       notification.classList.add('show');
@@ -499,18 +505,18 @@
       setTimeout(() => {
         notification.classList.remove('show');
       }, duration);
-    };
+    }
 
     // ======== العد التنازلي ========
     let countdownInterval;
-    const startCountdown = () => {
+    function startCountdown() {
       const startTime = new Date(settings.startISO).getTime();
       const cdDays = document.getElementById('cd-days');
       const cdHours = document.getElementById('cd-hours');
       const cdMins = document.getElementById('cd-mins');
       const cdSecs = document.getElementById('cd-secs');
 
-      const updateCountdown = () => {
+      function updateCountdown(){
         const now = Date.now();
         let diff = Math.max(0, startTime - now);
         const days = Math.floor(diff / (1000*60*60*24)); diff -= days*(1000*60*60*24);
@@ -526,16 +532,16 @@
         if (days === 0 && hours === 0 && mins === 0 && secs === 0) {
           completeCurrentLesson();
         }
-      };
+      }
 
       // إيقاف أي عد تنازلي سابق
       if (countdownInterval) clearInterval(countdownInterval);
 
       updateCountdown();
       countdownInterval = setInterval(updateCountdown, 1000);
-    };
+    }
 
-    const completeCurrentLesson = () => {
+    function completeCurrentLesson() {
       const currentLesson = getCurrentLesson();
       if (currentLesson) {
         currentLesson.completed = true;
@@ -543,7 +549,7 @@
         showNotification('تم الانتقال تلقائيًا للدرس التالي!', 5000);
         initializePage();
       }
-    };
+    }
 
     // ======== زر نسخ الرابط ========
     document.getElementById('copyBtn').addEventListener('click', async () => {
@@ -556,7 +562,7 @@
     });
 
     // ======== مشاركة واتساب ========
-    const updateWhatsAppLink = () => {
+    function updateWhatsAppLink() {
       const currentLesson = getCurrentLesson();
       if (!currentLesson) return;
 
@@ -566,10 +572,10 @@
         '🔗 ' + settings.pageUrl);
 
       document.getElementById('shareWa').href = 'https://wa.me/?text=' + waText;
-    };
+    }
 
     // ======== إنشاء ملف ICS للتقويم ========
-    const downloadICS = () => {
+    function downloadICS(){
       const currentLesson = getCurrentLesson();
       if (!currentLesson) return;
 
@@ -583,7 +589,7 @@
       a.download = `Arabic-Lesson-${currentLesson.id}.ics`;
       a.click();
       URL.revokeObjectURL(a.href);
-    };
+    }
     document.getElementById('icsBtn').addEventListener('click', downloadICS);
 
     // ======== سمة اللون: داكن/فاتح ========
@@ -608,7 +614,7 @@
     });
 
     // ======== تهيئة الصفحة ========
-    const initializePage = () => {
+    function initializePage() {
       // تحميل الدروس من localStorage إذا كانت موجودة
       const savedLessons = localStorage.getItem('lessons');
       if (savedLessons) {
@@ -641,7 +647,7 @@
       // معلومات أسفل الصفحة
       document.getElementById('year').textContent = String(new Date().getFullYear());
       document.getElementById('lastUpdated').textContent = new Date().toLocaleString('ar-EG');
-    };
+    }
 
     // بدء تشغيل الصفحة
     initializePage();
