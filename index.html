@@ -39,9 +39,7 @@
       --danger: #ef4444;
       --shadow: 0 10px 30px rgba(0,0,0,.35);
       --radius: 16px;
-      --font-primary: 'Cairo', system-ui, -apple-system, Segoe UI, Roboto, "Noto Naskh Arabic", Arial, sans-serif;
     }
-
     [data-theme="light"]{
       --bg: #f8fafc;
       --panel: #ffffff;
@@ -50,12 +48,11 @@
       --muted: #475569;
       --shadow: 0 8px 22px rgba(0,0,0,.08);
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
     body {
       margin: 0;
-      font-family: var(--font-primary);
+      font-family: 'Cairo', system-ui, -apple-system, Segoe UI, Roboto, "Noto Naskh Arabic", Arial, sans-serif;
       background: radial-gradient(1200px 800px at 80% -10%, rgba(34,197,94,.08), transparent 40%),
                   radial-gradient(1200px 800px at 0% 10%, rgba(14,165,233,.10), transparent 50%),
                   var(--bg);
@@ -94,10 +91,9 @@
       font-weight: 700;
       box-shadow: var(--shadow);
       cursor: pointer;
-      transition: background 0.3s ease, transform 0.3s ease;
+      transition: filter 0.2s ease;
     }
-    .btn:hover { background: var(--brand-2); transform: translateY(-2px); }
-    .btn:active { transform: translateY(0); }
+    .btn:hover { filter: brightness(1.05); }
     .btn.secondary { background: var(--soft); color: var(--text); border-color: color-mix(in srgb, var(--muted) 20%, transparent); }
     .btn.success { background: var(--brand-2); }
     .btn.ghost { background: transparent; color: var(--text); border-color: color-mix(in srgb, var(--muted) 30%, transparent); }
@@ -341,6 +337,7 @@
       { id: 5, title: "المفعول به", completed: false, date: "2025-10-11" },
       { id: 6, title: "إثبات همزة ابن وحذفها", completed: false, date: "2025-10-18" },
       { id: 7, title: "حروف الجر وشبه الجملة", completed: false, date: "2025-10-25" }
+      // تم حذف الدرسين 9 و 10 حسب الطلب
     ];
 
     // ======== إعدادات قابلة للتعديل سريعًا ========
@@ -377,9 +374,11 @@
       const today = new Date();
       const nextSaturday = new Date(today);
 
+      // الانتقال إلى يوم السبت القادم
       const daysUntilSaturday = (6 - today.getDay() + 7) % 7 || 7;
       nextSaturday.setDate(today.getDate() + daysUntilSaturday);
 
+      // ضبط الوقت إلى 11:00 صباحًا
       nextSaturday.setHours(11, 0, 0, 0);
 
       return nextSaturday;
@@ -392,7 +391,7 @@
       lessons.forEach(lesson => {
         if (!lesson.completed && !lesson.date) {
           lesson.date = nextDate.toISOString().split('T')[0];
-          nextDate.setDate(nextDate.getDate() + 7);
+          nextDate.setDate(nextDate.getDate() + 7); // أسبوع واحد
         }
       });
     };
@@ -404,16 +403,19 @@
     const getUpcomingLessons = () => lessons.filter(lesson => !lesson.completed);
 
     const updatePageContent = () => {
+      // تحديث الدرس الحالي
       const currentLesson = getCurrentLesson();
       if (currentLesson) {
         document.getElementById('currentLessonTitle').textContent = `الدرس ${currentLesson.id}: ${currentLesson.title}`;
         document.getElementById('currentLessonDesc').innerHTML = `نراجع أهم قواعد <b>${currentLesson.title}</b> مع أمثلة تطبيقية مناسبة لجميع المستويات.`;
         document.getElementById('lessonDate').textContent = formatDate(currentLesson.date);
 
+        // تحديث إعدادات العد التنازلي
         settings.startISO = `${currentLesson.date}T${settings.lessonTime}:00${settings.timeZone}`;
         settings.lessonTitle = `الدرس ${currentLesson.id}: ${currentLesson.title}`;
       }
 
+      // تحديث الدروس المكتملة
       const completedLessonsContainer = document.getElementById('completedLessons');
       completedLessonsContainer.innerHTML = '';
 
@@ -432,6 +434,7 @@
         completedLessonsContainer.appendChild(lessonElement);
       });
 
+      // تحديث الدروس القادمة
       const upcomingLessonsList = document.getElementById('upcomingLessonsList');
       upcomingLessonsList.innerHTML = '';
 
@@ -442,6 +445,7 @@
         upcomingLessonsList.appendChild(listItem);
       });
 
+      // تحديث معلومات الدرس التالي في التذييل
       const nextLesson = getUpcomingLessons()[0];
       if (nextLesson) {
         document.getElementById('nextLessonInfo').textContent = `${nextLesson.title} - ${formatDate(nextLesson.date)}`;
@@ -453,7 +457,7 @@
       if (!currentLesson) return;
 
       const startDate = new Date(`${currentLesson.date}T${settings.lessonTime}:00${settings.timeZone}`);
-      const endDate = new Date(startDate.getTime() + 90 * 60000);
+      const endDate = new Date(startDate.getTime() + 90 * 60000); // 90 دقيقة
 
       const structuredData = {
         "@context": "https://schema.org",
@@ -518,11 +522,13 @@
         cdMins.textContent = String(mins).padStart(2,'0');
         cdSecs.textContent = String(secs).padStart(2,'0');
 
+        // إذا انتهى العد التنازلي، انتقل تلقائيًا للدرس التالي
         if (days === 0 && hours === 0 && mins === 0 && secs === 0) {
           completeCurrentLesson();
         }
       };
 
+      // إيقاف أي عد تنازلي سابق
       if (countdownInterval) clearInterval(countdownInterval);
 
       updateCountdown();
@@ -603,10 +609,12 @@
 
     // ======== تهيئة الصفحة ========
     const initializePage = () => {
+      // تحميل الدروس من localStorage إذا كانت موجودة
       const savedLessons = localStorage.getItem('lessons');
       if (savedLessons) {
         try {
           const parsed = JSON.parse(savedLessons);
+          // تحديث الدروس مع الحفاظ على الهيكل الأساسي
           lessons.forEach((lesson, index) => {
             if (parsed[index]) {
               lesson.completed = parsed[index].completed;
@@ -618,13 +626,19 @@
         }
       }
 
+      // تعيين تواريخ للدروس غير المكتملة
       assignLessonDates();
+
+      // حفظ الدروس في localStorage
       localStorage.setItem('lessons', JSON.stringify(lessons));
+
+      // تحديث محتوى الصفحة
       updatePageContent();
       updateStructuredData();
       updateWhatsAppLink();
       startCountdown();
 
+      // معلومات أسفل الصفحة
       document.getElementById('year').textContent = String(new Date().getFullYear());
       document.getElementById('lastUpdated').textContent = new Date().toLocaleString('ar-EG');
     };
