@@ -349,7 +349,7 @@
     };
 
     // ======== الدوال المساعدة ========
-    function formatDate(date, includeTime = false) {
+    const formatDate = (date, includeTime = false) => {
       const options = {
         weekday: 'long',
         year: 'numeric',
@@ -368,9 +368,9 @@
       }
 
       return new Date(date).toLocaleDateString('ar-EG', options);
-    }
+    };
 
-    function getNextSaturday() {
+    const getNextSaturday = () => {
       const today = new Date();
       const nextSaturday = new Date(today);
 
@@ -382,9 +382,9 @@
       nextSaturday.setHours(11, 0, 0, 0);
 
       return nextSaturday;
-    }
+    };
 
-    function assignLessonDates() {
+    const assignLessonDates = () => {
       const today = new Date();
       let nextDate = getNextSaturday();
 
@@ -394,21 +394,15 @@
           nextDate.setDate(nextDate.getDate() + 7); // أسبوع واحد
         }
       });
-    }
+    };
 
-    function getCurrentLesson() {
-      return lessons.find(lesson => !lesson.completed);
-    }
+    const getCurrentLesson = () => lessons.find(lesson => !lesson.completed);
 
-    function getCompletedLessons() {
-      return lessons.filter(lesson => lesson.completed);
-    }
+    const getCompletedLessons = () => lessons.filter(lesson => lesson.completed);
 
-    function getUpcomingLessons() {
-      return lessons.filter(lesson => !lesson.completed);
-    }
+    const getUpcomingLessons = () => lessons.filter(lesson => !lesson.completed);
 
-    function updatePageContent() {
+    const updatePageContent = () => {
       // تحديث الدرس الحالي
       const currentLesson = getCurrentLesson();
       if (currentLesson) {
@@ -456,9 +450,9 @@
       if (nextLesson) {
         document.getElementById('nextLessonInfo').textContent = `${nextLesson.title} - ${formatDate(nextLesson.date)}`;
       }
-    }
+    };
 
-    function updateStructuredData() {
+    const updateStructuredData = () => {
       const currentLesson = getCurrentLesson();
       if (!currentLesson) return;
 
@@ -495,9 +489,9 @@
       };
 
       document.getElementById('structuredData').textContent = JSON.stringify(structuredData);
-    }
+    };
 
-    function showNotification(message, duration = 3000) {
+    const showNotification = (message, duration = 3000) => {
       const notification = document.getElementById('notification');
       notification.textContent = message;
       notification.classList.add('show');
@@ -505,18 +499,18 @@
       setTimeout(() => {
         notification.classList.remove('show');
       }, duration);
-    }
+    };
 
     // ======== العد التنازلي ========
     let countdownInterval;
-    function startCountdown() {
+    const startCountdown = () => {
       const startTime = new Date(settings.startISO).getTime();
       const cdDays = document.getElementById('cd-days');
       const cdHours = document.getElementById('cd-hours');
       const cdMins = document.getElementById('cd-mins');
       const cdSecs = document.getElementById('cd-secs');
 
-      function updateCountdown(){
+      const updateCountdown = () => {
         const now = Date.now();
         let diff = Math.max(0, startTime - now);
         const days = Math.floor(diff / (1000*60*60*24)); diff -= days*(1000*60*60*24);
@@ -532,16 +526,16 @@
         if (days === 0 && hours === 0 && mins === 0 && secs === 0) {
           completeCurrentLesson();
         }
-      }
+      };
 
       // إيقاف أي عد تنازلي سابق
       if (countdownInterval) clearInterval(countdownInterval);
 
       updateCountdown();
       countdownInterval = setInterval(updateCountdown, 1000);
-    }
+    };
 
-    function completeCurrentLesson() {
+    const completeCurrentLesson = () => {
       const currentLesson = getCurrentLesson();
       if (currentLesson) {
         currentLesson.completed = true;
@@ -549,7 +543,7 @@
         showNotification('تم الانتقال تلقائيًا للدرس التالي!', 5000);
         initializePage();
       }
-    }
+    };
 
     // ======== زر نسخ الرابط ========
     document.getElementById('copyBtn').addEventListener('click', async () => {
@@ -562,7 +556,7 @@
     });
 
     // ======== مشاركة واتساب ========
-    function updateWhatsAppLink() {
+    const updateWhatsAppLink = () => {
       const currentLesson = getCurrentLesson();
       if (!currentLesson) return;
 
@@ -572,10 +566,10 @@
         '🔗 ' + settings.pageUrl);
 
       document.getElementById('shareWa').href = 'https://wa.me/?text=' + waText;
-    }
+    };
 
     // ======== إنشاء ملف ICS للتقويم ========
-    function downloadICS(){
+    const downloadICS = () => {
       const currentLesson = getCurrentLesson();
       if (!currentLesson) return;
 
@@ -589,7 +583,7 @@
       a.download = `Arabic-Lesson-${currentLesson.id}.ics`;
       a.click();
       URL.revokeObjectURL(a.href);
-    }
+    };
     document.getElementById('icsBtn').addEventListener('click', downloadICS);
 
     // ======== سمة اللون: داكن/فاتح ========
@@ -614,7 +608,7 @@
     });
 
     // ======== تهيئة الصفحة ========
-    function initializePage() {
+    const initializePage = () => {
       // تحميل الدروس من localStorage إذا كانت موجودة
       const savedLessons = localStorage.getItem('lessons');
       if (savedLessons) {
@@ -647,7 +641,7 @@
       // معلومات أسفل الصفحة
       document.getElementById('year').textContent = String(new Date().getFullYear());
       document.getElementById('lastUpdated').textContent = new Date().toLocaleString('ar-EG');
-    }
+    };
 
     // بدء تشغيل الصفحة
     initializePage();
