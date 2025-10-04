@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +14,6 @@
             padding: 20px;
             min-height: 100vh;
         }
-
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -24,24 +22,36 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
-
         .header {
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             color: white;
             padding: 30px;
             text-align: center;
         }
-
         .header h1 {
             margin: 0;
             font-size: 2.5rem;
             font-weight: bold;
         }
-
         .content {
             padding: 30px;
         }
-
+        .student-name-section {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .student-name-section input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #bbdefb;
+            border-radius: 8px;
+            font-size: 1rem;
+            text-align: center;
+            font-family: inherit;
+        }
         .section {
             margin-bottom: 40px;
             border: 2px solid #e3f2fd;
@@ -49,7 +59,6 @@
             padding: 25px;
             background: #fafafa;
         }
-
         .section-title {
             color: #1976d2;
             font-size: 1.5rem;
@@ -58,7 +67,6 @@
             border-bottom: 3px solid #4facfe;
             padding-bottom: 10px;
         }
-
         .reading-text {
             background: #f8f9fa;
             padding: 20px;
@@ -68,7 +76,6 @@
             line-height: 1.8;
             font-size: 1.1rem;
         }
-
         .question {
             margin-bottom: 20px;
             padding: 15px;
@@ -77,17 +84,14 @@
             border: 1px solid #e0e0e0;
             transition: all 0.3s ease;
         }
-
         .question-text {
             font-weight: bold;
             color: #333;
             margin-bottom: 10px;
         }
-
         .grade {
             display: none;
         }
-
         input[type="text"],
         textarea {
             width: 100%;
@@ -98,21 +102,18 @@
             transition: border-color 0.3s;
             font-family: inherit;
         }
-
         input[type="text"]:focus,
         textarea:focus {
             outline: none;
             border-color: #4facfe;
             box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
         }
-
         .choices {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             margin-top: 10px;
         }
-
         .choices label {
             display: flex;
             align-items: center;
@@ -126,17 +127,14 @@
             position: relative;
             gap: 10px;
         }
-
         .choices label:hover {
             background: #e3f2fd;
             border-color: #4facfe;
         }
-
         .choices input[type="radio"] {
             margin: 0;
             accent-color: #4facfe;
         }
-
         .choices label .icon {
             font-weight: bold;
             font-size: 1.3em;
@@ -145,37 +143,30 @@
             opacity: 0;
             transition: opacity 0.3s;
         }
-
         .choices label.correct {
             background: #c8e6c9 !important;
             border-color: #2e7d32 !important;
         }
-
         .choices label.correct .icon {
             opacity: 1;
             color: #2e7d32;
         }
-
         .choices label.incorrect {
             background: #ffcdd2 !important;
             border-color: #c62828 !important;
         }
-
         .choices label.incorrect .icon {
             opacity: 1;
             color: #c62828;
         }
-
         textarea {
             resize: vertical;
             min-height: 80px;
         }
-
         .poetry-section {
             background: #fff3e0;
             border: 2px solid #ff9800;
         }
-
         .poetry-text {
             background: #fafafa;
             padding: 20px;
@@ -187,13 +178,11 @@
             font-size: 1.1rem;
             text-align: right;
         }
-
         .verse {
             margin-bottom: 10px;
             padding: 5px 0;
             text-align: right;
         }
-
         .submit-btn {
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             color: white;
@@ -207,12 +196,10 @@
             display: block;
             margin: 30px auto;
         }
-
         .submit-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
         }
-
         .retry-btn {
             background: linear-gradient(135deg, #ff9800 0%, #f44336 100%);
             color: white;
@@ -226,12 +213,10 @@
             display: none;
             margin: 10px auto;
         }
-
         .retry-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(244, 67, 54, 0.3);
         }
-
         .result {
             background: #e8f5e8;
             border: 2px solid #2e7d32;
@@ -241,7 +226,6 @@
             display: none;
             text-align: center;
         }
-
         .score {
             font-size: 2.5rem;
             font-weight: bold;
@@ -249,7 +233,6 @@
             text-align: center;
             margin-bottom: 15px;
         }
-
         .score-circle {
             width: 120px;
             height: 120px;
@@ -264,7 +247,6 @@
             margin: 0 auto 20px;
             box-shadow: 0 8px 16px rgba(46, 125, 50, 0.3);
         }
-
         .explanation {
             margin-top: 10px;
             padding: 10px;
@@ -274,14 +256,12 @@
             color: #0d47a1;
             display: none;
         }
-
         .footer {
             text-align: center;
             margin-top: 20px;
             font-weight: bold;
             color: #1976d2;
         }
-
         .whatsapp-link {
             display: block;
             text-align: center;
@@ -290,7 +270,6 @@
             text-decoration: none;
             font-weight: bold;
         }
-
         .answers-section {
             margin-top: 30px;
             padding: 20px;
@@ -299,26 +278,43 @@
             border: 2px solid #1976d2;
             display: none;
         }
-
         .answers-section h3 {
             color: #0d47a1;
             text-align: center;
             margin-bottom: 15px;
         }
-
+        .student-result {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+        .download-link {
+            display: block;
+            text-align: center;
+            margin: 20px auto;
+            color: #d32f2f;
+            text-decoration: none;
+            font-weight: bold;
+            background: #ffebee;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid #ef9a9a;
+            width: fit-content;
+        }
+        .download-link:hover {
+            background: #ffcdd2;
+        }
         @media (max-width: 768px) {
             .choices {
                 grid-template-columns: 1fr;
             }
-
             .header h1 {
                 font-size: 1.8rem;
             }
-
             .content {
                 padding: 15px;
             }
-
             .score-circle {
                 width: 100px;
                 height: 100px;
@@ -327,7 +323,6 @@
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <div class="header">
@@ -335,6 +330,12 @@
             <p>للصف الخامس الأساسي – قناة الأستاذ خليل البلوشي</p>
         </div>
         <div class="content">
+            <!-- قسم اسم الطالب -->
+            <div class="student-name-section">
+                <label for="student-name">أدخل اسمك هنا:</label>
+                <input type="text" id="student-name" placeholder="اسم الطالب" required>
+            </div>
+
             <!-- القسم الأول: النصوص القرائية -->
             <div class="section">
                 <h2 class="section-title">📖 أولاً: النصوص القرائية</h2>
@@ -403,7 +404,6 @@
                     <div class="explanation" id="q1e-explanation">الإجابة الصحيحة: حماية الغابات ومنع الصيد</div>
                 </div>
             </div>
-
             <!-- القسم الثاني: النصوص الأدبية -->
             <div class="section poetry-section">
                 <h2 class="section-title">🎭 ثانياً: النصوص الأدبية</h2>
@@ -468,7 +468,6 @@
                     <div class="explanation" id="q2e-explanation">الإجابة الصحيحة: أن يتقي الله ويحافظ على الأمانة</div>
                 </div>
             </div>
-
             <!-- القسم الثالث: النحو والصرف -->
             <div class="section">
                 <h2 class="section-title">📚 ثالثاً: النحو والصرف</h2>
@@ -536,15 +535,13 @@
                     <div class="explanation" id="q3e-explanation">الإجابة الصحيحة: الكتابُ مفيدٌ</div>
                 </div>
             </div>
-
             <button class="submit-btn" onclick="submitTest()">إرسال الإجابات</button>
             <button class="retry-btn" id="retry-btn" onclick="retryTest()">إعادة الاختبار</button>
-
             <div class="result" id="result">
+                <div class="student-result" id="student-result"></div>
                 <div class="score-circle" id="score-circle"></div>
                 <div class="score" id="score"></div>
             </div>
-
             <div class="answers-section" id="answers-section">
                 <h3>نموذج الإجابة الصحيح</h3>
                 <div class="section">
@@ -574,17 +571,17 @@
                     <p><strong>6-</strong> الكتابُ مفيدٌ</p>
                 </div>
             </div>
-
+            <a href="https://drive.google.com/file/d/1sz3RT1GH0_d4TCDT2Qfa0j7l8FfKn6T8/view?usp=drive_link" class="download-link" target="_blank">
+                📥 تحميل الاختبار الإلكتروني بصيغة PDF
+            </a>
             <a href="https://whatsapp.com/channel/0029VamotBKCxoAy3fzUcv3T" class="whatsapp-link" target="_blank">
                 انضم إلى قناة الواتساب الخاصة بنا 📲
             </a>
         </div>
-
         <div class="footer">
             إعداد: الأستاذ خليل البلوشي – قناة تعليمية للصف الخامس الأساسي
         </div>
     </div>
-
     <script>
         const correctAnswers = {
             q1a1: "أندر",
@@ -598,20 +595,18 @@
             q2c: "تضاد بين الرحيل والإقامة",
             q2d: "تاج للحمامة ورياض في تهامة",
             q2e: "أن يتقي الله ويحافظ على الأمانة",
-            q3a1: "الحديقةُ",  // الإجابة الصحيحة للسؤال الأول: مبتدأ مرفوع
-            q3a2: "يلعب",    // الإجابة الصحيحة للسؤال الثاني: فعل معرب
+            q3a1: "الحديقةُ",
+            q3a2: "يلعب",
             q3b: "علامات الإعراب",
             q3c: "مرفوعان",
             q3d: "خبر مرفوع وعلامة رفعه الضمة",
             q3e: "الكتابُ مفيدٌ"
         };
-
         const questionScores = {
             q1a1: 0.5, q1a2: 0.5, q1b: 1, q1c: 1, q1d: 2, q1e: 2,
             q2a: 0.5, q2b: 0.5, q2c: 1, q2d: 1, q2e: 1,
             q3a1: 0.5, q3a2: 0.5, q3b: 0.5, q3c: 0.5, q3d: 1, q3e: 1
         };
-
         window.onload = function () {
             const containers = [
                 "q1a1-choices", "q1a2-choices", "q1b-choices", "q1c-choices", "q1d-choices", "q1e-choices",
@@ -620,7 +615,6 @@
             ];
             containers.forEach(id => shuffleChoices(id));
         };
-
         function shuffleChoices(containerId) {
             const container = document.getElementById(containerId);
             if (!container) return;
@@ -631,55 +625,44 @@
             }
             choices.forEach(choice => container.appendChild(choice));
         }
-
         function submitTest() {
-            // نجمع الإجابات
+            const studentName = document.getElementById('student-name').value;
+            if (!studentName) {
+                alert('يرجى إدخال اسم الطالب!');
+                return;
+            }
             const answers = {};
             for (let key in correctAnswers) {
                 const selected = document.querySelector(`input[name="${key}"]:checked`);
                 answers[key] = selected ? selected.value : '';
             }
-
-            // حساب الدرجة
             let totalScore = 0;
             let totalPossible = 0;
-
             for (let key in questionScores) {
                 totalPossible += questionScores[key];
                 if (answers[key] === correctAnswers[key]) {
                     totalScore += questionScores[key];
                 }
             }
-
-            // وضع العلامات (✅ للصح، ❌ للخطأ) — التعديل الرئيس هنا:
-            // لم نعد نعتمد على عنصر الحاوية `${key}-container` بل نعتمد على inputs
             for (let key in correctAnswers) {
                 const inputs = document.querySelectorAll(`input[name="${key}"]`);
                 if (!inputs.length) continue;
-
                 inputs.forEach(input => {
                     const label = input.closest('label');
                     if (!label) return;
-
-                    // إزالة أي حالات سابقة
                     label.classList.remove('correct', 'incorrect');
                     const icon = label.querySelector('.icon');
-
+                    if (icon) icon.textContent = '';
                     if (input.value === correctAnswers[key]) {
-                        // هذا الخيار هو الصحيح (نعرضه دائماً باللون الأخضر)
                         label.classList.add('correct');
                         if (icon) icon.textContent = '✅';
                     } else if (input.checked) {
-                        // هذا الخيار مختار والمختار خاطئ -> علامة خطأ
                         label.classList.add('incorrect');
                         if (icon) icon.textContent = '❌';
-                    } else {
-                        if (icon) icon.textContent = '';
                     }
                 });
             }
-
-            // عرض النتيجة
+            document.getElementById('student-result').textContent = `نتائج الطالب: ${studentName}`;
             document.getElementById('score').textContent = `درجتك: ${totalScore.toFixed(1)} من ${totalPossible}`;
             document.getElementById('score-circle').textContent = totalScore.toFixed(1);
             document.getElementById('result').style.display = 'block';
@@ -688,16 +671,12 @@
             document.getElementById('answers-section').style.display = 'block';
             document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
         }
-
         function retryTest() {
-            // إزالة العلامات البصرية
             document.querySelectorAll('.correct, .incorrect').forEach(el => {
                 el.classList.remove('correct', 'incorrect');
             });
             document.querySelectorAll('.icon').forEach(i => i.textContent = '');
             document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
-
-            // إخفاء النتيجة
             document.getElementById('result').style.display = 'none';
             document.getElementById('answers-section').style.display = 'none';
             document.querySelector('.submit-btn').style.display = 'block';
@@ -705,5 +684,4 @@
         }
     </script>
 </body>
-
 </html>
