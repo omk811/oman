@@ -598,8 +598,8 @@
             q2c: "تضاد بين الرحيل والإقامة",
             q2d: "تاج للحمامة ورياض في تهامة",
             q2e: "أن يتقي الله ويحافظ على الأمانة",
-            q3a1: "الحديقةُ",
-            q3a2: "يلعب",
+            q3a1: "الحديقةُ",  // الإجابة الصحيحة للسؤال الأول: مبتدأ مرفوع
+            q3a2: "يلعب",    // الإجابة الصحيحة للسؤال الثاني: فعل معرب
             q3b: "علامات الإعراب",
             q3c: "مرفوعان",
             q3d: "خبر مرفوع وعلامة رفعه الضمة",
@@ -633,12 +633,14 @@
         }
 
         function submitTest() {
+            // نجمع الإجابات
             const answers = {};
             for (let key in correctAnswers) {
                 const selected = document.querySelector(`input[name="${key}"]:checked`);
                 answers[key] = selected ? selected.value : '';
             }
 
+            // حساب الدرجة
             let totalScore = 0;
             let totalPossible = 0;
 
@@ -649,26 +651,30 @@
                 }
             }
 
-            // وضع العلامات داخل span.icon
+            // وضع العلامات (✅ للصح، ❌ للخطأ) — التعديل الرئيس هنا:
+            // لم نعد نعتمد على عنصر الحاوية `${key}-container` بل نعتمد على inputs
             for (let key in correctAnswers) {
-                const container = document.getElementById(`${key}-container`);
-                if (!container) continue;
+                const inputs = document.querySelectorAll(`input[name="${key}"]`);
+                if (!inputs.length) continue;
 
-                const labels = container.querySelectorAll('label');
-                labels.forEach(label => {
+                inputs.forEach(input => {
+                    const label = input.closest('label');
+                    if (!label) return;
+
+                    // إزالة أي حالات سابقة
                     label.classList.remove('correct', 'incorrect');
-                    const input = label.querySelector('input[type="radio"]');
                     const icon = label.querySelector('.icon');
-                    if (!input || !icon) return;
 
                     if (input.value === correctAnswers[key]) {
+                        // هذا الخيار هو الصحيح (نعرضه دائماً باللون الأخضر)
                         label.classList.add('correct');
-                        icon.textContent = '✅';
+                        if (icon) icon.textContent = '✅';
                     } else if (input.checked) {
+                        // هذا الخيار مختار والمختار خاطئ -> علامة خطأ
                         label.classList.add('incorrect');
-                        icon.textContent = '❌';
+                        if (icon) icon.textContent = '❌';
                     } else {
-                        icon.textContent = '';
+                        if (icon) icon.textContent = '';
                     }
                 });
             }
