@@ -3,584 +3,670 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>دروس اللغة العربية - الأستاذ خليل البلوشي</title>
+  <title>دروس مراجعة مع الأستاذ خليل البلوشي — إعلانات الدروس</title>
+  <meta name="description" content="تابع درس 'الجملة الفعلية' مع الأستاذ خليل البلوشي. دروس مراجعة في اللغة العربية للصف الخامس: مواعيد البث المباشر، الدروس السابقة، والاشتراك بالقناة." />
+  <meta name="keywords" content="اللغة العربية, الصف الخامس, دروس مراجعة, خليل البلوشي, الجملة الاسمية, الجملة الفعلية" />
+  <meta name="theme-color" content="#0ea5e9" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="إعلانات الدروس — الأستاذ خليل البلوشي" />
+  <meta property="og:description" content="تابع درس 'الجملة الفعلية' مع الأستاذ خليل البلوشي. جدول البث المباشر والدروس السابقة في اللغة العربية للصف الخامس." />
+  <meta property="og:image" content="https://img.youtube.com/vi/QJ62TF47Ukk/hqdefault.jpg" />
+  <meta property="og:locale" content="ar_AR" />
+  <meta property="og:url" content="https://example.com" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="إعلانات الدروس — الأستاذ خليل البلوشي" />
+  <meta name="twitter:description" content="جدول البث المباشر والدروس السابقة في اللغة العربية للصف الخامس." />
+  <meta name="twitter:image" content="https://img.youtube.com/vi/QJ62TF47Ukk/hqdefault.jpg" />
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap"></noscript>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    
     :root {
-      --primary: #0ea5e9;
-      --secondary: #22c55e;
+      --bg: #0b1020;
+      --panel: #0f172a;
+      --soft: #111827;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --brand: #0ea5e9;
+      --brand-2: #22c55e;
+      --danger: #ef4444;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+    }
+    [data-theme="light"]{
       --bg: #f8fafc;
-      --card: #ffffff;
-      --text: #1e293b;
-      --text-light: #64748b;
-      --border: #e2e8f0;
-      --shadow: 0 1px 3px rgba(0,0,0,0.1);
+      --panel: #ffffff;
+      --soft: #f1f5f9;
+      --text: #0f172a;
+      --muted: #475569;
+      --shadow: 0 8px 22px rgba(0,0,0,.08);
     }
-    
-    [data-theme="dark"] {
-      --bg: #0f172a;
-      --card: #1e293b;
-      --text: #f1f5f9;
-      --text-light: #94a3b8;
-      --border: #334155;
-    }
-    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
     body {
-      font-family: 'Cairo', sans-serif;
-      background: var(--bg);
+      margin: 0;
+      font-family: 'Cairo', system-ui, -apple-system, Segoe UI, Roboto, "Noto Naskh Arabic", Arial, sans-serif;
+      background: radial-gradient(1200px 800px at 80% -10%, rgba(34,197,94,.08), transparent 40%),
+                  radial-gradient(1200px 800px at 0% 10%, rgba(14,165,233,.10), transparent 50%),
+                  var(--bg);
       color: var(--text);
-      line-height: 1.6;
-      transition: background 0.3s, color 0.3s;
+      line-height: 1.75;
     }
-    
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px;
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 1050px; margin-inline: auto; padding: 24px; }
+    header.nav {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(10px);
+      background: color-mix(in oklab, var(--bg) 82%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--muted) 20%, transparent);
     }
-    
-    /* Header */
-    header {
-      background: var(--card);
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      box-shadow: var(--shadow);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-    
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    
-    .logo-icon {
-      width: 50px;
-      height: 50px;
-      background: linear-gradient(135deg, var(--primary), #60a5fa);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-    }
-    
-    .logo-text h1 {
-      font-size: 1.3rem;
-      margin-bottom: 2px;
-    }
-    
-    .logo-text p {
-      font-size: 0.9rem;
-      color: var(--text-light);
-    }
-    
-    .theme-toggle {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      padding: 8px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1.2rem;
-    }
-    
-    /* Next Lesson Card */
-    .next-lesson {
-      background: linear-gradient(135deg, var(--primary), #0284c7);
-      color: white;
-      padding: 30px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      box-shadow: var(--shadow);
-    }
-    
-    .next-lesson .badge {
-      background: rgba(255,255,255,0.2);
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      display: inline-block;
-      margin-bottom: 15px;
-    }
-    
-    .next-lesson h2 {
-      font-size: 1.8rem;
-      margin-bottom: 10px;
-    }
-    
-    .next-lesson p {
-      opacity: 0.9;
-      margin-bottom: 20px;
-    }
-    
-    .lesson-info {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-    
-    .info-item {
-      background: rgba(255,255,255,0.15);
-      padding: 12px;
-      border-radius: 8px;
-      text-align: center;
-    }
-    
-    .info-item strong {
-      display: block;
-      margin-bottom: 5px;
-    }
-    
-    /* Countdown */
-    .countdown {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      margin: 20px 0;
-    }
-    
-    .countdown-item {
-      background: rgba(255,255,255,0.15);
-      padding: 15px;
-      border-radius: 8px;
-      text-align: center;
-      min-width: 70px;
-    }
-    
-    .countdown-item .number {
-      font-size: 1.5rem;
-      font-weight: bold;
-      display: block;
-    }
-    
-    .countdown-item .label {
-      font-size: 0.85rem;
-      opacity: 0.9;
-    }
-    
-    /* Buttons */
-    .buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    
+    .nav-inner { display: flex; align-items: center; gap: 12px; justify-content: space-between; padding: 12px 0; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .2px; }
+    .brand .logo { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: linear-gradient(135deg, var(--brand), #60a5fa); color: white; box-shadow: var(--shadow); }
+    .brand small { display: block; color: var(--muted); font-weight: 600; margin-top: -4px; }
+    nav a { margin: 0 8px; font-weight: 600; }
     .btn {
-      padding: 12px 20px;
-      border-radius: 8px;
-      border: none;
-      font-family: 'Cairo', sans-serif;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
-      transition: transform 0.2s, opacity 0.2s;
-    }
-    
-    .btn:hover {
-      transform: translateY(-2px);
-      opacity: 0.9;
-    }
-    
-    .btn-primary {
-      background: white;
-      color: var(--primary);
-    }
-    
-    .btn-secondary {
-      background: rgba(255,255,255,0.2);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.3);
-    }
-    
-    /* Section */
-    .section {
-      background: var(--card);
-      padding: 25px;
+      padding: 12px 16px;
       border-radius: 12px;
-      margin-bottom: 20px;
+      border: 1px solid transparent;
+      background: var(--brand);
+      color: white;
+      font-weight: 700;
       box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: filter 0.2s ease;
     }
-    
-    .section h3 {
-      font-size: 1.4rem;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .btn:hover { filter: brightness(1.05); }
+    .btn.secondary { background: var(--soft); color: var(--text); border-color: color-mix(in srgb, var(--muted) 20%, transparent); }
+    .btn.success { background: var(--brand-2); }
+    .btn.ghost { background: transparent; color: var(--text); border-color: color-mix(in srgb, var(--muted) 30%, transparent); }
+    .hero { margin-top: 18px; background: linear-gradient(180deg, color-mix(in oklab, var(--panel) 90%, transparent) 0%, var(--panel) 60%); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+    .hero-inner { display: grid; grid-template-columns: 1.2fr .8fr; gap: 24px; padding: 24px; }
+    .badge { display: inline-block; padding: 6px 10px; border-radius: 999px; font-size: .85rem; background: color-mix(in srgb, var(--brand) 20%, var(--soft)); color: var(--brand); font-weight: 700; }
+    h1 { font-size: clamp(1.4rem, 2.6vw + .8rem, 2.2rem); margin: 8px 0 10px; }
+    h2 { font-size: 1.25rem; margin: 0 0 12px; }
+    p.lead { color: var(--muted); font-weight: 600; }
+    .kpis { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin: 16px 0 12px; }
+    .kpi { background: var(--soft); border-radius: 12px; padding: 12px; border: 1px solid color-mix(in srgb, var(--muted) 20%, transparent); }
+    .kpi b { display: block; font-size: 1.1rem; }
+    .kpi small { color: var(--muted); }
+    .countdown { display: flex; gap: 10px; margin: 14px 0 8px; }
+    .cd-box { background: var(--soft); padding: 10px 12px; border-radius: 12px; text-align: center; min-width: 70px; border: 1px solid color-mix(in srgb, var(--muted) 20%, transparent); }
+    .cd-box b { display: block; font-size: 1.2rem; }
+    .cd-box small { color: var(--muted); font-weight: 700; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
+    .card { background: var(--panel); border-radius: var(--radius); border: 1px solid color-mix(in srgb, var(--muted) 20%, transparent); box-shadow: var(--shadow); }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+    @media (max-width: 920px){
+      .hero-inner { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; }
+      nav.desktop { display: none; }
+      .kpis { grid-template-columns: 1fr; }
+      .countdown { flex-wrap: wrap; justify-content: center; }
     }
-    
-    /* Video Grid */
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 15px;
+    .video-card { overflow: hidden; }
+    .video-thumb { aspect-ratio: 16/9; width: 100%; height: auto; object-fit: cover; display: block; }
+    .video-body { padding: 12px; }
+    .video-title { font-weight: 800; margin: 0 0 6px; }
+    .video-meta { color: var(--muted); font-size: .95rem; }
+    .timeline { padding: 18px; }
+    .timeline li { list-style: none; position: relative; padding: 10px 14px 10px 0; border-right: 3px solid color-mix(in srgb, var(--brand) 40%, transparent); }
+    .timeline li + li { margin-top: 10px; }
+    .timeline .soon { color: var(--muted); }
+    .aside {
+      background: linear-gradient(180deg, color-mix(in oklab, var(--soft) 30%, transparent), transparent), var(--panel);
+      border-radius: var(--radius); padding: 16px; border: 1px solid color-mix(in srgb, var(--muted) 20%, transparent);
     }
-    
-    .video-card {
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      transition: transform 0.2s;
+    footer { margin: 22px 0 60px; color: var(--muted); }
+    .footer-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .toggle { background: var(--soft); padding: 6px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--muted) 20%, transparent); }
+    .toggle button { background: white; border: 0; padding: 8px 10px; border-radius: 999px; cursor: pointer; font-weight: 800; }
+    .mobile-nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
     }
-    
-    .video-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    @media (max-width: 768px) {
+      .mobile-nav-toggle {
+        display: block;
+      }
+      nav.desktop {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: color-mix(in oklab, var(--bg) 95%, transparent);
+        backdrop-filter: blur(10px);
+        padding: 1rem;
+        flex-direction: column;
+        border-top: 1px solid color-mix(in srgb, var(--muted) 20%, transparent);
+      }
+      nav.desktop.active {
+        display: flex;
+      }
+      nav.desktop a {
+        margin: 8px 0;
+        padding: 8px 0;
+        border-bottom: 1px solid color-mix(in srgb, var(--muted) 10%, transparent);
+      }
     }
-    
-    .video-thumbnail {
-      width: 100%;
-      aspect-ratio: 16/9;
-      object-fit: cover;
-    }
-    
-    .video-info {
-      padding: 12px;
-    }
-    
-    .video-title {
-      font-weight: 600;
-      margin-bottom: 5px;
-    }
-    
-    .video-link {
-      color: var(--primary);
-      text-decoration: none;
-      font-size: 0.9rem;
-    }
-    
-    /* Upcoming List */
-    .upcoming-list {
-      list-style: none;
-    }
-    
-    .upcoming-list li {
-      padding: 15px;
-      border-right: 3px solid var(--primary);
-      margin-bottom: 10px;
-      background: var(--bg);
-      border-radius: 0 8px 8px 0;
-    }
-    
-    .upcoming-list li strong {
-      display: block;
-      margin-bottom: 5px;
-    }
-    
-    .upcoming-list li span {
-      color: var(--text-light);
-    }
-    
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: var(--text-light);
-      font-size: 0.9rem;
-    }
-    
-    /* Notification */
     .notification {
       position: fixed;
       top: 20px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-100px);
-      background: var(--secondary);
+      right: 20px;
+      background: var(--brand-2);
       color: white;
-      padding: 15px 25px;
+      padding: 12px 16px;
       border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      transition: transform 0.3s;
+      box-shadow: var(--shadow);
       z-index: 1000;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
-    
     .notification.show {
-      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      transform: translateY(0);
     }
-    
-    @media (max-width: 600px) {
-      .next-lesson h2 {
-        font-size: 1.4rem;
-      }
-      
-      .countdown {
-        flex-wrap: wrap;
-      }
-      
-      .video-grid {
-        grid-template-columns: 1fr;
-      }
+    .high-contrast * {
+      background-color: black !important;
+      color: white !important;
+      border-color: white !important;
+    }
+    .high-contrast a {
+      color: yellow !important;
     }
   </style>
 </head>
 <body>
-  <div id="notification" class="notification"></div>
-  
-  <div class="container">
-    <!-- Header -->
-    <header>
-      <div class="logo">
-        <div class="logo-icon">📘</div>
-        <div class="logo-text">
-          <h1>دروس اللغة العربية</h1>
-          <p>الأستاذ خليل البلوشي</p>
+  <div id="notification" class="notification" role="alert" aria-live="assertive"></div>
+  <header class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">📘</div>
+        <div>
+          <div>إعلانات الدروس</div>
+          <small>الأستاذ خليل البلوشي</small>
         </div>
       </div>
-      <button class="theme-toggle" id="themeToggle" title="تبديل الوضع">🌓</button>
-    </header>
-
-    <!-- Next Lesson -->
-    <div class="next-lesson">
-      <span class="badge">الدرس القادم</span>
-      <h2 id="lessonTitle">يتم التحميل...</h2>
-      <p id="lessonDesc">يتم تحميل وصف الدرس...</p>
-      
-      <div class="lesson-info">
-        <div class="info-item">
-          <strong>📅 التاريخ</strong>
-          <span id="lessonDate">يتم التحميل...</span>
-        </div>
-        <div class="info-item">
-          <strong>⏰ الوقت</strong>
-          <span>10:30 صباحًا</span>
-        </div>
-        <div class="info-item">
-          <strong>🌐 المنصة</strong>
-          <span>يوتيوب</span>
-        </div>
-      </div>
-
-      <div class="countdown">
-        <div class="countdown-item">
-          <span class="number" id="days">--</span>
-          <span class="label">يوم</span>
-        </div>
-        <div class="countdown-item">
-          <span class="number" id="hours">--</span>
-          <span class="label">ساعة</span>
-        </div>
-        <div class="countdown-item">
-          <span class="number" id="minutes">--</span>
-          <span class="label">دقيقة</span>
-        </div>
-        <div class="countdown-item">
-          <span class="number" id="seconds">--</span>
-          <span class="label">ثانية</span>
-        </div>
-      </div>
-
-      <div class="buttons">
-        <a class="btn btn-primary" href="https://www.youtube.com/@teacherKhalil811" target="_blank">📺 انتقل للقناة</a>
-        <button class="btn btn-secondary" id="addCalendar">🗓️ أضف للتقويم</button>
-        <button class="btn btn-secondary" id="shareBtn">📤 مشاركة</button>
+      <button class="mobile-nav-toggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="desktop-nav">☰</button>
+      <nav id="desktop-nav" class="desktop" aria-label="التنقل الرئيسي">
+        <a href="#next" aria-current="page">الدرس القادم</a>
+        <a href="#past">الدروس السابقة</a>
+        <a href="#upcoming">الدروس القادمة</a>
+        <a href="#join">اشترك</a>
+      </nav>
+      <div class="toggle" aria-label="تبديل السمة">
+        <button id="themeToggle" title="الوضع الفاتح/الداكن/التباين العالي">🌓</button>
       </div>
     </div>
-
-    <!-- Completed Lessons -->
-    <div class="section">
-      <h3>✅ الدروس المنجزة</h3>
-      <div class="video-grid" id="completedVideos"></div>
-    </div>
-
-    <!-- Upcoming Lessons -->
-    <div class="section">
-      <h3>📚 الدروس القادمة</h3>
-      <ul class="upcoming-list" id="upcomingList"></ul>
-      <div class="buttons" style="margin-top: 20px;">
-        <a class="btn btn-primary" href="https://www.youtube.com/@teacherKhalil811?sub_confirmation=1" target="_blank">🔔 اشترك في القناة</a>
-        <a class="btn btn-secondary" href="https://whatsapp.com/channel/0029VamotBKCxoAy3fzUcv3T" target="_blank">📱 قناة واتساب</a>
+  </header>
+  <main class="container">
+    <section id="next" class="hero card" aria-labelledby="nextTitle">
+      <div class="hero-inner">
+        <div>
+          <span class="badge">حصص مباشرة على اليوتيوب</span>
+          <h1 id="nextTitle"><span id="currentLessonTitle">يتم التحميل...</span></h1>
+          <p class="lead" id="currentLessonDesc">يتم تحميل وصف الدرس...</p>
+          <div class="kpis">
+            <div class="kpi" aria-label="التاريخ">
+              <b>📅 التاريخ</b>
+              <small id="lessonDate">يتم التحميل...</small>
+            </div>
+            <div class="kpi" aria-label="الوقت">
+              <b>⏰ الوقت</b>
+              <small>10:30 صباحًا (توقيت عمان)</small>
+            </div>
+            <div class="kpi" aria-label="المكان">
+              <b>🌐 المكان</b>
+              <small>قناة اليوتيوب</small>
+            </div>
+          </div>
+          <h2>العدّ التنازلي للبث</h2>
+          <div class="countdown" aria-live="polite" aria-atomic="true">
+            <div class="cd-box" aria-label="الأيام المتبقية"><b id="cd-days" aria-busy="true">...</b><small>أيام</small></div>
+            <div class="cd-box" aria-label="الساعات المتبقية"><b id="cd-hours">--</b><small>ساعات</small></div>
+            <div class="cd-box" aria-label="الدقائق المتبقية"><b id="cd-mins">--</b><small>دقائق</small></div>
+            <div class="cd-box" aria-label="الثواني المتبقية"><b id="cd-secs">--</b><small>ثوانٍ</small></div>
+          </div>
+          <div class="actions">
+            <a class="btn" href="https://www.youtube.com/@teacherKhalil811" target="_blank" rel="noopener noreferrer">📺 الانتقال للقناة</a>
+            <button class="btn success" id="icsBtn" type="button" aria-label="أضف الدرس إلى التقويم">🗓️ أضِف إلى التقويم</button>
+            <button class="btn secondary" id="copyBtn" type="button" aria-label="نسخ رابط الصفحة">🔗 نسخ رابط الصفحة</button>
+            <a class="btn ghost" id="shareWa" href="#" target="_blank" rel="noopener noreferrer" aria-label="مشاركة عبر واتساب">📤 مشاركة عبر واتساب</a>
+          </div>
+          <p style="margin-top: 12px; color: var(--muted); font-size: 0.9rem;">رابط مخصص لإعلانات الدروس، احتفظ به للرجوع السريع.</p>
+        </div>
+        <aside class="aside" aria-labelledby="teacher">
+          <h2 id="teacher">عن المعلم</h2>
+          <p><b>الأستاذ خليل البلوشي</b><br>معلم مجال أول في اللغة العربية، خبرة تزيد عن 20 سنة في تعليم طلبة الصف الخامس.</p>
+          <div class="actions">
+            <a class="btn" href="https://www.youtube.com/@teacherKhalil811?sub_confirmation=1" target="_blank" rel="noopener noreferrer">🔔 تفعيل التنبيهات</a>
+            <a class="btn secondary" href="https://whatsapp.com/channel/0029VamotBKCxoAy3fzUcv3T" target="_blank" rel="noopener noreferrer">📱 قناة الواتساب</a>
+          </div>
+        </aside>
       </div>
-    </div>
-
+    </section>
+    <section id="past" class="card" style="margin-top:16px; padding:16px" aria-labelledby="pastTitle">
+      <h2 id="pastTitle">✅ الدروس المنجزة</h2>
+      <div class="grid" id="completedLessons">
+        <!-- سيتم ملؤها تلقائياً بالدروس المكتملة -->
+      </div>
+    </section>
+    <section id="upcoming" class="card" style="margin-top:16px; padding:16px" aria-labelledby="upTitle">
+      <h2 id="upTitle">📚 الدروس القادمة إن شاء الله</h2>
+      <ol class="timeline" id="upcomingLessonsList">
+        <!-- سيتم ملؤها تلقائياً بالدروس القادمة -->
+      </ol>
+      <div class="actions">
+        <a class="btn" href="https://www.youtube.com/@teacherKhalil811" target="_blank" rel="noopener noreferrer">قناة اليوتيوب</a>
+        <a class="btn secondary" href="https://whatsapp.com/channel/0029VamotBKCxoAy3fzUcv3T" target="_blank" rel="noopener noreferrer">قناة الواتساب</a>
+      </div>
+    </section>
+    <section id="join" class="card" style="margin-top:16px; padding:16px" aria-labelledby="joinTitle">
+      <h2 id="joinTitle">🚀 اشترك ليصلك كل جديد</h2>
+      <p class="lead">اشترك في القناة وفعّل الجرس، وانضم لقناة الواتساب ليصلك إشعار قبل بدء البث.</p>
+      <div class="actions">
+        <a class="btn" href="https://www.youtube.com/@teacherKhalil811?sub_confirmation=1" target="_blank" rel="noopener noreferrer">اشترك في اليوتيوب</a>
+        <a class="btn secondary" href="https://whatsapp.com/channel/0029VamotBKCxoAy3fzUcv3T" target="_blank" rel="noopener noreferrer">انضم للواتساب</a>
+      </div>
+    </section>
     <footer>
-      <p>© 2025 الأستاذ خليل البلوشي — دروس اللغة العربية للصف الخامس</p>
+      <p>© <span id="year"></span> الأستاذ خليل البلوشي — هذا الرابط مخصص لإعلانات الدروس.</p>
+      <div class="footer-actions">
+        <small>آخر تحديث: <span id="lastUpdated"></span></small>
+        <small>الدرس التالي: <span id="nextLessonInfo"></span></small>
+      </div>
     </footer>
-  </div>
-
+  </main>
+  <script type="application/ld+json" id="structuredData"></script>
   <script>
-    // البيانات
-    const lessons = [
-      { id: 1, title: "الإعراب والبناء", completed: true, date: "2025-09-13", videoId: "RxTRJ7q659w" },
-      { id: 2, title: "همزتا الوصل والقطع", completed: true, date: "2025-09-20", videoId: "LaAF8QKoGIQ" },
-      { id: 3, title: "الجملة الاسمية", completed: true, date: "2025-09-27", videoId: "fzr_J3GIfKg" },
-      { id: 4, title: "الجملة الفعلية", completed: true, date: "2025-10-11", videoId: "QJ62TF47Ukk" },
-      { id: 5, title: "إثبات همزة ابن وحذفها", completed: false, date: "2025-10-18" },
-      { id: 6, title: "حروف الجر وشبه الجملة", completed: false, date: "2025-10-25" },
-      { id: 7, title: "الفاصلة", completed: false, date: "2025-11-01" }
-    ];
+    // بيانات الدروس
+    const lessonsData = {
+      version: "1.0",
+      lessons: [
+        { id: 1, title: "الإعراب والبناء", completed: true, date: "2025-09-13", videoId: "RxTRJ7q659w" },
+        { id: 2, title: "همزتا الوصل والقطع", completed: true, date: "2025-09-20", videoId: "LaAF8QKoGIQ" },
+        { id: 3, title: "الجملة الاسمية", completed: true, date: "2025-09-27", videoId: "fzr_J3GIfKg" },
+        { id: 4, title: "الجملة الفعلية", completed: false, date: "2025-10-11", videoId: "QJ62TF47Ukk" },
+        { id: 5, title: "إثبات همزة ابن وحذفها", completed: false, date: "2025-10-18" },
+        { id: 6, title: "حروف الجر وشبه الجملة", completed: false, date: "2025-10-25" },
+        { id: 7, title: "الفاصلة", completed: false, date: "2025-11-01" }
+      ]
+    };
 
-    // إظهار الإشعار
-    function showNotification(message) {
+    // الإعدادات العامة
+    const settings = {
+      pageUrl: window.location.href,
+      youtubeChannel: 'https://www.youtube.com/@teacherKhalil811',
+      lessonTime: '10:30',
+      timeZone: '+04:00',
+      dateFormatter: new Intl.DateTimeFormat('ar-EG', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        timeZone: 'Asia/Muscat'
+      }),
+      dateTimeFormatter: new Intl.DateTimeFormat('ar-EG', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'Asia/Muscat'
+      })
+    };
+
+    // المتغيرات العامة
+    let countdownInterval;
+    let lessons = [...lessonsData.lessons];
+
+    // الدوال المساعدة
+    function formatDate(date, includeTime = false) {
+      return includeTime
+        ? settings.dateTimeFormatter.format(new Date(date))
+        : settings.dateFormatter.format(new Date(date));
+    }
+
+    function getCurrentLesson() {
+      return lessons.find(lesson => !lesson.completed);
+    }
+
+    function getCompletedLessons() {
+      return lessons.filter(lesson => lesson.completed);
+    }
+
+    function getUpcomingLessons() {
+      return lessons.filter(lesson => !lesson.completed);
+    }
+
+    function showNotification(message, duration = 3000) {
       const notification = document.getElementById('notification');
       notification.textContent = message;
       notification.classList.add('show');
-      setTimeout(() => notification.classList.remove('show'), 3000);
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, duration);
     }
 
-    // تنسيق التاريخ
-    function formatDate(dateStr) {
-      const date = new Date(dateStr);
-      return date.toLocaleDateString('ar-EG', { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
+    // تحديث محتوى الصفحة
+    function updatePageContent() {
+      const currentLesson = getCurrentLesson();
+      if (currentLesson) {
+        document.getElementById('currentLessonTitle').textContent = `الدرس ${currentLesson.id}: ${currentLesson.title}`;
+        document.getElementById('currentLessonDesc').innerHTML =
+          `نراجع أهم قواعد <b>${currentLesson.title}</b> مع أمثلة تطبيقية مناسبة لجميع المستويات.`;
+        document.getElementById('lessonDate').textContent = formatDate(currentLesson.date);
+        settings.startISO = `${currentLesson.date}T${settings.lessonTime}:00${settings.timeZone}`;
+        settings.lessonTitle = `الدرس ${currentLesson.id}: ${currentLesson.title}`;
+        document.querySelector('meta[name="description"]').content =
+          `تابع درس "${currentLesson.title}" مع الأستاذ خليل البلوشي. دروس مراجعة في اللغة العربية للصف الخامس.`;
+        document.querySelector('meta[property="og:title"]').content =
+          `إعلانات الدروس — ${currentLesson.title} | الأستاذ خليل البلوشي`;
+        document.querySelector('meta[property="og:description"]').content =
+          `تابع درس "${currentLesson.title}" مع الأستاذ خليل البلوشي.`;
+        if (currentLesson.videoId) {
+          document.querySelector('meta[property="og:image"]').content =
+            `https://img.youtube.com/vi/${currentLesson.videoId}/hqdefault.jpg`;
+          document.querySelector('meta[name="twitter:image"]').content =
+            `https://img.youtube.com/vi/${currentLesson.videoId}/hqdefault.jpg`;
+        }
+      }
+
+      // تحديث الدروس المنجزة
+      const completedLessonsContainer = document.getElementById('completedLessons');
+      completedLessonsContainer.innerHTML = '';
+      getCompletedLessons().forEach(lesson => {
+        const videoUrl = `https://www.youtube.com/live/${lesson.videoId}?si=Myqyaypie1dhIKEz`;
+        const thumbnailUrl = `https://img.youtube.com/vi/${lesson.videoId}/hqdefault.jpg`;
+        const lessonElement = document.createElement('article');
+        lessonElement.className = 'video-card card';
+        lessonElement.innerHTML = `
+          <a href="${videoUrl}" target="_blank" rel="noopener noreferrer" aria-label="شاهد الآن: ${lesson.title}">
+            <img class="video-thumb" loading="lazy" width="400" height="225" alt="درس ${lesson.title}" src="${thumbnailUrl}">
+          </a>
+          <div class="video-body">
+            <div class="video-title">${lesson.id}) ${lesson.title}</div>
+            <div class="video-meta"><a href="${videoUrl}" target="_blank" rel="noopener noreferrer">شاهد الآن ↗</a></div>
+          </div>
+        `;
+        completedLessonsContainer.appendChild(lessonElement);
       });
+
+      // تحديث الدروس القادمة
+      const upcomingLessonsList = document.getElementById('upcomingLessonsList');
+      upcomingLessonsList.innerHTML = '';
+      getUpcomingLessons().forEach(lesson => {
+        const dateInfo = lesson.date ? formatDate(lesson.date) : '<span class="soon">قريبًا</span>';
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `<b>${lesson.id}) ${lesson.title}</b> — ${dateInfo}`;
+        upcomingLessonsList.appendChild(listItem);
+      });
+
+      // تحديث معلومات الدرس التالي في التذييل
+      const nextLesson = getUpcomingLessons()[0];
+      if (nextLesson) {
+        document.getElementById('nextLessonInfo').textContent =
+          `${nextLesson.title} - ${formatDate(nextLesson.date)}`;
+      }
     }
 
-    // تحديث الدرس الحالي
-    function updateCurrentLesson() {
-      const currentLesson = lessons.find(l => !l.completed);
+    // تحديث البيانات المنظمة
+    function updateStructuredData() {
+      const currentLesson = getCurrentLesson();
       if (!currentLesson) return;
 
-      document.getElementById('lessonTitle').textContent = `الدرس ${currentLesson.id}: ${currentLesson.title}`;
-      document.getElementById('lessonDesc').textContent = `مراجعة شاملة لموضوع ${currentLesson.title} مع أمثلة تطبيقية`;
-      document.getElementById('lessonDate').textContent = formatDate(currentLesson.date);
-
-      // بدء العد التنازلي
-      startCountdown(currentLesson.date);
+      const startDate = new Date(`${currentLesson.date}T${settings.lessonTime}:00${settings.timeZone}`);
+      const endDate = new Date(startDate.getTime() + 90 * 60000);
+      const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "Event",
+        "name": `الدرس ${currentLesson.id}: ${currentLesson.title}`,
+        "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "startDate": startDate.toISOString(),
+        "endDate": endDate.toISOString(),
+        "location": {
+          "@type": "VirtualLocation",
+          "url": settings.youtubeChannel
+        },
+        "image": currentLesson.videoId
+          ? [`https://img.youtube.com/vi/${currentLesson.videoId}/hqdefault.jpg`]
+          : [],
+        "description": `مراجعة شاملة لـ${currentLesson.title} مع أمثلة تطبيقية لطلبة الصف الخامس.`,
+        "organizer": {
+          "@type": "Person",
+          "name": "الأستاذ خليل البلوشي",
+          "sameAs": settings.youtubeChannel
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "OMR",
+          "availability": "https://schema.org/InStock"
+        }
+      };
+      document.getElementById('structuredData').textContent = JSON.stringify(structuredData);
+      document.dispatchEvent(new Event('structured-data-updated'));
     }
 
     // العد التنازلي
-    function startCountdown(dateStr) {
-      const targetDate = new Date(`${dateStr}T10:30:00+04:00`).getTime();
+    function startCountdown() {
+      const startTime = new Date(settings.startISO).getTime();
+      const cdDays = document.getElementById('cd-days');
+      const cdHours = document.getElementById('cd-hours');
+      const cdMins = document.getElementById('cd-mins');
+      const cdSecs = document.getElementById('cd-secs');
 
-      function update() {
-        const now = new Date().getTime();
-        const diff = targetDate - now;
+      function updateCountdown() {
+        const now = Date.now();
+        let diff = Math.max(0, startTime - now);
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        diff -= days * (1000 * 60 * 60 * 24);
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        diff -= hours * (1000 * 60 * 60);
+        const mins = Math.floor(diff / (1000 * 60));
+        diff -= mins * (1000 * 60);
+        const secs = Math.floor(diff / 1000);
 
-        if (diff <= 0) {
-          document.getElementById('days').textContent = '0';
-          document.getElementById('hours').textContent = '00';
-          document.getElementById('minutes').textContent = '00';
-          document.getElementById('seconds').textContent = '00';
-          return;
+        if (cdDays.textContent !== String(days)) {
+          cdDays.textContent = String(days);
+          cdDays.removeAttribute('aria-busy');
+        }
+        if (cdHours.textContent !== String(hours).padStart(2, '0')) {
+          cdHours.textContent = String(hours).padStart(2, '0');
+        }
+        if (cdMins.textContent !== String(mins).padStart(2, '0')) {
+          cdMins.textContent = String(mins).padStart(2, '0');
+        }
+        if (cdSecs.textContent !== String(secs).padStart(2, '0')) {
+          cdSecs.textContent = String(secs).padStart(2, '0');
         }
 
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-        document.getElementById('days').textContent = days;
-        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        if (days === 0 && hours === 0 && mins === 0 && secs === 0) {
+          completeCurrentLesson();
+        } else {
+          requestAnimationFrame(updateCountdown);
+        }
       }
 
-      update();
-      setInterval(update, 1000);
+      if (countdownInterval) {
+        cancelAnimationFrame(countdownInterval);
+      }
+      updateCountdown();
     }
 
-    // تحديث الدروس المنجزة
-    function updateCompletedLessons() {
-      const container = document.getElementById('completedVideos');
-      const completed = lessons.filter(l => l.completed);
-
-      container.innerHTML = completed.map(lesson => `
-        <div class="video-card">
-          <a href="https://www.youtube.com/watch?v=${lesson.videoId}" target="_blank">
-            <img class="video-thumbnail" src="https://img.youtube.com/vi/${lesson.videoId}/hqdefault.jpg" alt="${lesson.title}">
-          </a>
-          <div class="video-info">
-            <div class="video-title">${lesson.id}. ${lesson.title}</div>
-            <a class="video-link" href="https://www.youtube.com/watch?v=${lesson.videoId}" target="_blank">شاهد الدرس ←</a>
-          </div>
-        </div>
-      `).join('');
+    // إكمال الدرس الحالي
+    function completeCurrentLesson() {
+      const currentLesson = getCurrentLesson();
+      if (currentLesson) {
+        currentLesson.completed = true;
+        saveLessons();
+        showNotification('تم الانتقال تلقائيًا للدرس التالي!', 5000);
+        initializePage();
+      }
     }
 
-    // تحديث الدروس القادمة
-    function updateUpcomingLessons() {
-      const container = document.getElementById('upcomingList');
-      const upcoming = lessons.filter(l => !l.completed);
-
-      container.innerHTML = upcoming.map(lesson => `
-        <li>
-          <strong>${lesson.id}. ${lesson.title}</strong>
-          <span>${lesson.date ? formatDate(lesson.date) : 'قريبًا'}</span>
-        </li>
-      `).join('');
+    // حفظ الدروس في التخزين المحلي
+    function saveLessons() {
+      const dataToSave = {
+        version: lessonsData.version,
+        lessons: lessons
+      };
+      localStorage.setItem('lessonsData', JSON.stringify(dataToSave));
     }
 
-    // إضافة للتقويم
-    document.getElementById('addCalendar').addEventListener('click', () => {
-      const currentLesson = lessons.find(l => !l.completed);
+    // تحميل الدروس من التخزين المحلي
+    function loadLessons() {
+      const savedData = localStorage.getItem('lessonsData');
+      if (savedData) {
+        try {
+          const parsed = JSON.parse(savedData);
+          if (parsed.version === lessonsData.version) {
+            lessons = parsed.lessons;
+          }
+        } catch (e) {
+          console.error('Error loading saved lessons:', e);
+        }
+      }
+    }
+
+    // تحديث رابط واتساب
+    function updateWhatsAppLink() {
+      const currentLesson = getCurrentLesson();
       if (!currentLesson) return;
 
-      const startDate = new Date(`${currentLesson.date}T10:30:00+04:00`);
-      const endDate = new Date(startDate.getTime() + 90 * 60000);
+      const waText = encodeURIComponent(
+        '📘 دروس مراجعة مع الأستاذ خليل البلوشي\n' +
+        `الدرس ${currentLesson.id}: ${currentLesson.title}\n` +
+        '⏰ السبت 10:30 صباحًا (توقيت عمان)\n' +
+        '🔗 ' + settings.pageUrl
+      );
+      document.getElementById('shareWa').href = 'https://wa.me/?text=' + waText;
+    }
 
-      const formatICSDate = (date) => {
-        return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-      };
+    // تنزيل ملف ICS
+    function downloadICS() {
+      const currentLesson = getCurrentLesson();
+      if (!currentLesson) return;
 
-      const ics = `BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//Arabic Lessons//AR
-BEGIN:VEVENT
-UID:${Date.now()}@example.com
-DTSTAMP:${formatICSDate(new Date())}
-DTSTART:${formatICSDate(startDate)}
-DTEND:${formatICSDate(endDate)}
-SUMMARY:${currentLesson.title}
-DESCRIPTION:درس مباشر على اليوتيوب
-URL:https://www.youtube.com/@teacherKhalil811
-END:VEVENT
-END:VCALENDAR`;
+      const dtStart = settings.startISO.replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+      const dtEnd = new Date(new Date(settings.startISO).getTime() + 90 * 60000)
+        .toISOString()
+        .replace(/[-:]/g, '')
+        .replace(/\.\d{3}/, '');
+      const uid = 'khalil-arabic-' + Date.now() + '@example.com';
+      const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Khalil Arabic//Lessons//AR\nBEGIN:VEVENT\nUID:${uid}\nDTSTAMP:${dtStart}\nDTSTART:${dtStart}\nDTEND:${dtEnd}\nSUMMARY:الدرس ${currentLesson.id}: ${currentLesson.title}\nDESCRIPTION:بث مباشر عبر اليوتيوب — ${settings.youtubeChannel}\nURL:${settings.youtubeChannel}\nEND:VEVENT\nEND:VCALENDAR`;
 
       const blob = new Blob([ics], { type: 'text/calendar' });
-      const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url;
-      a.download = `lesson-${currentLesson.id}.ics`;
+      a.href = URL.createObjectURL(blob);
+      a.download = `Arabic-Lesson-${currentLesson.id}.ics`;
+      document.body.appendChild(a);
       a.click();
-      URL.revokeObjectURL(url);
-      showNotification('تم تحميل ملف التقويم!');
-    });
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+    }
 
-    // المشاركة
-    document.getElementById('shareBtn').addEventListener('click', async () => {
-      const currentLesson = lessons.find(l => !l.completed);
-      const text = `📘 درس: ${currentLesson.title}\n⏰ ${formatDate(currentLesson.date)} - 10:30 صباحًا\n🔗 ${window.location.href}`;
-      
-      try {
-        await navigator.clipboard.writeText(text);
-        showNotification('تم نسخ معلومات الدرس!');
-      } catch(e) {
-        showNotification('تعذر النسخ');
+    // تبديل السمة
+    function setupThemeToggle() {
+      const root = document.documentElement;
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        root.setAttribute('data-theme', savedTheme);
+        if (savedTheme === 'high-contrast') {
+          root.classList.add('high-contrast');
+        }
       }
+
+      document.getElementById('themeToggle').addEventListener('click', () => {
+        const current = root.getAttribute('data-theme') || 'dark';
+        let next;
+        if (current === 'dark') next = 'light';
+        else if (current === 'light') next = 'high-contrast';
+        else {
+          next = 'dark';
+          root.classList.remove('high-contrast');
+        }
+
+        if (next === 'high-contrast') {
+          root.classList.add('high-contrast');
+        } else {
+          root.classList.remove('high-contrast');
+        }
+
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    }
+
+    // قائمة التنقل على الجوال
+    function setupMobileNav() {
+      const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+      const desktopNav = document.querySelector('nav.desktop');
+
+      mobileNavToggle.addEventListener('click', () => {
+        const expanded = mobileNavToggle.getAttribute('aria-expanded') === 'true';
+        mobileNavToggle.setAttribute('aria-expanded', String(!expanded));
+        desktopNav.classList.toggle('active');
+        mobileNavToggle.setAttribute('aria-label', expanded ? 'فتح القائمة' : 'إغلاق القائمة');
+      });
+    }
+
+    // نسخ رابط الصفحة
+    function setupCopyButton() {
+      document.getElementById('copyBtn').addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(settings.pageUrl);
+          showNotification('تم نسخ رابط الصفحة!');
+        } catch (e) {
+          showNotification('تعذر النسخ تلقائيًا — يمكنك نسخ الرابط من شريط العنوان.');
+        }
+      });
+    }
+
+    // تهئية الصفحة
+    function initializePage() {
+      loadLessons();
+      updatePageContent();
+      updateStructuredData();
+      updateWhatsAppLink();
+      startCountdown();
+      document.getElementById('year').textContent = new Date().getFullYear();
+      document.getElementById('lastUpdated').textContent =
+        new Date().toLocaleString('ar-EG');
+    }
+
+    // تهئية المستمعين للأحداث
+    function setupEventListeners() {
+      document.getElementById('icsBtn').addEventListener('click', downloadICS);
+      setupThemeToggle();
+      setupMobileNav();
+      setupCopyButton();
+    }
+
+    // بدء التطبيق
+    document.addEventListener('DOMContentLoaded', () => {
+      initializePage();
+      setupEventListeners();
     });
-
-    // تبديل الوضع
-    const themeToggle = document.getElementById('themeToggle');
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-
-    themeToggle.addEventListener('click', () => {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'light' ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-    });
-
-    // التهيئة
-    updateCurrentLesson();
-    updateCompletedLessons();
-    updateUpcomingLessons();
   </script>
 </body>
 </html>
