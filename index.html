@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>دروس مراجعة مع الأستاذ خليل البلوشي — إعلانات الدروس</title>
   <meta name="description" content="تابع درس 'الجملة الفعلية' مع الأستاذ خليل البلوشي. دروس مراجعة في اللغة العربية للصف الخامس: مواعيد البث المباشر، الدروس السابقة، والاشتراك بالقناة." />
   <meta name="keywords" content="اللغة العربية, الصف الخامس, دروس مراجعة, خليل البلوشي, الجملة الاسمية, الجملة الفعلية" />
@@ -507,20 +510,30 @@
         }
       }
 
-      if (countdownInterval) {
-        cancelAnimationFrame(countdownInterval);
-      }
       updateCountdown();
     }
 
     // إكمال الدرس الحالي
     function completeCurrentLesson() {
       const currentLesson = getCurrentLesson();
-      if (currentLesson) {
-        currentLesson.completed = true;
-        saveLessons();
-        showNotification('تم الانتقال تلقائيًا للدرس التالي!', 5000);
-        initializePage();
+      if (!currentLesson) return;
+
+      const lessonTime = new Date(`${currentLesson.date}T${settings.lessonTime}:00${settings.timeZone}`).getTime();
+      const now = Date.now();
+
+      if (now >= lessonTime) {
+        // التحقق من أن الوقت الحالي ليس متقدمًا بشكل غير طبيعي (أكثر من 24 ساعة)
+        const timeDiff = now - lessonTime;
+        const maxAllowedDiff = 24 * 60 * 60 * 1000; // 24 ساعة بالمللي ثانية
+
+        if (timeDiff <= maxAllowedDiff) {
+          currentLesson.completed = true;
+          saveLessons();
+          showNotification('تم الانتقال تلقائيًا للدرس التالي!');
+          initializePage();
+        } else {
+          showNotification('تحذير: وقت جهازك متقدم جدًا! قد يكون غير صحيح.', 10000);
+        }
       }
     }
 
@@ -662,8 +675,25 @@
       setupCopyButton();
     }
 
+    // التحقق من وقت الجهاز
+    function checkDeviceTime() {
+      const now = new Date();
+      const currentHour = now.getHours();
+      const currentMinute = now.getMinutes();
+
+      // الوقت المتوقع للدرس (10:30 صباحًا بتوقيت عمان)
+      const expectedHour = 10;
+      const expectedMinute = 30;
+
+      // إذا كان الوقت الحالي متقدمًا عن الوقت المتوقع بوقت غير طبيعي (أكثر من 12 ساعة)
+      if (currentHour > expectedHour + 12 || (currentHour === expectedHour + 12 && currentMinute >= expectedMinute)) {
+        showNotification('تحذير: وقت جهازك قد يكون غير صحيح! قد يؤثر ذلك على العد التنازلي.', 10000);
+      }
+    }
+
     // بدء التطبيق
     document.addEventListener('DOMContentLoaded', () => {
+      checkDeviceTime();
       initializePage();
       setupEventListeners();
     });
