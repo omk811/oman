@@ -1,687 +1,586 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختبار اللغة العربية - الصف الخامس</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            box-sizing: border-box;
-            font-family: 'Noto Kufi Arabic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-        .header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-        .header h1 {
-            margin: 0;
-            font-size: 2.5rem;
-            font-weight: bold;
-        }
-        .content {
-            padding: 30px;
-        }
-        .student-name-section {
-            background: #e3f2fd;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .student-name-section input {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #bbdefb;
-            border-radius: 8px;
-            font-size: 1rem;
-            text-align: center;
-            font-family: inherit;
-        }
-        .section {
-            margin-bottom: 40px;
-            border: 2px solid #e3f2fd;
-            border-radius: 15px;
-            padding: 25px;
-            background: #fafafa;
-        }
-        .section-title {
-            color: #1976d2;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-            border-bottom: 3px solid #4facfe;
-            padding-bottom: 10px;
-        }
-        .reading-text {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            border-right: 5px solid #4facfe;
-            margin-bottom: 25px;
-            line-height: 1.8;
-            font-size: 1.1rem;
-        }
-        .question {
-            margin-bottom: 20px;
-            padding: 15px;
-            background: white;
-            border-radius: 10px;
-            border: 1px solid #e0e0e0;
-            transition: all 0.3s ease;
-        }
-        .question-text {
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        .grade {
-            display: none;
-        }
-        input[type="text"],
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-            font-family: inherit;
-        }
-        input[type="text"]:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #4facfe;
-            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
-        }
-        .choices {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .choices label {
-            display: flex;
-            align-items: center;
-            padding: 10px 15px;
-            background: #f8f9fa;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 500;
-            position: relative;
-            gap: 10px;
-        }
-        .choices label:hover {
-            background: #e3f2fd;
-            border-color: #4facfe;
-        }
-        .choices input[type="radio"] {
-            margin: 0;
-            accent-color: #4facfe;
-        }
-        .choices label .icon {
-            font-weight: bold;
-            font-size: 1.3em;
-            min-width: 24px;
-            text-align: center;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .choices label.correct {
-            background: #c8e6c9 !important;
-            border-color: #2e7d32 !important;
-        }
-        .choices label.correct .icon {
-            opacity: 1;
-            color: #2e7d32;
-        }
-        .choices label.incorrect {
-            background: #ffcdd2 !important;
-            border-color: #c62828 !important;
-        }
-        .choices label.incorrect .icon {
-            opacity: 1;
-            color: #c62828;
-        }
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-        .poetry-section {
-            background: #fff3e0;
-            border: 2px solid #ff9800;
-        }
-        .poetry-text {
-            background: #fafafa;
-            padding: 20px;
-            border-radius: 10px;
-            border-right: 5px solid #ff9800;
-            margin-bottom: 25px;
-            font-family: 'Noto Kufi Arabic', serif;
-            line-height: 2;
-            font-size: 1.1rem;
-            text-align: right;
-        }
-        .verse {
-            margin-bottom: 10px;
-            padding: 5px 0;
-            text-align: right;
-        }
-        .submit-btn {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 25px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: block;
-            margin: 30px auto;
-        }
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
-        }
-        .retry-btn {
-            background: linear-gradient(135deg, #ff9800 0%, #f44336 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 25px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: none;
-            margin: 10px auto;
-        }
-        .retry-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(244, 67, 54, 0.3);
-        }
-        .result {
-            background: #e8f5e8;
-            border: 2px solid #2e7d32;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-            display: none;
-            text-align: center;
-        }
-        .score {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #2e7d32;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        .score-circle {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #4caf50, #2e7d32);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin: 0 auto 20px;
-            box-shadow: 0 8px 16px rgba(46, 125, 50, 0.3);
-        }
-        .explanation {
-            margin-top: 10px;
-            padding: 10px;
-            background: #e3f2fd;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            color: #0d47a1;
-            display: none;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            font-weight: bold;
-            color: #1976d2;
-        }
-        .whatsapp-link {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #25D366;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .answers-section {
-            margin-top: 30px;
-            padding: 20px;
-            background: #e3f2fd;
-            border-radius: 10px;
-            border: 2px solid #1976d2;
-            display: none;
-        }
-        .answers-section h3 {
-            color: #0d47a1;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        .student-result {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #1976d2;
-            margin-bottom: 10px;
-        }
-        .download-link {
-            display: block;
-            text-align: center;
-            margin: 20px auto;
-            color: #d32f2f;
-            text-decoration: none;
-            font-weight: bold;
-            background: #ffebee;
-            padding: 10px 20px;
-            border-radius: 8px;
-            border: 1px solid #ef9a9a;
-            width: fit-content;
-        }
-        .download-link:hover {
-            background: #ffcdd2;
-        }
-        @media (max-width: 768px) {
-            .choices {
-                grid-template-columns: 1fr;
-            }
-            .header h1 {
-                font-size: 1.8rem;
-            }
-            .content {
-                padding: 15px;
-            }
-            .score-circle {
-                width: 100px;
-                height: 100px;
-                font-size: 2rem;
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>دروس اللغة العربية - الأستاذ خليل البلوشي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --primary: #0ea5e9;
+      --secondary: #22c55e;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --border: #e2e8f0;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #f1f5f9;
+      --text-light: #94a3b8;
+      --border: #334155;
+    }
+    
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background 0.3s, color 0.3s;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* Header */
+    header {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .logo-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary), #60a5fa);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    
+    .logo-text h1 {
+      font-size: 1.3rem;
+      margin-bottom: 2px;
+    }
+    
+    .logo-text p {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+    
+    .theme-toggle {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+    
+    /* Next Lesson Card */
+    .next-lesson {
+      background: linear-gradient(135deg, var(--primary), #0284c7);
+      color: white;
+      padding: 30px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+    
+    .next-lesson .badge {
+      background: rgba(255,255,255,0.2);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      display: inline-block;
+      margin-bottom: 15px;
+    }
+    
+    .next-lesson h2 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+    
+    .next-lesson p {
+      opacity: 0.9;
+      margin-bottom: 20px;
+    }
+    
+    .lesson-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .info-item {
+      background: rgba(255,255,255,0.15);
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    
+    .info-item strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    /* Countdown */
+    .countdown {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    
+    .countdown-item {
+      background: rgba(255,255,255,0.15);
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      min-width: 70px;
+    }
+    
+    .countdown-item .number {
+      font-size: 1.5rem;
+      font-weight: bold;
+      display: block;
+    }
+    
+    .countdown-item .label {
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+    
+    /* Buttons */
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .btn {
+      padding: 12px 20px;
+      border-radius: 8px;
+      border: none;
+      font-family: 'Cairo', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      opacity: 0.9;
+    }
+    
+    .btn-primary {
+      background: white;
+      color: var(--primary);
+    }
+    
+    .btn-secondary {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    
+    /* Section */
+    .section {
+      background: var(--card);
+      padding: 25px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+    
+    .section h3 {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    /* Video Grid */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 15px;
+    }
+    
+    .video-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+    
+    .video-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .video-thumbnail {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+    }
+    
+    .video-info {
+      padding: 12px;
+    }
+    
+    .video-title {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    
+    .video-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    
+    /* Upcoming List */
+    .upcoming-list {
+      list-style: none;
+    }
+    
+    .upcoming-list li {
+      padding: 15px;
+      border-right: 3px solid var(--primary);
+      margin-bottom: 10px;
+      background: var(--bg);
+      border-radius: 0 8px 8px 0;
+    }
+    
+    .upcoming-list li strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    .upcoming-list li span {
+      color: var(--text-light);
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+    
+    /* Notification */
+    .notification {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100px);
+      background: var(--secondary);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+      z-index: 1000;
+    }
+    
+    .notification.show {
+      transform: translateX(-50%) translateY(0);
+    }
+    
+    @media (max-width: 600px) {
+      .next-lesson h2 {
+        font-size: 1.4rem;
+      }
+      
+      .countdown {
+        flex-wrap: wrap;
+      }
+      
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🌟 اختبار اللغة العربية 🌟</h1>
-            <p>للصف الخامس الأساسي – قناة الأستاذ خليل البلوشي</p>
+  <div id="notification" class="notification"></div>
+  
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="logo">
+        <div class="logo-icon">📘</div>
+        <div class="logo-text">
+          <h1>دروس اللغة العربية</h1>
+          <p>الأستاذ خليل البلوشي</p>
         </div>
-        <div class="content">
-            <!-- قسم اسم الطالب -->
-            <div class="student-name-section">
-                <label for="student-name">أدخل اسمك هنا:</label>
-                <input type="text" id="student-name" placeholder="اسم الطالب" required>
-            </div>
+      </div>
+      <button class="theme-toggle" id="themeToggle" title="تبديل الوضع">🌓</button>
+    </header>
 
-            <!-- القسم الأول: النصوص القرائية -->
-            <div class="section">
-                <h2 class="section-title">📖 أولاً: النصوص القرائية</h2>
-                <p><strong>اقرأ الفقرة الآتية ثم أجب عن الأسئلة التي تليها:</strong></p>
-                <div class="reading-text">
-                    <p><strong>1-</strong> في أعماق الغابات المطيرة، حيث تتشابك الأغصان وتتراقص أشعة الشمس بين أوراق الشجر الخضراء، يعيش طائر الياقوت بجماله الأخاذ. يعتبر هذا الطائر من أندر الكائنات الحية على وجه الأرض، ويتميز بريشه اللامع الذي يتلألأ بألوان قوس قزح. يعيش الياقوت حياة منعزلة في أعالي الأشجار، يتغذى على الفواكه الحلوة والرحيق الزاخر.</p>
-                    <p><strong>2-</strong> ولكن، يواجه طائر الياقوت تهديدات كبيرة تهدد وجوده. فقد أدت قطع الأشجار والتوسع العمراني إلى تدمير بيئته الطبيعية، مما قلل من عدد الأشجار التي يتخذها مسكناً. بالإضافة إلى ذلك، يواجه الياقوت خطر الصيد غير المشروع، حيث يبحث الصيادون عن ريشه الجميل لبيعه في السوق السوداء.</p>
-                </div>
-                <div class="question" id="q1a1-container">
-                    <div class="question-text">أ- استخرج من النص: <span class="grade">نصف درجة لكل إجابة</span></div>
-                    <p>1- كلمة مضادها (أوفر وأكثر):</p>
-                    <div class="choices" id="q1a1-choices">
-                        <label><input type="radio" name="q1a1" value="أندر"><span class="icon"></span> أندر</label>
-                        <label><input type="radio" name="q1a1" value="أعماق"><span class="icon"></span> أعماق</label>
-                        <label><input type="radio" name="q1a1" value="أعالي"><span class="icon"></span> أعالي</label>
-                        <label><input type="radio" name="q1a1" value="أخاذ"><span class="icon"></span> أخاذ</label>
-                    </div>
-                    <div class="explanation" id="q1a1-explanation">الإجابة الصحيحة: أندر</div>
-                    <p>2- كلمة تكون جمع تكسير:</p>
-                    <div class="choices" id="q1a2-choices">
-                        <label><input type="radio" name="q1a2" value="الكائنات"><span class="icon"></span> الكائنات</label>
-                        <label><input type="radio" name="q1a2" value="الصيادون"><span class="icon"></span> الصيادون</label>
-                        <label><input type="radio" name="q1a2" value="الأغصان"><span class="icon"></span> الأغصان</label>
-                        <label><input type="radio" name="q1a2" value="ورقات"><span class="icon"></span> ورقات</label>
-                    </div>
-                    <div class="explanation" id="q1a2-explanation">الإجابة الصحيحة: الأغصان</div>
-                </div>
-                <div class="question" id="q1b-container">
-                    <div class="question-text">ب- بماذا يتميز طائر الياقوت كما ورد في الفقرة الأولى؟ <span class="grade">نصف درجة</span></div>
-                    <div class="choices" id="q1b-choices">
-                        <label><input type="radio" name="q1b" value="ريشه اللامع الملون"><span class="icon"></span> ريشه اللامع الملون</label>
-                        <label><input type="radio" name="q1b" value="صوته العذب"><span class="icon"></span> صوته العذب</label>
-                        <label><input type="radio" name="q1b" value="سرعته في الطيران"><span class="icon"></span> سرعته في الطيران</label>
-                        <label><input type="radio" name="q1b" value="حجمه الكبير"><span class="icon"></span> حجمه الكبير</label>
-                    </div>
-                    <div class="explanation" id="q1b-explanation">الإجابة الصحيحة: ريشه اللامع الملون</div>
-                </div>
-                <div class="question" id="q1c-container">
-                    <div class="question-text">ت- ما التهديدات التي تواجه طائر الياقوت وتعرضه للانقراض – الفقرة الثانية؟ <span class="grade">درجة</span></div>
-                    <div class="choices" id="q1c-choices">
-                        <label><input type="radio" name="q1c" value="قطع الأشجار والصيد غير المشروع"><span class="icon"></span> قطع الأشجار والصيد غير المشروع</label>
-                        <label><input type="radio" name="q1c" value="التلوث البيئي فقط"><span class="icon"></span> التلوث البيئي فقط</label>
-                        <label><input type="radio" name="q1c" value="نقص الغذاء فقط"><span class="icon"></span> نقص الغذاء فقط</label>
-                        <label><input type="radio" name="q1c" value="الأمراض المعدية"><span class="icon"></span> الأمراض المعدية</label>
-                    </div>
-                    <div class="explanation" id="q1c-explanation">الإجابة الصحيحة: قطع الأشجار والصيد غير المشروع</div>
-                </div>
-                <div class="question" id="q1d-container">
-                    <div class="question-text">ث- ما الفكرة الجزئية التي تحدثت عنها الفقرة الثانية؟ <span class="grade">درجتان</span></div>
-                    <div class="choices" id="q1d-choices">
-                        <label><input type="radio" name="q1d" value="التهديدات التي تواجه طائر الياقوت"><span class="icon"></span> التهديدات التي تواجه طائر الياقوت</label>
-                        <label><input type="radio" name="q1d" value="جمال طائر الياقوت"><span class="icon"></span> جمال طائر الياقوت</label>
-                        <label><input type="radio" name="q1d" value="غذاء طائر الياقوت"><span class="icon"></span> غذاء طائر الياقوت</label>
-                        <label><input type="radio" name="q1d" value="موطن طائر الياقوت"><span class="icon"></span> موطن طائر الياقوت</label>
-                    </div>
-                    <div class="explanation" id="q1d-explanation">الإجابة الصحيحة: التهديدات التي تواجه طائر الياقوت</div>
-                </div>
-                <div class="question" id="q1e-container">
-                    <div class="question-text">ج- كيف يمكن الحفاظ على طائر الياقوت وحماية بيئته؟ <span class="grade">درجتان</span></div>
-                    <div class="choices" id="q1e-choices">
-                        <label><input type="radio" name="q1e" value="حماية الغابات ومنع الصيد"><span class="icon"></span> حماية الغابات ومنع الصيد</label>
-                        <label><input type="radio" name="q1e" value="نقله إلى حدائق الحيوان"><span class="icon"></span> نقله إلى حدائق الحيوان</label>
-                        <label><input type="radio" name="q1e" value="تربيته في المنازل"><span class="icon"></span> تربيته في المنازل</label>
-                        <label><input type="radio" name="q1e" value="تغيير نوع غذائه"><span class="icon"></span> تغيير نوع غذائه</label>
-                    </div>
-                    <div class="explanation" id="q1e-explanation">الإجابة الصحيحة: حماية الغابات ومنع الصيد</div>
-                </div>
-            </div>
-            <!-- القسم الثاني: النصوص الأدبية -->
-            <div class="section poetry-section">
-                <h2 class="section-title">🎭 ثانياً: النصوص الأدبية</h2>
-                <p><strong>اقرأ الأبيات ثم أجب عن الأسئلة التي تليها:</strong></p>
-                <div class="poetry-text">
-                    <div class="verse">١- فــأرادت الحــمـقـاء تعـرف<span style="display:inline-block;width:30px;"></span>من رسائلـــه مــرامـــه</div>
-                    <div class="verse">٢- عَمَـدَت لأولــهـا وكـــان<span style="display:inline-block;width:30px;"></span>إلـــى خــلـيفـتـه بـِرامـــه</div>
-                    <div class="verse">٣- فرأتــــه يأمـــر فــيـه<span style="display:inline-block;width:30px;"></span>عـامـلـه بتـــاج للحــمـامـــه</div>
-                    <div class="verse">٤- ويقول : وفُّوها الرِّعايـة<span style="display:inline-block;width:30px;"></span>في الرحيل وفي الإقامه</div>
-                    <div class="verse">٥- وأشرت في الثاني بأن<span style="display:inline-block;width:30px;"></span>تُعطَى رياضاً في تهامـه</div>
-                    <div class="verse">٦- وأتَت لثالثها ولـــم تسـتـــح<span style="display:inline-block;width:30px;"></span>أن فَضَّـــت خِـتامـــه</div>
-                    <div class="verse">٧- فرأتــه يأمر أن تكـون لهـا<span style="display:inline-block;width:30px;"></span>علـى الطير الزعامـه</div>
-                </div>
-                <div class="question" id="q2a-container">
-                    <div class="question-text">أ- ما مفرد كلمة (رسائل): <span class="grade">نصف درجة</span></div>
-                    <div class="choices" id="q2a-choices">
-                        <label><input type="radio" name="q2a" value="رسالة"><span class="icon"></span> رسالة</label>
-                        <label><input type="radio" name="q2a" value="مرسال"><span class="icon"></span> مرسال</label>
-                        <label><input type="radio" name="q2a" value="رسول"><span class="icon"></span> رسول</label>
-                        <label><input type="radio" name="q2a" value="إرسال"><span class="icon"></span> إرسال</label>
-                    </div>
-                    <div class="explanation" id="q2a-explanation">الإجابة الصحيحة: رسالة</div>
-                </div>
-                <div class="question" id="q2b-container">
-                    <div class="question-text">ب- ما مرادف (الرعاية): <span class="grade">نصف درجة</span></div>
-                    <div class="choices" id="q2b-choices">
-                        <label><input type="radio" name="q2b" value="الاهتمام"><span class="icon"></span> الاهتمام</label>
-                        <label><input type="radio" name="q2b" value="الإهمال"><span class="icon"></span> الإهمال</label>
-                        <label><input type="radio" name="q2b" value="الرفض"><span class="icon"></span> الرفض</label>
-                        <label><input type="radio" name="q2b" value="التجاهل"><span class="icon"></span> التجاهل</label>
-                    </div>
-                    <div class="explanation" id="q2b-explanation">الإجابة الصحيحة: الاهتمام</div>
-                </div>
-                <div class="question" id="q2c-container">
-                    <div class="question-text">ت- ورد في البيت الرابع موطن جمالي. اذكره؟ <span class="grade">درجة</span></div>
-                    <div class="choices" id="q2c-choices">
-                        <label><input type="radio" name="q2c" value="تضاد بين الرحيل والإقامة"><span class="icon"></span> تضاد بين الرحيل والإقامة</label>
-                        <label><input type="radio" name="q2c" value="الاستعارة في كلمة الرعاية"><span class="icon"></span> الاستعارة في كلمة الرعاية</label>
-                        <label><input type="radio" name="q2c" value="الجناس بين الكلمات"><span class="icon"></span> الجناس بين الكلمات</label>
-                        <label><input type="radio" name="q2c" value="التشبيه في البيت"><span class="icon"></span> التشبيه في البيت</label>
-                    </div>
-                    <div class="explanation" id="q2c-explanation">الإجابة الصحيحة: تضاد بين الرحيل والإقامة</div>
-                </div>
-                <div class="question" id="q2d-container">
-                    <div class="question-text">ث- ما الجوائز التي خبأها سليمان عليه السلام في رسائله. اذكر اثنتين؟ <span class="grade">درجتان</span></div>
-                    <div class="choices" id="q2d-choices">
-                        <label><input type="radio" name="q2d" value="تاج للحمامة ورياض في تهامة"><span class="icon"></span> تاج للحمامة ورياض في تهامة</label>
-                        <label><input type="radio" name="q2d" value="ذهب وفضة"><span class="icon"></span> ذهب وفضة</label>
-                        <label><input type="radio" name="q2d" value="طعام وشراب"><span class="icon"></span> طعام وشراب</label>
-                        <label><input type="radio" name="q2d" value="قصر وخدم"><span class="icon"></span> قصر وخدم</label>
-                    </div>
-                    <div class="explanation" id="q2d-explanation">الإجابة الصحيحة: تاج للحمامة ورياض في تهامة</div>
-                </div>
-                <div class="question" id="q2e-container">
-                    <div class="question-text">ج- ما نصيحتك للشخص الذي يخون الأمانة ولا يحافظ عليها؟ <span class="grade">درجتان</span></div>
-                    <div class="choices" id="q2e-choices">
-                        <label><input type="radio" name="q2e" value="أن يتقي الله ويحافظ على الأمانة"><span class="icon"></span> أن يتقي الله ويحافظ على الأمانة</label>
-                        <label><input type="radio" name="q2e" value="أن يتجاهل الأمر"><span class="icon"></span> أن يتجاهل الأمر</label>
-                        <label><input type="radio" name="q2e" value="أن يخفي الأمانة"><span class="icon"></span> أن يخفي الأمانة</label>
-                        <label><input type="radio" name="q2e" value="أن يبيع الأمانة"><span class="icon"></span> أن يبيع الأمانة</label>
-                    </div>
-                    <div class="explanation" id="q2e-explanation">الإجابة الصحيحة: أن يتقي الله ويحافظ على الأمانة</div>
-                </div>
-            </div>
-            <!-- القسم الثالث: النحو والصرف -->
-            <div class="section">
-                <h2 class="section-title">📚 ثالثاً: النحو والصرف</h2>
-                <p><strong>اقرأ الفقرة الآتية ثم أجب عن الأسئلة التي تليها:</strong></p>
-                <div class="reading-text">
-                    <p>الحديقةُ واسعةٌ، يلعب الأطفال فيها بفرحٍ وسعادةٍ، والأزهارُ متفتحةٌ، ويقومُ الأطفالُ بجمعِ الأزهار الملونة، والأم مستريحةٌ على مقعدٍ خشبيٍ، وتقرأ كتابًا شيقًا. الطيورُ محلقةٌ في السماء، وتغرد بألحانٍ جميلةٍ. والشمسُ تشرق في سعادة؛ لتضيء الكون بنورها الدافئ.</p>
-                </div>
-                <div class="question" id="q3a1-container">
-                    <div class="question-text">استخرج من الفقرة: <span class="grade">نصف درجة لكل إجابة</span></div>
-                    <p>1- مبتدأ مرفوع:</p>
-                    <div class="choices" id="q3a1-choices">
-                        <label><input type="radio" name="q3a1" value="الحديقةُ"><span class="icon"></span> الحديقةُ</label>
-                        <label><input type="radio" name="q3a1" value="يلعب"><span class="icon"></span> يلعب</label>
-                        <label><input type="radio" name="q3a1" value="واسعة"><span class="icon"></span> واسعة</label>
-                        <label><input type="radio" name="q3a1" value="فيها"><span class="icon"></span> فيها</label>
-                    </div>
-                    <div class="explanation" id="q3a1-explanation">الإجابة الصحيحة: الحديقةُ</div>
-                    <p>2- فعل معرب:</p>
-                    <div class="choices" id="q3a2-choices">
-                        <label><input type="radio" name="q3a2" value="يلعب"><span class="icon"></span> يلعب</label>
-                        <label><input type="radio" name="q3a2" value="الحديقة"><span class="icon"></span> الحديقة</label>
-                        <label><input type="radio" name="q3a2" value="واسعة"><span class="icon"></span> واسعة</label>
-                        <label><input type="radio" name="q3a2" value="فيها"><span class="icon"></span> فيها</label>
-                    </div>
-                    <div class="explanation" id="q3a2-explanation">الإجابة الصحيحة: يلعب</div>
-                </div>
-                <div class="question" id="q3b-container">
-                    <div class="question-text">أ- الحركات التي تكون في آخر الكلمة المعربة تسمى: <span class="grade">نصف درجة</span></div>
-                    <div class="choices" id="q3b-choices">
-                        <label><input type="radio" name="q3b" value="علامات الإعراب"><span class="icon"></span> علامات الإعراب</label>
-                        <label><input type="radio" name="q3b" value="الاسم والفعل والحرف"><span class="icon"></span> الاسم والفعل والحرف</label>
-                        <label><input type="radio" name="q3b" value="علامات البناء"><span class="icon"></span> علامات البناء</label>
-                        <label><input type="radio" name="q3b" value="أقسام الكلام"><span class="icon"></span> أقسام الكلام</label>
-                    </div>
-                    <div class="explanation" id="q3b-explanation">الإجابة الصحيحة: علامات الإعراب</div>
-                </div>
-                <div class="question" id="q3c-container">
-                    <div class="question-text">ب- المبتدأ والخبر اسمان ................. دائماً: <span class="grade">نصف درجة</span></div>
-                    <div class="choices" id="q3c-choices">
-                        <label><input type="radio" name="q3c" value="مرفوعان"><span class="icon"></span> مرفوعان</label>
-                        <label><input type="radio" name="q3c" value="منصوبان"><span class="icon"></span> منصوبان</label>
-                        <label><input type="radio" name="q3c" value="مجروران"><span class="icon"></span> مجروران</label>
-                        <label><input type="radio" name="q3c" value="مبنيان"><span class="icon"></span> مبنيان</label>
-                    </div>
-                    <div class="explanation" id="q3c-explanation">الإجابة الصحيحة: مرفوعان</div>
-                </div>
-                <div class="question" id="q3d-container">
-                    <div class="question-text">ت- أعرب كلمة (واسعةٌ) في الجملة (الحديقةُ واسعةٌ): <span class="grade">درجة</span></div>
-                    <div class="choices" id="q3d-choices">
-                        <label><input type="radio" name="q3d" value="خبر مرفوع وعلامة رفعه الضمة"><span class="icon"></span> خبر مرفوع وعلامة رفعه الضمة</label>
-                        <label><input type="radio" name="q3d" value="مبتدأ مرفوع وعلامة رفعه الضمة"><span class="icon"></span> مبتدأ مرفوع وعلامة رفعه الضمة</label>
-                        <label><input type="radio" name="q3d" value="فاعل مرفوع وعلامة رفعه الضمة"><span class="icon"></span> فاعل مرفوع وعلامة رفعه الضمة</label>
-                        <label><input type="radio" name="q3d" value="مفعول به منصوب"><span class="icon"></span> مفعول به منصوب</label>
-                    </div>
-                    <div class="explanation" id="q3d-explanation">الإجابة الصحيحة: خبر مرفوع وعلامة رفعه الضمة</div>
-                </div>
-                <div class="question" id="q3e-container">
-                    <div class="question-text">ث- اجعل كلمة (الكتابُ) مبتدأ في جملة اسمية مع الضبط الصحيح: <span class="grade">درجة</span></div>
-                    <div class="choices" id="q3e-choices">
-                        <label><input type="radio" name="q3e" value="الكتابُ مفيدٌ"><span class="icon"></span> الكتابُ مفيدٌ</label>
-                        <label><input type="radio" name="q3e" value="الكتابَ مفيدٌ"><span class="icon"></span> الكتابَ مفيدٌ</label>
-                        <label><input type="radio" name="q3e" value="الكتابِ جميلٌ"><span class="icon"></span> الكتابِ جميلٌ</label>
-                        <label><input type="radio" name="q3e" value="الكتابْ نافعٌ"><span class="icon"></span> الكتابْ نافعٌ</label>
-                    </div>
-                    <div class="explanation" id="q3e-explanation">الإجابة الصحيحة: الكتابُ مفيدٌ</div>
-                </div>
-            </div>
-            <button class="submit-btn" onclick="submitTest()">إرسال الإجابات</button>
-            <button class="retry-btn" id="retry-btn" onclick="retryTest()">إعادة الاختبار</button>
-            <div class="result" id="result">
-                <div class="student-result" id="student-result"></div>
-                <div class="score-circle" id="score-circle"></div>
-                <div class="score" id="score"></div>
-            </div>
-            <div class="answers-section" id="answers-section">
-                <h3>نموذج الإجابة الصحيح</h3>
-                <div class="section">
-                    <h4>📖 أولاً: النصوص القرائية</h4>
-                    <p><strong>1-</strong> أندر</p>
-                    <p><strong>2-</strong> الأغصان</p>
-                    <p><strong>3-</strong> ريشه اللامع الملون</p>
-                    <p><strong>4-</strong> قطع الأشجار والصيد غير المشروع</p>
-                    <p><strong>5-</strong> التهديدات التي تواجه طائر الياقوت</p>
-                    <p><strong>6-</strong> حماية الغابات ومنع الصيد</p>
-                </div>
-                <div class="section">
-                    <h4>🎭 ثانياً: النصوص الأدبية</h4>
-                    <p><strong>1-</strong> رسالة</p>
-                    <p><strong>2-</strong> الاهتمام</p>
-                    <p><strong>3-</strong> تضاد بين الرحيل والإقامة</p>
-                    <p><strong>4-</strong> تاج للحمامة ورياض في تهامة</p>
-                    <p><strong>5-</strong> أن يتقي الله ويحافظ على الأمانة</p>
-                </div>
-                <div class="section">
-                    <h4>📚 ثالثاً: النحو والصرف</h4>
-                    <p><strong>1-</strong> الحديقةُ</p>
-                    <p><strong>2-</strong> يلعب</p>
-                    <p><strong>3-</strong> علامات الإعراب</p>
-                    <p><strong>4-</strong> مرفوعان</p>
-                    <p><strong>5-</strong> خبر مرفوع وعلامة رفعه الضمة</p>
-                    <p><strong>6-</strong> الكتابُ مفيدٌ</p>
-                </div>
-            </div>
-            <a href="https://drive.google.com/file/d/1sz3RT1GH0_d4TCDT2Qfa0j7l8FfKn6T8/view?usp=drive_link" class="download-link" target="_blank">
-                📥 تحميل الاختبار الإلكتروني بصيغة PDF
-            </a>
-            <a href="https://whatsapp.com/channel/0029VamotBKCxoAy3fzUcv3T" class="whatsapp-link" target="_blank">
-                انضم إلى قناة الواتساب الخاصة بنا 📲
-            </a>
+    <!-- Next Lesson -->
+    <div class="next-lesson">
+      <span class="badge">الدرس القادم</span>
+      <h2 id="lessonTitle">يتم التحميل...</h2>
+      <p id="lessonDesc">يتم تحميل وصف الدرس...</p>
+      
+      <div class="lesson-info">
+        <div class="info-item">
+          <strong>📅 التاريخ</strong>
+          <span id="lessonDate">يتم التحميل...</span>
         </div>
-        <div class="footer">
-            إعداد: الأستاذ خليل البلوشي – قناة تعليمية للصف الخامس الأساسي
+        <div class="info-item">
+          <strong>⏰ الوقت</strong>
+          <span>10:30 صباحًا</span>
         </div>
+        <div class="info-item">
+          <strong>🌐 المنصة</strong>
+          <span>يوتيوب</span>
+        </div>
+      </div>
+
+      <div class="countdown">
+        <div class="countdown-item">
+          <span class="number" id="days">--</span>
+          <span class="label">يوم</span>
+        </div>
+        <div class="countdown-item">
+          <span class="number" id="hours">--</span>
+          <span class="label">ساعة</span>
+        </div>
+        <div class="countdown-item">
+          <span class="number" id="minutes">--</span>
+          <span class="label">دقيقة</span>
+        </div>
+        <div class="countdown-item">
+          <span class="number" id="seconds">--</span>
+          <span class="label">ثانية</span>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <a class="btn btn-primary" href="https://www.youtube.com/@teacherKhalil811" target="_blank">📺 انتقل للقناة</a>
+        <button class="btn btn-secondary" id="addCalendar">🗓️ أضف للتقويم</button>
+        <button class="btn btn-secondary" id="shareBtn">📤 مشاركة</button>
+      </div>
     </div>
-    <script>
-        const correctAnswers = {
-            q1a1: "أندر",
-            q1a2: "الأغصان",
-            q1b: "ريشه اللامع الملون",
-            q1c: "قطع الأشجار والصيد غير المشروع",
-            q1d: "التهديدات التي تواجه طائر الياقوت",
-            q1e: "حماية الغابات ومنع الصيد",
-            q2a: "رسالة",
-            q2b: "الاهتمام",
-            q2c: "تضاد بين الرحيل والإقامة",
-            q2d: "تاج للحمامة ورياض في تهامة",
-            q2e: "أن يتقي الله ويحافظ على الأمانة",
-            q3a1: "الحديقةُ",
-            q3a2: "يلعب",
-            q3b: "علامات الإعراب",
-            q3c: "مرفوعان",
-            q3d: "خبر مرفوع وعلامة رفعه الضمة",
-            q3e: "الكتابُ مفيدٌ"
-        };
-        const questionScores = {
-            q1a1: 0.5, q1a2: 0.5, q1b: 1, q1c: 1, q1d: 2, q1e: 2,
-            q2a: 0.5, q2b: 0.5, q2c: 1, q2d: 1, q2e: 1,
-            q3a1: 0.5, q3a2: 0.5, q3b: 0.5, q3c: 0.5, q3d: 1, q3e: 1
-        };
-        window.onload = function () {
-            const containers = [
-                "q1a1-choices", "q1a2-choices", "q1b-choices", "q1c-choices", "q1d-choices", "q1e-choices",
-                "q2a-choices", "q2b-choices", "q2c-choices", "q2d-choices", "q2e-choices",
-                "q3a1-choices", "q3a2-choices", "q3b-choices", "q3c-choices", "q3d-choices", "q3e-choices"
-            ];
-            containers.forEach(id => shuffleChoices(id));
-        };
-        function shuffleChoices(containerId) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            const choices = Array.from(container.querySelectorAll('label'));
-            for (let i = choices.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [choices[i], choices[j]] = [choices[j], choices[i]];
-            }
-            choices.forEach(choice => container.appendChild(choice));
+
+    <!-- Completed Lessons -->
+    <div class="section">
+      <h3>✅ الدروس المنجزة</h3>
+      <div class="video-grid" id="completedVideos"></div>
+    </div>
+
+    <!-- Upcoming Lessons -->
+    <div class="section">
+      <h3>📚 الدروس القادمة</h3>
+      <ul class="upcoming-list" id="upcomingList"></ul>
+      <div class="buttons" style="margin-top: 20px;">
+        <a class="btn btn-primary" href="https://www.youtube.com/@teacherKhalil811?sub_confirmation=1" target="_blank">🔔 اشترك في القناة</a>
+        <a class="btn btn-secondary" href="https://whatsapp.com/channel/0029VamotBKCxoAy3fzUcv3T" target="_blank">📱 قناة واتساب</a>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2025 الأستاذ خليل البلوشي — دروس اللغة العربية للصف الخامس</p>
+    </footer>
+  </div>
+
+  <script>
+    // البيانات
+    const lessons = [
+      { id: 1, title: "الإعراب والبناء", completed: true, date: "2025-09-13", videoId: "RxTRJ7q659w" },
+      { id: 2, title: "همزتا الوصل والقطع", completed: true, date: "2025-09-20", videoId: "LaAF8QKoGIQ" },
+      { id: 3, title: "الجملة الاسمية", completed: true, date: "2025-09-27", videoId: "fzr_J3GIfKg" },
+      { id: 4, title: "الجملة الفعلية", completed: false, date: "2025-10-11", videoId: "QJ62TF47Ukk" },
+      { id: 5, title: "إثبات همزة ابن وحذفها", completed: false, date: "2025-10-18" },
+      { id: 6, title: "حروف الجر وشبه الجملة", completed: false, date: "2025-10-25" },
+      { id: 7, title: "الفاصلة", completed: false, date: "2025-11-01" }
+    ];
+
+    // إظهار الإشعار
+    function showNotification(message) {
+      const notification = document.getElementById('notification');
+      notification.textContent = message;
+      notification.classList.add('show');
+      setTimeout(() => notification.classList.remove('show'), 3000);
+    }
+
+    // تنسيق التاريخ
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('ar-EG', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+    }
+
+    // تحديث الدرس الحالي
+    function updateCurrentLesson() {
+      const currentLesson = lessons.find(l => !l.completed);
+      if (!currentLesson) return;
+
+      document.getElementById('lessonTitle').textContent = `الدرس ${currentLesson.id}: ${currentLesson.title}`;
+      document.getElementById('lessonDesc').textContent = `مراجعة شاملة لموضوع ${currentLesson.title} مع أمثلة تطبيقية`;
+      document.getElementById('lessonDate').textContent = formatDate(currentLesson.date);
+
+      // بدء العد التنازلي
+      startCountdown(currentLesson.date);
+    }
+
+    // العد التنازلي
+    function startCountdown(dateStr) {
+      const targetDate = new Date(`${dateStr}T10:30:00+04:00`).getTime();
+
+      function update() {
+        const now = new Date().getTime();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+          document.getElementById('days').textContent = '0';
+          document.getElementById('hours').textContent = '00';
+          document.getElementById('minutes').textContent = '00';
+          document.getElementById('seconds').textContent = '00';
+          return;
         }
-        function submitTest() {
-            const studentName = document.getElementById('student-name').value;
-            if (!studentName) {
-                alert('يرجى إدخال اسم الطالب!');
-                return;
-            }
-            const answers = {};
-            for (let key in correctAnswers) {
-                const selected = document.querySelector(`input[name="${key}"]:checked`);
-                answers[key] = selected ? selected.value : '';
-            }
-            let totalScore = 0;
-            let totalPossible = 0;
-            for (let key in questionScores) {
-                totalPossible += questionScores[key];
-                if (answers[key] === correctAnswers[key]) {
-                    totalScore += questionScores[key];
-                }
-            }
-            for (let key in correctAnswers) {
-                const inputs = document.querySelectorAll(`input[name="${key}"]`);
-                if (!inputs.length) continue;
-                inputs.forEach(input => {
-                    const label = input.closest('label');
-                    if (!label) return;
-                    label.classList.remove('correct', 'incorrect');
-                    const icon = label.querySelector('.icon');
-                    if (icon) icon.textContent = '';
-                    if (input.value === correctAnswers[key]) {
-                        label.classList.add('correct');
-                        if (icon) icon.textContent = '✅';
-                    } else if (input.checked) {
-                        label.classList.add('incorrect');
-                        if (icon) icon.textContent = '❌';
-                    }
-                });
-            }
-            document.getElementById('student-result').textContent = `نتائج الطالب: ${studentName}`;
-            document.getElementById('score').textContent = `درجتك: ${totalScore.toFixed(1)} من ${totalPossible}`;
-            document.getElementById('score-circle').textContent = totalScore.toFixed(1);
-            document.getElementById('result').style.display = 'block';
-            document.querySelector('.submit-btn').style.display = 'none';
-            document.getElementById('retry-btn').style.display = 'block';
-            document.getElementById('answers-section').style.display = 'block';
-            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
-        }
-        function retryTest() {
-            document.querySelectorAll('.correct, .incorrect').forEach(el => {
-                el.classList.remove('correct', 'incorrect');
-            });
-            document.querySelectorAll('.icon').forEach(i => i.textContent = '');
-            document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
-            document.getElementById('result').style.display = 'none';
-            document.getElementById('answers-section').style.display = 'none';
-            document.querySelector('.submit-btn').style.display = 'block';
-            document.getElementById('retry-btn').style.display = 'none';
-        }
-    </script>
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById('days').textContent = days;
+        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+      }
+
+      update();
+      setInterval(update, 1000);
+    }
+
+    // تحديث الدروس المنجزة
+    function updateCompletedLessons() {
+      const container = document.getElementById('completedVideos');
+      const completed = lessons.filter(l => l.completed);
+
+      container.innerHTML = completed.map(lesson => `
+        <div class="video-card">
+          <a href="https://www.youtube.com/watch?v=${lesson.videoId}" target="_blank">
+            <img class="video-thumbnail" src="https://img.youtube.com/vi/${lesson.videoId}/hqdefault.jpg" alt="${lesson.title}">
+          </a>
+          <div class="video-info">
+            <div class="video-title">${lesson.id}. ${lesson.title}</div>
+            <a class="video-link" href="https://www.youtube.com/watch?v=${lesson.videoId}" target="_blank">شاهد الدرس ←</a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // تحديث الدروس القادمة
+    function updateUpcomingLessons() {
+      const container = document.getElementById('upcomingList');
+      const upcoming = lessons.filter(l => !l.completed);
+
+      container.innerHTML = upcoming.map(lesson => `
+        <li>
+          <strong>${lesson.id}. ${lesson.title}</strong>
+          <span>${lesson.date ? formatDate(lesson.date) : 'قريبًا'}</span>
+        </li>
+      `).join('');
+    }
+
+    // إضافة للتقويم
+    document.getElementById('addCalendar').addEventListener('click', () => {
+      const currentLesson = lessons.find(l => !l.completed);
+      if (!currentLesson) return;
+
+      const startDate = new Date(`${currentLesson.date}T10:30:00+04:00`);
+      const endDate = new Date(startDate.getTime() + 90 * 60000);
+
+      const formatICSDate = (date) => {
+        return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+      };
+
+      const ics = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Arabic Lessons//AR
+BEGIN:VEVENT
+UID:${Date.now()}@example.com
+DTSTAMP:${formatICSDate(new Date())}
+DTSTART:${formatICSDate(startDate)}
+DTEND:${formatICSDate(endDate)}
+SUMMARY:${currentLesson.title}
+DESCRIPTION:درس مباشر على اليوتيوب
+URL:https://www.youtube.com/@teacherKhalil811
+END:VEVENT
+END:VCALENDAR`;
+
+      const blob = new Blob([ics], { type: 'text/calendar' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `lesson-${currentLesson.id}.ics`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showNotification('تم تحميل ملف التقويم!');
+    });
+
+    // المشاركة
+    document.getElementById('shareBtn').addEventListener('click', async () => {
+      const currentLesson = lessons.find(l => !l.completed);
+      const text = `📘 درس: ${currentLesson.title}\n⏰ ${formatDate(currentLesson.date)} - 10:30 صباحًا\n🔗 ${window.location.href}`;
+      
+      try {
+        await navigator.clipboard.writeText(text);
+        showNotification('تم نسخ معلومات الدرس!');
+      } catch(e) {
+        showNotification('تعذر النسخ');
+      }
+    });
+
+    // تبديل الوضع
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    // التهيئة
+    updateCurrentLesson();
+    updateCompletedLessons();
+    updateUpcomingLessons();
+  </script>
 </body>
 </html>
