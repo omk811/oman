@@ -2,124 +2,336 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>شكرًا وتقديرًا | الأستاذ خليل البلوشي</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- خط أنيق -->
+  <title>شكرًا وتقديرًا | الأستاذ خليل البلوشي</title>
+  
+  <!-- خط Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+  
   <style>
-    body {
+    /* متغيرات CSS للسهولة في الصيانة */
+    :root {
+      --bg-primary: radial-gradient(circle at top, #111 0%, #000 60%);
+      --card-bg: linear-gradient(180deg, #0b0b0b 0%, #000 100%);
+      --gold: #f5d97a;
+      --gold-dark: #bfa14a;
+      --text-primary: #fff;
+      --text-secondary: #eaeaea;
+      --text-muted: #aaa;
+      --border-gold: rgba(212, 175, 55, 0.25);
+      --shadow-main: 0 25px 60px rgba(0,0,0,0.6);
+      --shadow-popup: 0 18px 60px rgba(0,0,0,0.45);
+      --radius-main: 22px;
+      --radius-popup: 18px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --spacing-xs: 10px;
+      --spacing-sm: 14px;
+      --spacing-md: 25px;
+      --spacing-lg: 35px;
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
-      font-family: 'Cairo', sans-serif;
-      background: radial-gradient(circle at top, #111 0%, #000 60%);
-      color: #fff;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
+      padding: var(--spacing-md);
+      line-height: 1.7;
     }
 
+    /* البطاقة الرئيسية */
     .card {
       max-width: 800px;
-      width: 92%;
-      background: linear-gradient(180deg, #0b0b0b, #000);
-      border-radius: 22px;
-      padding: 45px 35px;
+      width: 100%;
+      background: var(--card-bg);
+      border-radius: var(--radius-main);
+      padding: clamp(35px, 6vw, 45px) clamp(25px, 5vw, 35px);
       text-align: center;
-      box-shadow: 0 25px 60px rgba(0,0,0,.6);
-      border: 1px solid rgba(212,175,55,0.25);
+      box-shadow: var(--shadow-main);
+      border: 1px solid var(--border-gold);
+      position: relative;
+      z-index: 1;
     }
 
     .gold-line {
       width: 90px;
       height: 3px;
-      background: linear-gradient(90deg, #bfa14a, #f5d97a, #bfa14a);
-      margin: 0 auto 25px;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
+      margin: 0 auto var(--spacing-md);
       border-radius: 2px;
     }
 
     h1 {
-      font-size: 30px;
-      margin-bottom: 10px;
-      color: #f5d97a;
+      font-size: clamp(24px, 4vw, 30px);
+      margin-bottom: var(--spacing-xs);
+      color: var(--gold);
       letter-spacing: 1px;
+      font-weight: 700;
     }
 
     .subtitle {
-      font-size: 16px;
+      font-size: clamp(14px, 2.5vw, 16px);
       color: #ccc;
-      margin-bottom: 35px;
-      line-height: 1.9;
+      margin-bottom: clamp(25px, 5vw, 35px);
     }
 
     .message {
-      font-size: 17px;
-      line-height: 2;
-      color: #eaeaea;
-      margin-bottom: 40px;
+      font-size: clamp(15px, 2.8vw, 17px);
+      color: var(--text-secondary);
+      margin-bottom: clamp(30px, 6vw, 40px);
     }
 
     .message span {
-      color: #f5d97a;
+      color: var(--gold);
       font-weight: 600;
     }
 
     .section-title {
-      margin: 35px 0 15px;
-      font-size: 18px;
-      color: #f5d97a;
-      letter-spacing: .5px;
+      margin: var(--spacing-lg) 0 var(--spacing-sm);
+      font-size: clamp(16px, 3vw, 18px);
+      color: var(--gold);
+      letter-spacing: 0.5px;
+      font-weight: 600;
     }
 
     .links {
       display: grid;
-      gap: 14px;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-lg);
     }
 
     .links a {
+      display: block;
       text-decoration: none;
-      padding: 14px 18px;
+      padding: var(--spacing-sm);
       border-radius: 14px;
       background: rgba(255,255,255,0.04);
-      color: #fff;
-      border: 1px solid rgba(212,175,55,0.3);
-      transition: all .3s ease;
-      font-size: 15px;
+      color: var(--text-primary);
+      border: 1px solid var(--border-gold);
+      transition: var(--transition);
+      font-size: clamp(14px, 2.5vw, 15px);
+      line-height: 1.5;
     }
 
     .links a:hover {
       background: rgba(212,175,55,0.12);
       transform: translateY(-2px);
-    }
-
-    .email {
-      margin-top: 30px;
-      font-size: 15px;
-      color: #ddd;
-    }
-
-    .email strong {
-      color: #f5d97a;
+      box-shadow: 0 10px 25px rgba(212,175,55,0.15);
     }
 
     .footer {
-      margin-top: 35px;
+      margin-top: var(--spacing-lg);
       font-size: 13px;
-      color: #aaa;
+      color: var(--text-muted);
+      font-weight: 400;
     }
 
+    /* ✅ الـ Popup المحسّن */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-sm);
+      z-index: 9999;
+      backdrop-filter: blur(8px);
+    }
+
+    .popup-overlay.show {
+      display: flex;
+    }
+
+    .popup-overlay.show .popup-card {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .popup-card {
+      width: min(90vw, 560px);
+      max-width: 100%;
+      background: var(--card-bg);
+      border-radius: var(--radius-popup);
+      box-shadow: var(--shadow-popup);
+      border: 1px solid var(--border-gold);
+      overflow: hidden;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .popup-header {
+      padding: 18px 20px 12px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .popup-title {
+      font-size: clamp(16px, 3vw, 18px);
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      line-height: 1.4;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(212,175,55,0.15);
+      color: var(--gold);
+      border: 1px solid rgba(212,175,55,0.3);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: #ccc;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 12px;
+      line-height: 1;
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+
+    .close-btn:hover {
+      background: rgba(255,255,255,0.1);
+      color: var(--text-primary);
+    }
+
+    .popup-body {
+      padding: 20px;
+    }
+
+    .dua {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
+      font-size: clamp(13px, 2.5vw, 14px);
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    .dua strong {
+      color: var(--gold);
+    }
+
+    .popup-footer {
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .dont-show {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: #ccc;
+      font-size: 13px;
+    }
+
+    .dont-show input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      flex: 1;
+      min-height: 44px;
+      border: none;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.08);
+      color: var(--text-primary);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.15);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), #f3d06a);
+      color: #111;
+      box-shadow: 0 8px 20px rgba(212,175,55,0.3);
+      font-weight: 700;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 30px rgba(212,175,55,0.4);
+    }
+
+    /* تحسينات الـ Responsive */
     @media (max-width: 480px) {
-      h1 { font-size: 24px; }
-      .message { font-size: 15px; }
+      body {
+        padding: var(--spacing-sm);
+      }
+      
+      .links a {
+        padding: 16px;
+      }
+      
+      .btn-group {
+        flex-direction: column;
+      }
+    }
+
+    /* إخفاء التمرير عند فتح الـ popup */
+    body.popup-open {
+      overflow: hidden;
     }
   </style>
 </head>
+
 <body>
-
-  <div class="card">
-    <div class="gold-line"></div>
-
+  <!-- البطاقة الرئيسية -->
+  <div class="card" role="main">
+    <div class="gold-line" aria-hidden="true"></div>
+    
     <h1>شكرًا… وتقديرًا</h1>
     <div class="subtitle">
       امتنان صادق على شرف المتابعة والدعم
@@ -140,288 +352,153 @@
     <div class="section-title">قنوات التواصل المعتمدة</div>
 
     <div class="links">
-      <a href="mailto:omk456456@gmail.com">
+      <a href="mailto:omk456456@gmail.com" aria-label="البريد الإلكتروني الرسمي">
         📧 البريد الإلكتروني الرسمي  
-        <br><strong>omk456456@gmail.com</strong>
+        <strong>omk456456@gmail.com</strong>
       </a>
-
-      <a href="https://www.youtube.com/@teacherKhalil811" target="_blank">
+      <a href="https://www.youtube.com/@teacherKhalil811" target="_blank" rel="noopener">
         ▶ قناة اليوتيوب  
         شروحات المنهج والدروس المجانية
       </a>
-
-      <a href="https://omk811.blogspot.com/" target="_blank">
+      <a href="https://omk811.blogspot.com/" target="_blank" rel="noopener">
         🌐 المدونة الرسمية  
         كل ما يحتاجه طالب الصف الخامس
       </a>
-
-      <a href="https://omk811.github.io/K/" target="_blank">
+      <a href="https://omk811.github.io/K/" target="_blank" rel="noopener">
         📰 موقع عرض المواضيع الجديدة
       </a>
     </div>
 
     <div class="footer">
       مع خالص التقدير  
-      <br>
-      الأستاذ خليل البلوشي
+      <br>الأستاذ خليل البلوشي
     </div>
   </div>
-<!-- ✅ Popup دعاء + نصائح (Responsive) -->
-<style>
-  :root{
-    --pop-bg: rgba(0,0,0,.58);
-    --card: #0f0f10;
-    --card2:#151517;
-    --text:#f7f7f7;
-    --muted:#cfcfd4;
-    --gold:#d4af37;
-    --danger:#ff4d4d;
-    --shadow: 0 18px 60px rgba(0,0,0,.45);
-    --radius: 18px;
-  }
-  #examPopupOverlay{
-    position: fixed; inset: 0;
-    background: var(--pop-bg);
-    display: none;
-    align-items: center; justify-content: center;
-    padding: 14px;
-    z-index: 99999;
-    backdrop-filter: blur(6px);
-  }
-  #examPopup{
-    width: min(560px, 100%);
-    background: linear-gradient(180deg, var(--card) 0%, var(--card2) 100%);
-    color: var(--text);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    border: 1px solid rgba(212,175,55,.25);
-    overflow: hidden;
-    transform: translateY(14px);
-    opacity: 0;
-    transition: .25s ease;
-  }
-  #examPopupOverlay.show #examPopup{
-    transform: translateY(0);
-    opacity: 1;
-  }
-  .pop-head{
-    padding: 16px 16px 10px;
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
-    gap: 10px;
-    border-bottom: 1px solid rgba(255,255,255,.08);
-  }
-  .pop-title{
-    margin: 0;
-    font-size: 18px;
-    line-height: 1.4;
-    font-weight: 800;
-    letter-spacing: .2px;
-  }
-  .badge{
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(212,175,55,.14);
-    color: var(--gold);
-    border: 1px solid rgba(212,175,55,.28);
-    padding: 6px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 800;
-    margin-top: 8px;
-    width: fit-content;
-  }
-  .close-btn{
-    background: transparent;
-    border: 0;
-    color: var(--muted);
-    font-size: 22px;
-    cursor: pointer;
-    line-height: 1;
-    padding: 6px 10px;
-    border-radius: 10px;
-  }
-  .close-btn:hover{ background: rgba(255,255,255,.08); color: var(--text); }
-  .pop-body{ padding: 14px 16px 6px; }
-  .dua{
-    background: rgba(255,255,255,.06);
-    border: 1px solid rgba(255,255,255,.10);
-    border-radius: 14px;
-    padding: 12px 12px;
-    margin-bottom: 12px;
-    font-size: 14px;
-    line-height: 1.9;
-  }
-  .dua strong{ color: var(--gold); }
-  .tips{
-    margin: 0;
-    padding: 0 18px 0 0;
-    list-style: none;
-    display: grid;
-    gap: 10px;
-  }
-  .tips li{
-    background: rgba(255,255,255,.05);
-    border: 1px solid rgba(255,255,255,.09);
-    border-radius: 14px;
-    padding: 10px 12px;
-    font-size: 14px;
-    line-height: 1.8;
-  }
-  .tips li b{ color: var(--gold); }
-  .pop-foot{
-    padding: 12px 16px 16px;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .btn{
-    appearance: none;
-    border: 0;
-    cursor: pointer;
-    border-radius: 14px;
-    padding: 10px 12px;
-    font-weight: 800;
-    font-size: 14px;
-    transition: .2s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    user-select: none;
-    white-space: nowrap;
-  }
-  .btn-primary{
-    background: linear-gradient(135deg, var(--gold), #f3d06a);
-    color: #111;
-    box-shadow: 0 10px 24px rgba(212,175,55,.22);
-  }
-  .btn-primary:hover{ transform: translateY(-1px); }
-  .btn-ghost{
-    background: rgba(255,255,255,.06);
-    color: var(--text);
-    border: 1px solid rgba(255,255,255,.12);
-  }
-  .btn-ghost:hover{ background: rgba(255,255,255,.10); }
-  .dont-show{
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--muted);
-    font-size: 12.5px;
-  }
-  .dont-show input{ width: 16px; height: 16px; accent-color: var(--gold); }
 
-  /* ✅ RTL + Mobile tweaks */
-  .rtl{ direction: rtl; font-family: "Cairo", Tahoma, Arial, sans-serif; }
-  @media (max-width: 420px){
-    .pop-title{ font-size: 16px; }
-    .tips li, .dua{ font-size: 13.5px; }
-    .btn{ width: 100%; justify-content: center; }
-    .pop-foot{ gap: 8px; }
-  }
-</style>
-
-<div id="examPopupOverlay" class="rtl" aria-hidden="true">
-  <div id="examPopup" role="dialog" aria-modal="true" aria-labelledby="examPopupTitle">
-    <div class="pop-head">
-      <div>
-        <h3 class="pop-title" id="examPopupTitle">دعاء ونصائح لطلبة الصف الخامس قبل الامتحان النهائي 📘</h3>
-        <div class="badge">⭐ بالتوفيق والنجاح بإذن الله</div>
+  <!-- ✅ الـ Popup المحسّن -->
+  <div id="popupOverlay" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="popupTitle" aria-hidden="true">
+    <div class="popup-card">
+      <div class="popup-header">
+        <div>
+          <h2 class="popup-title" id="popupTitle">دعاء ونصائح لطلبة الصف الخامس قبل الامتحان النهائي 📘</h2>
+          <div class="badge" aria-label="بالتوفيق والنجاح بإذن الله">⭐ بالتوفيق والنجاح بإذن الله</div>
+        </div>
+        <button class="close-btn" id="popupClose" aria-label="إغلاق النافذة">×</button>
       </div>
-      <button class="close-btn" id="examPopupClose" aria-label="إغلاق">×</button>
-    </div>
 
-    <div class="pop-body">
-      <div class="dua">
-        <strong>اللهم</strong> افتح عليهم فتوح العارفين، ووفّقهم في امتحانهم، وبارك في فهمهم ووقتِهم،
-        واجعل ما تعلموه نورًا لهم، ونتائجهم فرحة لهم ولوالديهم. <strong>آمين</strong>.
+      <div class="popup-body">
+        <div class="dua">
+          <strong>اللهم</strong> افتح عليهم فتوح العارفين، ووفّقهم في امتحانهم، وبارك في فهمهم ووقتِهم،
+          واجعل ما تعلموه نورًا لهم، ونتائجهم فرحة لهم ولوالديهم. <strong>آمين</strong>.
+        </div>
       </div>
-      
-    </div>
 
-    <div class="pop-foot">
-      <label class="dont-show">
-        <input type="checkbox" id="examPopupDontShow">
-        لا تُظهرها مرة أخرى
-      </label>
+      <div class="popup-footer">
+        <label class="dont-show">
+          <input type="checkbox" id="dontShowAgain">
+          لا تُظهرها مرة أخرى
+        </label>
 
-      <div style="display:flex; gap:10px; flex-wrap:wrap; width:100%; justify-content:space-between;">
-        <button class="btn btn-ghost" id="examPopupLater">لاحقًا</button>
-        <button class="btn btn-primary" id="examPopupOk">جاهزون للنجاح 🚀</button>
+        <div class="btn-group">
+          <button class="btn btn-ghost" id="popupLater" type="button">لاحقًا</button>
+          <button class="btn btn-primary" id="popupOk" type="button">جاهزون للنجاح 🚀</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<script>
-  (function(){
-    const KEY_HIDE = "examPopup_hide";
-    const KEY_SHOWN_AT = "examPopup_shownAt";
-    const SHOW_AFTER_HOURS = 24; // ✅ إن لم يضع "لا تُظهرها"، تظهر مرة كل 24 ساعة
+  <script>
+    /**
+     * ✅ Popup Manager محسّن ومُحسَّن الأداء
+     */
+    class PopupManager {
+      constructor() {
+        this.KEY_HIDE = 'popup_hide';
+        this.KEY_SHOWN_AT = 'popup_shownAt';
+        this.SHOW_AFTER_HOURS = 24;
+        this.init();
+      }
 
-    const overlay = document.getElementById("examPopupOverlay");
-    const btnClose = document.getElementById("examPopupClose");
-    const btnOk = document.getElementById("examPopupOk");
-    const btnLater = document.getElementById("examPopupLater");
-    const dontShow = document.getElementById("examPopupDontShow");
+      init() {
+        this.overlay = document.getElementById('popupOverlay');
+        this.closeBtn = document.getElementById('popupClose');
+        this.okBtn = document.getElementById('popupOk');
+        this.laterBtn = document.getElementById('popupLater');
+        this.dontShow = document.getElementById('dontShowAgain');
 
-    function now(){ return Date.now(); }
-    function hoursSince(ts){ return (now() - ts) / (1000*60*60); }
+        this.bindEvents();
+        this.checkShowConditions();
+      }
 
-    function openPopup(){
-      overlay.style.display = "flex";
-      requestAnimationFrame(()=> overlay.classList.add("show"));
-      overlay.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
-    }
+      now() {
+        return Date.now();
+      }
 
-    function closePopup(){
-      overlay.classList.remove("show");
-      overlay.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
-      setTimeout(()=> { overlay.style.display = "none"; }, 180);
-    }
+      hoursSince(timestamp) {
+        return (this.now() - timestamp) / (1000 * 60 * 60);
+      }
 
-    // ✅ شروط الإظهار
-    const hide = localStorage.getItem(KEY_HIDE) === "1";
-    const shownAt = parseInt(localStorage.getItem(KEY_SHOWN_AT) || "0", 10);
+      open() {
+        this.overlay.classList.add('show');
+        this.overlay.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('popup-open');
+      }
 
-    if(!hide){
-      if(!shownAt || hoursSince(shownAt) >= SHOW_AFTER_HOURS){
-        // تأخير بسيط حتى لا يزعج تحميل الصفحة
-        setTimeout(()=>{
-          openPopup();
-          localStorage.setItem(KEY_SHOWN_AT, String(now()));
-        }, 800);
+      close() {
+        this.overlay.classList.remove('show');
+        this.overlay.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('popup-open');
+      }
+
+      shouldShow() {
+        const hide = localStorage.getItem(this.KEY_HIDE) === '1';
+        const shownAt = parseInt(localStorage.getItem(this.KEY_SHOWN_AT) || '0', 10);
+        
+        if (hide) return false;
+        
+        return !shownAt || this.hoursSince(shownAt) >= this.SHOW_AFTER_HOURS;
+      }
+
+      checkShowConditions() {
+        if (this.shouldShow()) {
+          setTimeout(() => {
+            this.open();
+            localStorage.setItem(this.KEY_SHOWN_AT, String(this.now()));
+          }, 1000);
+        }
+      }
+
+      handleClose() {
+        if (this.dontShow.checked) {
+          localStorage.setItem(this.KEY_HIDE, '1');
+        }
+        this.close();
+      }
+
+      bindEvents() {
+        // أزرار الإغلاق
+        [this.closeBtn, this.okBtn, this.laterBtn].forEach(btn => {
+          btn.addEventListener('click', () => this.handleClose());
+        });
+
+        // النقر خارج البطاقة
+        this.overlay.addEventListener('click', (e) => {
+          if (e.target === this.overlay) this.handleClose();
+        });
+
+        // مفتاح ESC
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && this.overlay.classList.contains('show')) {
+            this.handleClose();
+          }
+        });
       }
     }
 
-    function handleExit(){
-      if(dontShow.checked){
-        localStorage.setItem(KEY_HIDE, "1");
-      }
-      closePopup();
-    }
-
-    btnClose.addEventListener("click", handleExit);
-    btnOk.addEventListener("click", handleExit);
-    btnLater.addEventListener("click", handleExit);
-
-    // ✅ إغلاق بالنقر خارج البطاقة
-    overlay.addEventListener("click", (e)=>{
-      if(e.target === overlay) handleExit();
+    // تشغيل الـ Popup عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', () => {
+      new PopupManager();
     });
-
-    // ✅ إغلاق بزر ESC
-    document.addEventListener("keydown", (e)=>{
-      if(e.key === "Escape" && overlay.style.display === "flex") handleExit();
-    });
-  })();
-</script>
-
+  </script>
 </body>
 </html>
