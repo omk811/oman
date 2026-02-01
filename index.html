@@ -1,508 +1,225 @@
-<!doctype html>
-<html lang="ar" dir="rtl" class="h-full">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>الديناصورات عاشت في عُمان - مع المفردات التفاعلية</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <title>كان وأخواتها | درس تفاعلي – الصف الخامس</title>
+
   <style>
-    :root {
-      --primary-color: #1e3a5f;
-      --primary-light: #2d5a3f;
-      --accent-color: #d4af37;
-      --success-color: #22c55e;
-      --danger-color: #ef4444;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
+    /* ===== إعدادات عامة (مستقلة عن أي قالب) ===== */
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #f8f9fa 0%, #f0f4f8 100%);
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      background-color: #f4f6f9;
+      color: #333;
+      line-height: 1.9;
     }
 
-    h1, h2, h3, h4, h5, h6 {
-      font-weight: 700;
-      letter-spacing: -0.5px;
-    }
-
-    .section-card {
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      border-radius: 16px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 10px 20px rgba(0, 0, 0, 0.05);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .section-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #1e3a5f, #2d5a3f, #6b8e23);
-      opacity: 0.6;
-    }
-
-    .section-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
-    }
-
-    .dino-icon {
-      font-size: 4rem;
-      filter: drop-shadow(3px 3px 8px rgba(0, 0, 0, 0.1));
-      animation: dinoFloat 3s ease-in-out infinite;
-    }
-
-    @keyframes dinoFloat {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-    }
-
-    .fade-in {
-      animation: fadeInDown 0.6s ease 0.1s both;
-    }
-
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .progress-bar {
-      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      background: linear-gradient(90deg, #1e3a5f, #2d5a3f);
-      box-shadow: 0 4px 12px rgba(45, 90, 63, 0.3);
-    }
-
-    .nav-button {
-      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      position: relative;
-      overflow: hidden;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-    }
-
-    .nav-button:hover:not(:disabled) {
-      transform: translateX(-4px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-    }
-
-    .nav-button:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
-
-    /* المفردات التفاعلية */
-    .vocab-word {
-      color: #8b5cf6 !important;
-      font-weight: 700;
-      border-bottom: 2px dotted #8b5cf6;
-      cursor: pointer;
-      padding: 2px 5px;
-      display: inline;
-      transition: all 0.3s ease;
-    }
-
-    .vocab-word:hover {
-      background-color: rgba(139, 92, 246, 0.2);
-      border-bottom-style: solid;
-      border-radius: 4px;
-    }
-
-    .vocab-tooltip {
-      position: fixed;
-      background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-      color: white;
+    .lesson-container {
+      max-width: 1000px;
+      margin: 30px auto;
       padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 15px 50px rgba(139, 92, 246, 0.6);
-      max-width: 380px;
-      z-index: 10000;
-      animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    }
-
-    @keyframes popIn {
-      0% { opacity: 0; transform: scale(0.7) translateY(20px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    .vocab-tooltip-close {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      width: 32px;
-      height: 32px;
-      background: rgba(255, 255, 255, 0.25);
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      font-weight: bold;
-      transition: all 0.2s ease;
-    }
-
-    .vocab-tooltip-close:hover {
-      background: rgba(255, 255, 255, 0.4);
-      transform: scale(1.1) rotate(90deg);
-    }
-
-    .vocab-legend {
-      background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(124, 58, 237, 0.12));
-      border-right: 4px solid #8b5cf6;
+      background: #ffffff;
       border-radius: 12px;
-      padding: 1.25rem;
-      margin: 1.5rem 0;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.08);
     }
 
-    .vocab-legend-content {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      color: #6b21a8;
-      font-weight: 600;
-      font-size: 1.05em;
+    h1 {
+      text-align: center;
+      color: #1f4fd8;
+      margin-bottom: 10px;
     }
 
-    .answer-box {
-      animation: slideDown 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    h2 {
+      color: #0f766e;
+      border-right: 5px solid #0f766e;
+      padding-right: 10px;
+      margin-top: 35px;
     }
 
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-15px); }
-      to { opacity: 1; transform: translateY(0); }
+    p {
+      font-size: 18px;
+      margin: 10px 0;
     }
 
-    .primary-btn {
-      transition: all 0.3s ease;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      outline: none;
+    ul {
+      padding-right: 25px;
+      font-size: 18px;
     }
 
-    .secondary-btn {
-      transition: all 0.3s ease;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      outline: none;
-      background: linear-gradient(135deg, #2d5a3f, #3d7a4f) !important;
+    li {
+      margin-bottom: 8px;
     }
 
-    .secondary-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(45, 90, 63, 0.3) !important;
+    .box {
+      background: #f0f7ff;
+      border: 1px solid #cfe2ff;
+      border-radius: 10px;
+      padding: 15px 20px;
+      margin: 15px 0;
     }
 
-    @media (max-width: 768px) {
-      .vocab-tooltip {
-        max-width: calc(100vw - 40px);
-        left: 20px !important;
-        right: 20px !important;
+    .example {
+      background: #fefce8;
+      border: 1px dashed #facc15;
+      border-radius: 8px;
+      padding: 12px 18px;
+      margin: 12px 0;
+      font-size: 18px;
+    }
+
+    .highlight {
+      color: #b91c1c;
+      font-weight: bold;
+    }
+
+    .question {
+      background: #ecfeff;
+      border: 1px solid #67e8f9;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 15px 0;
+    }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 16px;
+      color: #555;
+    }
+
+    /* ===== استجابة للشاشات الصغيرة ===== */
+    @media (max-width: 600px) {
+      .lesson-container {
+        margin: 15px;
+        padding: 18px;
+      }
+      p, ul, li, .example {
+        font-size: 17px;
       }
     }
   </style>
 </head>
-<body class="h-full">
-  <div id="app" class="w-full h-full overflow-auto"></div>
-  
-  <script>
-    // قاعدة بيانات المفردات
-    const vocabularyDatabase = {
-      'أبرز': { meaning: 'أوضح وأظهر وأهم', opposite: 'أخفى، أقل أهمية' },
-      'حقبة': { meaning: 'فترة زمنية طويلة، عصر', opposite: 'لحظة، فترة قصيرة' },
-      'التباين': { meaning: 'الاختلاف والتنوع الواضح', opposite: 'التشابه، التماثل' },
-      'مصابّ': { meaning: 'موضع التقاء مياه الأنهار والأودية', opposite: 'منبع' },
-      'المناخ': { meaning: 'حالة الجو في منطقة كبيرة خلال مدة زمنية طويلة', opposite: null },
-      'الرواسب': { meaning: 'مواد تحملها المياه الجارية وتترسب في الأودية', opposite: null },
-      'انحدرت': { meaning: 'نزلت من أعلى إلى أسفل', opposite: 'ارتفعت، صعدت' },
-      'ترسيب': { meaning: 'إسقاط المواد وتجميعها في مكان', opposite: 'إذابة، تفتيت' },
-      'التحلُّل': { meaning: 'التفكك والتعفن وفقدان التماسك', opposite: 'التماسك، الحفظ' },
-      'تماثُل': { meaning: 'التشابه والمطابقة', opposite: 'اختلاف، تباين' },
-      'ازدهار': { meaning: 'النمو والتطور والوصول للقمة', opposite: 'تدهور، انحطاط' },
-      'المفترسة': { meaning: 'الحيوانات التي تصطاد وتأكل حيوانات أخرى', opposite: 'الفريسة' },
-      'المفترسات': { meaning: 'الحيوانات التي تصطاد وتأكل حيوانات أخرى', opposite: 'الفريسة' },
-      'أضخم': { meaning: 'أكبر حجماً وأعظم', opposite: 'أصغر، أدق' },
-      'محصورًا': { meaning: 'مقتصراً ومحدوداً في مكان معين', opposite: 'منتشراً، شائعاً' },
-      'الدهشة': { meaning: 'التعجب والاستغراب الشديد', opposite: 'اللامبالاة، التوقع' }
-    };
 
-    let currentSection = 0;
-    const totalSections = 7;
-    let activeTooltip = null;
+<body>
 
-    function showVocabTooltip(event, word) {
-      const vocabData = vocabularyDatabase[word];
-      if (!vocabData) return;
+  <div class="lesson-container">
 
-      if (activeTooltip) {
-        activeTooltip.remove();
-      }
+    <h1>كان وأخواتها</h1>
+    <p style="text-align:center;">درس تفاعلي – الصف الخامس</p>
 
-      const tooltip = document.createElement('div');
-      tooltip.className = 'vocab-tooltip';
-      
-      let tooltipHTML = '<div class="vocab-tooltip-close" onclick="closeVocabTooltip()">×</div>' +
-        '<div style="font-size: 1.5em; font-weight: 700; margin-bottom: 15px; border-bottom: 2px solid rgba(255, 255, 255, 0.4); padding-bottom: 12px;">' +
-        '📚 ' + word +
-        '</div>' +
-        '<div style="font-size: 1.1em; line-height: 1.7; margin-bottom: 10px;">' +
-        '<strong>💡 المعنى:</strong> ' + vocabData.meaning +
-        '</div>';
+    <!-- الأهداف -->
+    <h2>الأهداف التعليمية</h2>
+    <ul>
+      <li>أن يتعرّف الطالب على الأفعال الناسخة (كان وأخواتها) ويحفظها.</li>
+      <li>أن يفهم وظيفة كان وأخواتها في الجملة الاسمية.</li>
+      <li>أن يميّز بين الجملة الاسمية قبل وبعد دخول كان عليها.</li>
+      <li>أن يحدّد اسم وخبر كان في جمل بسيطة.</li>
+      <li>أن يذكر معاني بعض الأفعال الناسخة.</li>
+      <li>أن يستخرج جملة من كان وأخواتها من فقرة قصيرة.</li>
+      <li>أن يدرك أن بعض الأفعال الناسخة تأتي بصيغة الماضي والمضارع والأمر.</li>
+    </ul>
 
-      if (vocabData.opposite) {
-        tooltipHTML += '<div style="font-size: 1.05em; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255, 255, 255, 0.3); font-style: italic;">' +
-          '<strong>⚖️ المضاد:</strong> ' + vocabData.opposite +
-          '</div>';
-      }
+    <!-- التمهيد -->
+    <h2>التمهيد</h2>
+    <div class="example">
+      الجوُّ جميلٌ<br>
+      الجوُّ كان جميلًا
+    </div>
+    <p>
+      نلاحظ أن جملة <span class="highlight">كان جميلًا</span> دخل عليها فعل جديد،
+      فغيّر حركة الكلمة الأخيرة فقط.
+    </p>
 
-      tooltip.innerHTML = tooltipHTML;
-      document.body.appendChild(tooltip);
+    <!-- القاعدة -->
+    <h2>ما المقصود بكان وأخواتها؟</h2>
+    <div class="box">
+      <p>
+        كان وأخواتها <strong>أفعال ناسخة</strong> تدخل على الجملة الاسمية،
+        فتُغيّر إعرابها ولا تُغيّر معناها الأساسي.
+      </p>
+      <p>
+        🔹 ترفع المبتدأ ويُسمّى <strong>اسمها</strong><br>
+        🔹 تنصب الخبر ويُسمّى <strong>خبرها</strong>
+      </p>
+    </div>
 
-      const rect = event.target.getBoundingClientRect();
-      let top = rect.bottom + window.scrollY + 15;
-      let left = rect.left + window.scrollX - 150;
+    <!-- قبل وبعد -->
+    <h2>قبل كان وبعدها</h2>
+    <div class="example">
+      قبل كان: الجوُّ جميلٌ<br>
+      بعد كان: كان الجوُّ جميلًا
+    </div>
+    <p>
+      بقيت كلمة <strong>الجوُّ</strong> مرفوعة،
+      وتغيّرت حركة <strong>جميل</strong> إلى الفتحة.
+    </p>
 
-      if (left < 20) left = 20;
-      if (left + 380 > window.innerWidth) left = window.innerWidth - 400;
+    <!-- أخوات كان -->
+    <h2>أخوات كان</h2>
+    <div class="box">
+      <p>
+        كان – أصبح – أمسى – صار – ليس
+      </p>
+    </div>
 
-      tooltip.style.top = top + 'px';
-      tooltip.style.left = left + 'px';
-      activeTooltip = tooltip;
+    <!-- المعاني -->
+    <h2>معاني بعض الأفعال الناسخة</h2>
+    <ul>
+      <li><strong>كان</strong>: تدل على الماضي → كان الجوُّ معتدلًا</li>
+      <li><strong>أصبح</strong>: تدل على الصباح أو التحوّل → أصبح الجوُّ حارًّا</li>
+      <li><strong>أمسى</strong>: تدل على المساء → أمسى الجوُّ لطيفًا</li>
+      <li><strong>صار</strong>: تدل على التحوّل → صار الماءُ باردًا</li>
+      <li><strong>ليس</strong>: تدل على النفي → ليس الطالبُ مهملًا</li>
+    </ul>
 
-      setTimeout(function() {
-        document.addEventListener('click', closeTooltipOnClickOutside);
-      }, 100);
-    }
+    <!-- تحديد الاسم والخبر -->
+    <h2>تحديد اسم وخبر كان</h2>
+    <div class="example">
+      كان الطالبُ نشيطًا
+    </div>
+    <p>
+      الطالبُ: اسم كان (مرفوع)<br>
+      نشيطًا: خبر كان (منصوب)
+    </p>
 
-    function closeVocabTooltip() {
-      if (activeTooltip) {
-        activeTooltip.remove();
-        activeTooltip = null;
-        document.removeEventListener('click', closeTooltipOnClickOutside);
-      }
-    }
+    <!-- استخراج -->
+    <h2>استخرج من الفقرة</h2>
+    <div class="example">
+      كان الطقسُ جميلًا، وأصبح الجوُّ معتدلًا، وليس المطرُ غزيرًا.
+    </div>
+    <div class="question">
+      ✦ استخرج جملة من كان وأخواتها، ثم حدّد اسمها وخبرها.
+    </div>
 
-    function closeTooltipOnClickOutside(event) {
-      if (activeTooltip && !activeTooltip.contains(event.target) && !event.target.classList.contains('vocab-word')) {
-        closeVocabTooltip();
-      }
-    }
+    <!-- الصيغ -->
+    <h2>صيغ كان وأخواتها</h2>
+    <ul>
+      <li>الماضي: كان الجوُّ جميلًا</li>
+      <li>المضارع: يكون الجوُّ جميلًا</li>
+      <li>الأمر: كنْ مهذبًا</li>
+    </ul>
 
-    window.closeVocabTooltip = closeVocabTooltip;
+    <!-- التقويم -->
+    <h2>تقويم ختامي</h2>
+    <div class="question">
+      1) اختر الإجابة الصحيحة: ( ___ ) الطالبُ مجتهدًا. ( كان – كتب – لعب )<br><br>
+      2) حدّد اسم كان وخبرها: كان الدرسُ سهلًا.<br><br>
+      3) ضع فعلًا ناسخًا مناسبًا: ___ الجوُّ معتدلًا في الصباح.
+    </div>
 
-    function attachVocabListeners() {
-      const vocabWords = document.querySelectorAll('.vocab-word');
-      vocabWords.forEach(function(word) {
-        word.addEventListener('click', function(e) {
-          e.stopPropagation();
-          const wordText = e.target.getAttribute('data-word');
-          showVocabTooltip(e, wordText);
-        });
-      });
-    }
+    <!-- الخلاصة -->
+    <h2>الخلاصة</h2>
+    <div class="box">
+      كان وأخواتها أفعال تدخل على الجملة الاسمية،
+      فترفع الاسم وتنصب الخبر، وتُغيّر الإعراب فقط.
+    </div>
 
-    function renderApp() {
-      const app = document.getElementById('app');
-      const progress = ((currentSection + 1) / totalSections) * 100;
-      const prevDisabled = currentSection === 0 ? 'disabled' : '';
-      const nextDisabled = currentSection === totalSections - 1 ? 'disabled' : '';
-      
-      app.innerHTML = '<div class="w-full min-h-full" style="background-color: #f8f9fa; color: #1a1a1a; padding: 1.5rem 1rem; font-family: Tajawal, Cairo, sans-serif;">' +
-          '<div class="max-w-5xl mx-auto">' +
-            '<div class="fade-in mb-8" style="position: relative; padding: 2.5rem 0; background: linear-gradient(135deg, rgba(30, 58, 95, 0.08) 0%, rgba(45, 90, 63, 0.08) 100%); border-radius: 16px; border-bottom: 3px solid #d4af37;">' +
-              '<div class="text-center">' +
-                '<div class="text-6xl mb-4">🦕</div>' +
-                '<h1 style="font-size: 2rem; margin: 0 0 0.5rem 0;">الديناصورات عاشت في عُمان</h1>' +
-                '<p style="font-size: 1.2rem; margin: 0 0 1rem 0; opacity: 0.8;">الدرس الثاني</p>' +
-                '<div class="mt-4 pt-4" style="border-top: 2px solid rgba(0,0,0,0.1);">' +
-                  '<p style="margin: 0.5rem 0; font-size: 0.9rem;">📚 <strong>الأستاذ خليل البلوشي</strong></p>' +
-                  '<p style="margin: 0.5rem 0; font-size: 0.85rem;">مدرسة سعد بن معاذ للتعليم الأساسي</p>' +
-                  '<p style="margin: 0.5rem 0; font-size: 0.85rem;">وزارة التعليم - سلطنة عمان</p>' +
-                '</div>' +
-                '<div class="w-full h-3 rounded-full mt-6 mb-4" style="background-color: rgba(0,0,0,0.08);">' +
-                  '<div class="progress-bar h-full rounded-full" style="width: ' + progress + '%;"></div>' +
-                '</div>' +
-                '<p style="font-size: 0.85rem; display: flex; justify-content: center; gap: 1rem; margin-top: 1rem;">' +
-                  '<span>📍 القسم ' + (currentSection + 1) + ' من ' + totalSections + '</span>' +
-                '</p>' +
-              '</div>' +
-            '</div>' +
-            '<div id="content-area" class="mb-8">' +
-              renderSection(currentSection) +
-            '</div>' +
-            '<div class="flex justify-between items-center mt-12 gap-4 flex-wrap">' +
-              '<button id="prev-btn" class="primary-btn nav-button px-8 py-3 rounded-lg text-white font-semibold" style="background-color: #2d5a3f; font-size: 16px; min-width: 140px;" ' + prevDisabled + '>← السابق</button>' +
-              '<div style="text-align: center; flex: 1;"><span style="font-size: 0.9rem; opacity: 0.6;">تحديث 2025 - درس تفاعلي</span></div>' +
-              '<button id="next-btn" class="primary-btn nav-button px-8 py-3 rounded-lg text-white font-semibold" style="background-color: #2d5a3f; font-size: 16px; min-width: 140px;" ' + nextDisabled + '>التالي →</button>' +
-            '</div>' +
-          '</div>' +
-        '</div>';
+    <div class="footer-note">
+      إعداد درس تفاعلي – اللغة العربية – الصف الخامس
+    </div>
 
-      attachEventListeners();
-      attachVocabListeners();
-    }
+  </div>
 
-    function renderSection(index) {
-      const surfaceColor = '#ffffff';
-      const primaryColor = '#2d5a3f';
-
-      if (index === 0) {
-        return '<div class="section-card p-8 fade-in" style="background-color: ' + surfaceColor + ';">' +
-          '<div class="text-center mb-6"><span class="dino-icon">🦕</span><h2 class="font-bold mt-4 mb-6" style="font-size: 1.8rem; margin: 0;">نص الدرس</h2></div>' +
-          '<div class="vocab-legend"><div class="vocab-legend-content"><span style="font-size: 1.5rem;">💡</span><span>انقر على الكلمات الملونة باللون البنفسجي لمعرفة معناها ومضادها</span></div></div>' +
-          '<div style="font-size: 16px; line-height: 2;">' +
-            '<p class="mb-4">تُعَدُّ الديناصوراتُ من <span class="vocab-word" data-word="أبرز">أبرز</span> ملامح الحياة خلال <span class="vocab-word" data-word="حقبة">حقبة</span> الحياة المتوسطة على الإطلاق، فقد كانت هذه الزواحف العملاقة أكبرَ الحيوانات التي عاشت على ظهر اليابسة، وقد تميَّزت أنواعُها المختلفة التي ظهرت <span class="vocab-word" data-word="التباين">بالتباين</span> الشديد في الأشكال والأحجام والسلوك والنظام الغذائي.</p>' +
-            '<p class="mb-4">وقد عُثِرَ على عظامٍ كبيرةٍ للديناصورات في مواقع عدّة في محيط قرية الحوض بولاية السيب، ومنطقة السيح الأحمر بولاية بدبد.</p>' +
-            '<p class="mb-4">وتُعَدُّ هذه المواقعُ أفضلَ مواقع عظام الديناصورات المتحجِّرة في شبه الجزيرة العربية، وقد كانت هذه المواقع في العصر الطباشيري عبارةً عن <span class="vocab-word" data-word="مصابّ">مصابّ</span> أنهارٍ نشِطة، تكوَّنت في <span class="vocab-word" data-word="المناخ">مناخٍ</span> أكثر رطوبة، <span class="vocab-word" data-word="انحدرت">وانحدرت</span> من الجبال في صورةٍ شبيهةٍ باليوم، وكانت الأنهارُ تحمل هذه العظام والأخشاب المتحجِّرة، وتُعيد <span class="vocab-word" data-word="ترسيب">ترسيبَها</span> في مصابّ الأنهار ومناطق التقاء الأنهار بالبحر، وربما يُفسِّر هذا الأمر عدمَ العثور على هيكلٍ متكاملٍ للديناصورات في هذه الصخور حتى اليوم، ثم غُطِّيَت العظامُ والأخشاب بعد ذلك <span class="vocab-word" data-word="الرواسب">بالرواسب</span>، ومع نقص الأكسجين في هذه الرواسب حُفِظَت هذه المواد من <span class="vocab-word" data-word="التحلُّل">التحلُّل</span>.</p>' +
-            '<div style="background: linear-gradient(135deg, rgba(30, 58, 95, 0.08), rgba(45, 90, 63, 0.08)); border-right: 4px solid #2d5a3f; border-radius: 8px; padding: 1.25rem; margin: 1rem 0;"><p class="font-semibold mb-2" style="color: ' + primaryColor + '; font-size: 1.1rem;">💡 الأنواع المكتشفة</p><p>وقد استطاع الباحثون التعرُّفَ على أربعة أنواع مختلفة من الديناصورات كانت تعيش في عُمان:</p></div>' +
-            '<h3 class="font-bold mt-6 mb-3" style="font-size: 1.3rem; color: ' + primaryColor + ';">النوع الأول: أورنيثوبود (Ornithopod) – أقدام الطير</h3>' +
-            '<p class="mb-4">وهو آكلُ النباتات الصغيرة، واسمُه باللاتينية يعني (أقدام الطير)، وهذا الاسم أُطلِقَ عليه <span class="vocab-word" data-word="تماثُل">لتماثُل</span> أقدامِه ذات الأصابع الثلاثة مع أقدام الطير، وفي ذروة <span class="vocab-word" data-word="ازدهار">ازدهارها</span> وصل طولها إلى نحو خمسة عشر مترًا، ووزنها إلى نحو عشرين طنًّا.</p>' +
-            '<h3 class="font-bold mt-6 mb-3" style="font-size: 1.3rem; color: ' + primaryColor + ';">النوع الثاني: ثيروبود (Theropod) – أقدام الوحش</h3>' +
-            '<p class="mb-4">وهو من الديناصورات <span class="vocab-word" data-word="المفترسة">المفترسة</span>، أشهر آكلات اللحوم، وهي <span class="vocab-word" data-word="المفترسات">المفترسات</span> الأكبر على اليابسة، واسمها باللاتينية يعني (أقدام الوحش).</p>' +
-            '<h3 class="font-bold mt-6 mb-3" style="font-size: 1.3rem; color: ' + primaryColor + ';">النوع الثالث: ساوروبود (Sauropod) – أقدام السحالي</h3>' +
-            '<p class="mb-4">فهو أحد <span class="vocab-word" data-word="أضخم">أضخم</span> الكائنات التي عاشت على اليابسة على الإطلاق، وكانت هذه الديناصورات تأكل الأعشاب والنباتات، واسمها باللاتينية يعني (أقدام السحالي)، وبعض أنواعها قد يصل طولها إلى أكثر من ثلاثين مترًا، وارتفاعها إلى نحو ثمانية عشر مترًا.</p>' +
-            '<h3 class="font-bold mt-6 mb-3" style="font-size: 1.3rem; color: ' + primaryColor + ';">النوع الرابع: هادروسورس (Hadrosaurus) – السحلية القوية</h3>' +
-            '<p class="mb-4">أمّا عظامُ الديناصور المكتشَف حديثًا في عام (1987م)، فقد تكون لديناصورٍ ذي منقارٍ يشبه منقارَ البطّة يأكل به النباتات، وهو معروف باسم (السحلية القوية).</p>' +
-            '<p class="mb-4">إنَّ العثورَ على هذا النوع الأخير من الديناصورات يُعَدُّ أمرًا مثيرًا <span class="vocab-word" data-word="الدهشة">للدهشة</span>؛ فهذا النوع كان وجودُه <span class="vocab-word" data-word="محصورًا">محصورًا</span> في القارات الشمالية، وبالتحديد في أمريكا الشمالية وأوروبا وآسيا، ولذلك فإن وجودَه في شبه الجزيرة العربية أو إفريقيا لم يكن معروفًا من قبل، وقد عُثِرَ على العظام في محيط قرية الحوض، حيث كانت القرية مليئةً بالأنهار والأشجار عندما عاشت فيها الديناصورات.</p>' +
-            '<div style="background: linear-gradient(135deg, rgba(30, 58, 95, 0.1), rgba(45, 90, 63, 0.1)); border-left: 4px solid #d4af37; padding: 1.5rem; border-radius: 8px; text-align: center; margin-top: 2rem; font-style: italic;"><p style="margin: 0.5rem 0;">باحث وكاتب عُماني: د. محمد بن هلال الكندي</p><p style="margin: 0.5rem 0;">"قصة الحياة في عُمان" – 2015م (بتصرّف)</p></div>' +
-          '</div>' +
-        '</div>';
-      }
-      // باقي الأقسام...
-      else if (index === 1) {
-        return '<div class="section-card p-8 fade-in" style="background-color: ' + surfaceColor + ';"><div class="text-center mb-6"><span class="dino-icon">📚</span><h2 class="font-bold mt-4" style="font-size: 1.8rem; margin: 0;">أولاً: ثروتي اللغوية</h2></div><div class="mb-8"><h3 class="font-bold mb-4" style="font-size: 1.3rem;">1️⃣ استبدل بالكلمات التي تحتها خط كلمات تؤدي المعنى نفسه:</h3><div style="background-color: rgba(0,0,0,0.03); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; border-right: 4px solid ' + primaryColor + ';"><p style="font-size: 16px; line-height: 2;">تُعَدُّ الديناصوراتُ من <span style="border-bottom: 3px solid ' + primaryColor + '; font-weight: bold;">أبرز</span> ملامح الحياة خلال <span style="border-bottom: 3px solid ' + primaryColor + '; font-weight: bold;">حقبة</span> الحياة المتوسطة على الإطلاق، فقد كانت هذه الزواحف العملاقة أكبر الحيوانات التي عاشت على ظهر اليابسة، وقد تميَّزت أنواعُها المختلفة التي ظهرت <span style="border-bottom: 3px solid ' + primaryColor + '; font-weight: bold;">بالتباين</span> الشديد في الأشكال والأحجام.</p></div><button class="secondary-btn mt-4 px-6 py-3 rounded-lg text-white font-semibold" onclick="showVocab1Answer()">📖 عرض الإجابة النموذجية</button><div id="vocab1-answer" class="mt-4"></div></div><div class="mb-8"><h3 class="font-bold mb-4" style="font-size: 1.3rem;">2️⃣ استخرج من النص الكلمات التي تدل على المعاني الآتية:</h3><div class="space-y-3 mb-4"><div style="padding: 1rem; background-color: rgba(0,0,0,0.03); border-radius: 8px;"><p>أ. موضع التقاء مياه الأنهار والأودية</p></div><div style="padding: 1rem; background-color: rgba(0,0,0,0.03); border-radius: 8px;"><p>ب. حالة الجو في منطقة كبيرة خلال مدة زمنية طويلة</p></div><div style="padding: 1rem; background-color: rgba(0,0,0,0.03); border-radius: 8px;"><p>ج. مواد تحملها المياه الجارية إلى الأودية</p></div></div><button class="secondary-btn mt-4 px-6 py-3 rounded-lg text-white font-semibold" onclick="showVocab2Answer()">📖 عرض الإجابة النموذجية</button><div id="vocab2-answer" class="mt-4"></div></div><div><h3 class="font-bold mb-4" style="font-size: 1.3rem;">3️⃣ حاكِ الأسلوب الآتي:</h3><div style="padding: 1.5rem; background-color: rgba(0,0,0,0.05); border-radius: 12px; border-right: 4px solid ' + primaryColor + '; margin-bottom: 1.5rem;"><p style="margin: 0;">تُعَدُّ الديناصوراتُ من أبرز ملامح الحياة خلال حقبة الحياة المتوسطة.</p></div><button class="secondary-btn mt-4 px-6 py-3 rounded-lg text-white font-semibold" onclick="showVocab3Answer()">📖 عرض الإجابة النموذجية</button><div id="vocab3-answer" class="mt-4"></div></div></div>';
-      }
-      else if (index === 2) {
-        return '<div class="section-card p-8 fade-in" style="background-color: ' + surfaceColor + ';"><div class="text-center mb-6"><span class="dino-icon">💭</span><h2 class="font-bold mt-4" style="font-size: 1.8rem; margin: 0;">ثانياً: أناقش وأحلل</h2></div><div class="mb-8"><h3 class="font-bold mb-3" style="font-size: 1.2rem;">1️⃣ استنتج الفكرة العامة للنص</h3><button class="secondary-btn mt-4 px-6 py-3 rounded-lg text-white font-semibold" onclick="showDiscussion1Answer()">📖 عرض الإجابة النموذجية</button><div id="discussion1-answer" class="mt-4"></div></div><div class="mb-8"><h3 class="font-bold mb-3" style="font-size: 1.2rem;">2️⃣ لماذا لم يعثر علماء الطبيعة على هيكل ديناصور متكامل في سلطنة عُمان؟</h3><p class="mb-2" style="font-size: 0.9rem; opacity: 0.8;">(ادعم إجابتك بشاهد من النص)</p><button class="secondary-btn mt-4 px-6 py-3 rounded-lg text-white font-semibold" onclick="showDiscussion2Answer()">📖 عرض الإجابة النموذجية</button><div id="discussion2-answer" class="mt-4"></div></div><div><h3 class="font-bold mb-3" style="font-size: 1.2rem;">3️⃣ الأخشاب والعظام لم تتحلّل رغم مرور ملايين السنين. علّل ذلك:</h3><button class="secondary-btn mt-4 px-6 py-3 rounded-lg text-white font-semibold" onclick="showDiscussion3Answer()">📖 عرض الإجابة النموذجية</button><div id="discussion3-answer" class="mt-4"></div></div></div>';
-      }
-      else if (index === 3) {
-        return '<div class="section-card p-8 fade-in" style="background-color: ' + surfaceColor + ';"><div class="text-center mb-6"><span class="dino-icon">📊</span><h2 class="font-bold mt-4" style="font-size: 1.8rem; margin: 0;">ثالثاً: أصنّف</h2></div><div class="mb-8"><h3 class="font-bold mb-4" style="font-size: 1.2rem;">4️⃣ صنِّف الديناصورات المكتشفة عظامها في عُمان:</h3><button class="secondary-btn mt-4 px-6 py-3 rounded-lg text-white font-semibold" onclick="showClassificationAnswer()">📖 عرض الإجابة النموذجية</button><div id="classification-answer" class="mt-4"></div></div><div><h3 class="font-bold mb-4" style="font-size: 1.2rem;">5️⃣ يُعَدُّ وجود ديناصور (السحلية القوية) في الجزيرة العربية أمرًا مثيرًا للدهشة.</h3><div class="mb-4"><p class="font-semibold mb-2">أ. اذكر السبب</p></div><div class="mb-4"><p class="font-semibold mb-2">ب. اقترح سببًا علميًّا محتملًا</p></div><button class="secondary-btn mt-4 px-6 py-3 rounded-lg text-white font-semibold" onclick="showQuestion5Answer()">📖 عرض الإجابة النموذجية</button><div id="question5-answer" class="mt-4"></div></div></div>';
-      }
-      else if (index === 4) {
-        return '<div class="section-card p-8 fade-in" style="background-color: ' + surfaceColor + ';"><div class="text-center mb-6"><span class="dino-icon">🔍</span><h2 class="font-bold mt-4" style="font-size: 1.8rem; margin: 0;">سادساً: أميّز</h2></div><div class="mb-8"><h3 class="font-bold mb-4" style="font-size: 1.2rem;">6️⃣ نص (الديناصورات عاشت في عُمان) نصٌّ علميٌّ له خصائص تميّزه عن غيره من النصوص.</h3><p class="mb-4">ضع علامة (✔) أمام ما يتناسب أسلوب النص من خصائص:</p><div class="space-y-3 mb-4"><div style="padding: 1rem; background-color: rgba(0,0,0,0.03); border-radius: 8px; border-right: 4px solid ' + primaryColor + ';"><p style="margin: 0;">• استخدام الأرقام والكلمات العلمية.</p></div><div style="padding: 1rem; background-color: rgba(0,0,0,0.03); border-radius: 8px;"><p style="margin: 0;">• وجود حوار بين الشخصيات.</p></div><div style="padding: 1rem; background-color: rgba(0,0,0,0.03); border-radius: 8px; border-right: 4px solid ' + primaryColor + ';"><p style="margin: 0;">• استخدام الرسوم والصور أحيانًا لتوضيح النص.</p></div><div style="padding: 1rem; background-color: rgba(0,0,0,0.03); border-radius: 8px;"><p style="margin: 0;">• سرد حكايات خيالية عن الديناصورات.</p></div><div style="padding: 1rem; background-color: rgba(0,0,0,0.03); border-radius: 8px; border-right: 4px solid ' + primaryColor + ';"><p style="margin: 0;">• وضوح الأفكار ودقّة المعلومات.</p></div></div><button class="secondary-btn px-6 py-3 rounded-lg text-white font-semibold" onclick="showDistinguishAnswer()">📖 عرض الإجابة النموذجية</button><div id="distinguish-answer" class="mt-4"></div></div><div><h3 class="font-bold mb-4" style="font-size: 1.2rem;">7️⃣ هل تحب قراءة هذا النوع من النصوص العلمية؟ لماذا؟</h3><p style="padding: 1rem; background-color: rgba(0,0,0,0.03); border-radius: 8px;">هذا سؤال رأي شخصي - يمكن للطالب التعبير عن رأيه الخاص وتبرير موقفه. 💭</p></div></div>';
-      }
-      else if (index === 5) {
-        return '<div class="section-card p-8 fade-in" style="background-color: ' + surfaceColor + ';"><div class="text-center mb-6"><span class="dino-icon">🦖</span><h2 class="font-bold mt-4" style="font-size: 1.8rem; margin: 0;">أنواع الديناصورات في عُمان</h2></div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;"><div style="padding: 1.5rem; border-radius: 12px; border: 2px solid #2d5a3f; background-color: rgba(45, 90, 63, 0.1);"><div style="font-size: 3.5rem; text-align: center; margin-bottom: 1rem;">🦕</div><h3 class="font-bold mb-2" style="font-size: 1.2rem; color: #2d5a3f; margin: 0;">أورنيثوبود</h3><p class="font-semibold mb-2" style="margin: 0;">أقدام الطير</p><ul style="padding-right: 1rem; margin: 0;"><li>آكل النباتات الصغيرة</li><li>أقدام ثلاثية الأصابع</li><li>الطول: 15 متر</li><li>الوزن: 20 طن</li></ul></div><div style="padding: 1.5rem; border-radius: 12px; border: 2px solid #6b8e23; background-color: rgba(107, 142, 35, 0.1);"><div style="font-size: 3.5rem; text-align: center; margin-bottom: 1rem;">🦖</div><h3 class="font-bold mb-2" style="font-size: 1.2rem; color: #6b8e23; margin: 0;">ثيروبود</h3><p class="font-semibold mb-2" style="margin: 0;">أقدام الوحش</p><ul style="padding-right: 1rem; margin: 0;"><li>ديناصور مفترس</li><li>أشهر آكلات اللحوم</li><li>المفترس الأكبر على اليابسة</li></ul></div><div style="padding: 1.5rem; border-radius: 12px; border: 2px solid #2d5a3f; background-color: rgba(45, 90, 63, 0.1);"><div style="font-size: 3.5rem; text-align: center; margin-bottom: 1rem;">🦕</div><h3 class="font-bold mb-2" style="font-size: 1.2rem; color: #2d5a3f; margin: 0;">ساوروبود</h3><p class="font-semibold mb-2" style="margin: 0;">أقدام السحالي</p><ul style="padding-right: 1rem; margin: 0;"><li>أضخم الكائنات على اليابسة</li><li>يأكل الأعشاب والنباتات</li><li>الطول: 30+ متر</li><li>الارتفاع: 18 متر</li></ul></div><div style="padding: 1.5rem; border-radius: 12px; border: 2px solid #6b8e23; background-color: rgba(107, 142, 35, 0.1);"><div style="font-size: 3.5rem; text-align: center; margin-bottom: 1rem;">🦆</div><h3 class="font-bold mb-2" style="font-size: 1.2rem; color: #6b8e23; margin: 0;">هادروسورس</h3><p class="font-semibold mb-2" style="margin: 0;">السحلية القوية</p><ul style="padding-right: 1rem; margin: 0;"><li>له منقار يشبه البطة</li><li>يأكل النباتات</li><li>مكتشف في 1987م</li><li>كان محصورًا في القارات الشمالية</li></ul></div></div></div>';
-      }
-      else if (index === 6) {
-        return '<div class="section-card p-8 fade-in" style="background-color: ' + surfaceColor + ';"><div class="text-center mb-6"><span class="dino-icon">✅</span><h2 class="font-bold mt-4" style="font-size: 1.8rem; margin: 0;">ملخص الدرس</h2></div><div class="space-y-6"><div style="padding: 1.5rem; background-color: rgba(45, 90, 63, 0.1); border-radius: 12px; border-right: 4px solid #2d5a3f;"><h3 class="font-bold mb-3" style="font-size: 1.3rem; color: #2d5a3f; margin: 0;"><span>🌍</span> المواقع الأثرية</h3><ul style="padding-right: 1rem; margin: 0;"><li>قرية الحوض - ولاية السيب</li><li>السيح الأحمر - ولاية بدبد</li><li>أفضل مواقع عظام الديناصورات في شبه الجزيرة العربية</li></ul></div><div style="padding: 1.5rem; background-color: rgba(107, 142, 35, 0.1); border-radius: 12px; border-right: 4px solid #6b8e23;"><h3 class="font-bold mb-3" style="font-size: 1.3rem; color: #6b8e23; margin: 0;"><span>🔬</span> الأنواع المكتشفة</h3><ul style="padding-right: 1rem; margin: 0;"><li>أورنيثوبود (أقدام الطير) - آكل نباتات</li><li>ثيروبود (أقدام الوحش) - مفترس</li><li>ساوروبود (أقدام السحالي) - عملاق آكل نباتات</li><li>هادروسورس (السحلية القوية) - منقار البطة</li></ul></div><div style="padding: 1.5rem; background-color: rgba(45, 90, 63, 0.1); border-radius: 12px; border-right: 4px solid #2d5a3f;"><h3 class="font-bold mb-3" style="font-size: 1.3rem; color: #2d5a3f; margin: 0;"><span>💡</span> حقائق مهمة</h3><ul style="padding-right: 1rem; margin: 0;"><li>عاشت الديناصورات في مناخ أكثر رطوبة</li><li>كانت المنطقة مليئة بالأنهار والأشجار</li><li>حُفظت العظام بسبب نقص الأكسجين في الرواسب</li><li>لم يُعثر على هيكل متكامل حتى اليوم</li></ul></div><div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, #2d5a3f, #6b8e23); color: white; border-radius: 12px;"><p style="font-size: 2.5rem; margin: 0 0 1rem 0;">🎉</p><p class="font-bold" style="font-size: 1.3rem; margin: 0; letter-spacing: 1px;">أحسنت! أكملت الدرس</p><p style="font-size: 0.95rem; margin: 0.5rem 0 0 0; opacity: 0.95;">استمر في التعلم والاستكشاف</p></div></div></div>';
-      }
-      
-      return '';
-    }
-
-    function attachEventListeners() {
-      const prevBtn = document.getElementById('prev-btn');
-      const nextBtn = document.getElementById('next-btn');
-
-      if (prevBtn) {
-        prevBtn.addEventListener('click', function() {
-          if (currentSection > 0) {
-            currentSection--;
-            closeVocabTooltip();
-            renderApp();
-            window.scrollTo(0, 0);
-          }
-        });
-      }
-
-      if (nextBtn) {
-        nextBtn.addEventListener('click', function() {
-          if (currentSection < totalSections - 1) {
-            currentSection++;
-            closeVocabTooltip();
-            renderApp();
-            window.scrollTo(0, 0);
-          }
-        });
-      }
-    }
-
-    // دوال الإجابات
-    function showVocab1Answer() {
-      const answerDiv = document.getElementById('vocab1-answer');
-      if (answerDiv) {
-        answerDiv.innerHTML = '<div class="answer-box" style="background-color: rgba(45, 90, 63, 0.1); border: 2px solid #2d5a3f; border-radius: 12px; padding: 1.5rem;"><p class="font-bold mb-4" style="font-size: 1.1rem; color: #2d5a3f; margin: 0;">✅ الإجابة النموذجية:</p><div style="margin-top: 1rem;"><p style="margin: 0.5rem 0;"><strong>• أبرز ←</strong> أهم / أوضح / أظهر</p><p style="margin: 0.5rem 0;"><strong>• حقبة ←</strong> فترة / عصر / زمن</p><p style="margin: 0.5rem 0;"><strong>• التباين ←</strong> الاختلاف / التنوع / الفرق</p></div></div>';
-      }
-    }
-
-    function showVocab2Answer() {
-      const answerDiv = document.getElementById('vocab2-answer');
-      if (answerDiv) {
-        answerDiv.innerHTML = '<div class="answer-box" style="background-color: rgba(45, 90, 63, 0.1); border: 2px solid #2d5a3f; border-radius: 12px; padding: 1.5rem;"><p class="font-bold mb-4" style="font-size: 1.1rem; color: #2d5a3f; margin: 0;">✅ الإجابة النموذجية:</p><div style="margin-top: 1rem;"><p style="margin: 0.5rem 0;"><strong>أ.</strong> مصابّ (الأنهار)</p><p style="margin: 0.5rem 0;"><strong>ب.</strong> المناخ</p><p style="margin: 0.5rem 0;"><strong>ج.</strong> الرواسب</p></div></div>';
-      }
-    }
-
-    function showVocab3Answer() {
-      const answerDiv = document.getElementById('vocab3-answer');
-      if (answerDiv) {
-        answerDiv.innerHTML = '<div class="answer-box" style="background-color: rgba(45, 90, 63, 0.1); border: 2px solid #2d5a3f; border-radius: 12px; padding: 1.5rem;"><p class="font-bold mb-4" style="font-size: 1.1rem; color: #2d5a3f; margin: 0;">✅ أمثلة للإجابة:</p><div style="margin-top: 1rem;"><p style="margin: 0.5rem 0;">• تُعَدُّ <strong>سلطنة عُمان</strong> من أبرز <strong>الدول العربية في التطور</strong>.</p><p style="margin: 0.5rem 0;">• تُعَدُّ <strong>قلعة نزوى</strong> من أبرز <strong>المعالم التاريخية في عُمان</strong>.</p><p style="margin: 0.5rem 0;">• تُعَدُّ <strong>الجبال</strong> من أبرز <strong>التضاريس في عُمان</strong>.</p></div></div>';
-      }
-    }
-
-    function showDiscussion1Answer() {
-      const answerDiv = document.getElementById('discussion1-answer');
-      if (answerDiv) {
-        answerDiv.innerHTML = '<div class="answer-box" style="background-color: rgba(45, 90, 63, 0.1); border: 2px solid #2d5a3f; border-radius: 12px; padding: 1.5rem;"><p class="font-bold mb-4" style="font-size: 1.1rem; color: #2d5a3f; margin: 0;">✅ الإجابة النموذجية:</p><p style="line-height: 1.8;">الديناصورات التي عاشت في عُمان وأنواعها المختلفة.</p></div>';
-      }
-    }
-
-    function showDiscussion2Answer() {
-      const answerDiv = document.getElementById('discussion2-answer');
-      if (answerDiv) {
-        answerDiv.innerHTML = '<div class="answer-box" style="background-color: rgba(45, 90, 63, 0.1); border: 2px solid #2d5a3f; border-radius: 12px; padding: 1.5rem;"><p class="font-bold mb-4" style="font-size: 1.1rem; color: #2d5a3f; margin: 0;">✅ الإجابة النموذجية:</p><p style="line-height: 1.8; margin: 1rem 0;">لأن الأنهار كانت تحمل العظام والأخشاب المتحجرة وتُعيد ترسيبها في مصابّ الأنهار ومناطق التقاء الأنهار بالبحر.</p><div style="padding: 1rem; background-color: rgba(255,255,255,0.5); border-radius: 8px;"><p class="font-semibold mb-2" style="font-size: 0.95rem; color: #2d5a3f; margin: 0;">📖 الشاهد من النص:</p><p style="font-size: 0.9rem; font-style: italic; margin: 0.5rem 0;">"وكانت الأنهارُ تحمل هذه العظام والأخشاب المتحجِّرة، وتُعيد ترسيبَها في مصابّ الأنهار ومناطق التقاء الأنهار بالبحر..."</p></div></div>';
-      }
-    }
-
-    function showDiscussion3Answer() {
-      const answerDiv = document.getElementById('discussion3-answer');
-      if (answerDiv) {
-        answerDiv.innerHTML = '<div class="answer-box" style="background-color: rgba(45, 90, 63, 0.1); border: 2px solid #2d5a3f; border-radius: 12px; padding: 1.5rem;"><p class="font-bold mb-4" style="font-size: 1.1rem; color: #2d5a3f; margin: 0;">✅ الإجابة النموذجية:</p><p style="line-height: 1.8;">بسبب نقص الأكسجين في الرواسب التي غُطِّيَت بها العظام والأخشاب، مما حفظها من التحلُّل.</p></div>';
-      }
-    }
-
-    function showClassificationAnswer() {
-      const answerDiv = document.getElementById('classification-answer');
-      if (answerDiv) {
-        answerDiv.innerHTML = '<div class="answer-box" style="background-color: rgba(45, 90, 63, 0.1); border: 2px solid #2d5a3f; border-radius: 12px; padding: 1.5rem;"><p class="font-bold mb-4 text-center" style="font-size: 1.2rem; color: #2d5a3f; margin: 0;">✅ الجدول الكامل:</p><div style="overflow-x: auto; margin-top: 1rem;"><table style="width: 100%; border-collapse: collapse; border: 2px solid #2d5a3f;"><thead><tr style="background-color: #2d5a3f; color: white;"><th style="padding: 1rem; border: 1px solid #2d5a3f; text-align: right;">الاسم</th><th style="padding: 1rem; border: 1px solid #2d5a3f; text-align: right;">المعنى العربي</th><th style="padding: 1rem; border: 1px solid #2d5a3f; text-align: right;">الصنف</th><th style="padding: 1rem; border: 1px solid #2d5a3f; text-align: right;">الصفات</th></tr></thead><tbody style="background-color: white;"><tr><td style="padding: 0.875rem; border: 1px solid #2d5a3f; text-align: right;">أورنيثوبود</td><td style="padding: 0.875rem; border: 1px solid #2d5a3f; text-align: right;">أقدام الطير</td><td style="padding: 0.875rem; border: 1px solid #2d5a3f; text-align: right;">آكل نباتات</td><td style="padding: 0.875rem; border: 1px solid #2d5a3f; text-align: right;">طولها نحو 15م ووزنها نحو 20 طنًا</td></tr><tr style="background-color: rgba(0,0,0,0.02);"><td style="padding: 0.875rem; border: 1px solid #2d5a3f; text-align: right;">ساوروبود</td><td style="padding: 0.875rem; border: 1px solid #2d5a3f; text-align: right;">أقدام السحالي</td><td style="padding: 0.875rem; border: 1px solid #2d5a3f; text-align: right;">آكل نباتات</td><td style="padding: 0.875rem; border: 1px solid #2d5a3f; text-align: right;">طولها أكثر من 30م وارتفاعها نحو 18م</td></tr><tr><td style="padding: 0.875rem; border: 1px solid #2d5a3f; text-align: right;">هادروسورس</td><td style="padding: 0.875rem; border: 1px solid #2d5a3f; text-align: right;">السحلية القوية</td><td style="padding: 0.875rem; border: 1px solid #2d5a3f; text-align: right;">آكل نباتات</td><td style="padding: 0.875rem; border: 1px solid #2d5a3f; text-align: right;">له منقار يشبه البطّة</td></tr></tbody></table></div></div>';
-      }
-    }
-
-    function showQuestion5Answer() {
-      const answerDiv = document.getElementById('question5-answer');
-      if (answerDiv) {
-        answerDiv.innerHTML = '<div class="answer-box" style="background-color: rgba(45, 90, 63, 0.1); border: 2px solid #2d5a3f; border-radius: 12px; padding: 1.5rem;"><p class="font-bold mb-4" style="font-size: 1.1rem; color: #2d5a3f; margin: 0;">✅ الإجابة النموذجية:</p><div><div style="margin: 1rem 0;"><p class="font-semibold mb-2" style="margin: 0;">أ. السبب:</p><p style="margin: 0; line-height: 1.8;">لأن هذا النوع كان وجوده محصورًا في القارات الشمالية (أمريكا الشمالية وأوروبا وآسيا)، ولم يكن معروفًا في شبه الجزيرة العربية أو إفريقيا.</p></div><div style="margin: 1rem 0;"><p class="font-semibold mb-2" style="margin: 0;">ب. السبب العلمي المحتمل:</p><ul style="padding-right: 1.5rem; margin: 0;"><li>هجرة الديناصورات من القارات الشمالية إلى الجنوب</li><li>وجود جسور برية قديمة ربطت القارات</li><li>تغيرات مناخية دفعتها للانتقال جنوبًا</li><li>اتصال اليابسة في العصور القديمة</li></ul></div></div></div>';
-      }
-    }
-
-    function showDistinguishAnswer() {
-      const answerDiv = document.getElementById('distinguish-answer');
-      if (answerDiv) {
-        answerDiv.innerHTML = '<div class="answer-box" style="background-color: rgba(45, 90, 63, 0.1); border: 2px solid #2d5a3f; border-radius: 12px; padding: 1.5rem;"><p class="font-bold mb-4 text-center" style="font-size: 1.2rem; color: #2d5a3f; margin: 0;">✅ الإجابة النموذجية</p><div style="margin: 1.5rem 0;"><p style="margin: 0.5rem 0;"><span style="color: #22c55e; font-size: 1.2rem; font-weight: bold;">✔</span> استخدام الأرقام والكلمات العلمية.</p><p style="margin: 0.5rem 0;"><span style="color: #ef4444; font-size: 1.2rem; font-weight: bold;">✘</span> وجود حوار بين الشخصيات.</p><p style="margin: 0.5rem 0;"><span style="color: #22c55e; font-size: 1.2rem; font-weight: bold;">✔</span> استخدام الرسوم والصور أحيانًا لتوضيح النص.</p><p style="margin: 0.5rem 0;"><span style="color: #ef4444; font-size: 1.2rem; font-weight: bold;">✘</span> سرد حكايات خيالية عن الديناصورات.</p><p style="margin: 0.5rem 0;"><span style="color: #22c55e; font-size: 1.2rem; font-weight: bold;">✔</span> وضوح الأفكار ودقّة المعلومات.</p></div><div style="padding: 1rem; background-color: rgba(255,255,255,0.5); border-radius: 8px; margin-top: 1rem;"><p class="font-semibold mb-2" style="font-size: 1.05rem; color: #2d5a3f; margin: 0;">📖 التفسير:</p><p style="font-size: 0.95rem; line-height: 1.8; margin: 0.5rem 0;">النصوص العلمية تتميز بالدقة والموضوعية، وتستخدم الأرقام والمصطلحات العلمية، وقد تستعين بالرسوم التوضيحية. أما الحوار والحكايات الخيالية فهي من خصائص النصوص الأدبية والقصصية.</p></div></div>';
-      }
-    }
-
-    window.showVocab1Answer = showVocab1Answer;
-    window.showVocab2Answer = showVocab2Answer;
-    window.showVocab3Answer = showVocab3Answer;
-    window.showDiscussion1Answer = showDiscussion1Answer;
-    window.showDiscussion2Answer = showDiscussion2Answer;
-    window.showDiscussion3Answer = showDiscussion3Answer;
-    window.showClassificationAnswer = showClassificationAnswer;
-    window.showQuestion5Answer = showQuestion5Answer;
-    window.showDistinguishAnswer = showDistinguishAnswer;
-
-    renderApp();
-  </script>
 </body>
 </html>
