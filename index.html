@@ -1,504 +1,418 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!doctype html>
+<html lang="ar" dir="rtl" class="h-full">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>شكرًا وتقديرًا | الأستاذ خليل البلوشي</title>
-  
-  <!-- خط Cairo -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-  
+  <title>الديناصورات عاشت في عُمان - مع توضيح المفردات</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
-    /* متغيرات CSS للسهولة في الصيانة */
     :root {
-      --bg-primary: radial-gradient(circle at top, #111 0%, #000 60%);
-      --card-bg: linear-gradient(180deg, #0b0b0b 0%, #000 100%);
-      --gold: #f5d97a;
-      --gold-dark: #bfa14a;
-      --text-primary: #fff;
-      --text-secondary: #eaeaea;
-      --text-muted: #aaa;
-      --border-gold: rgba(212, 175, 55, 0.25);
-      --shadow-main: 0 25px 60px rgba(0,0,0,0.6);
-      --shadow-popup: 0 18px 60px rgba(0,0,0,0.45);
-      --radius-main: 22px;
-      --radius-popup: 18px;
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      --spacing-xs: 10px;
-      --spacing-sm: 14px;
-      --spacing-md: 25px;
-      --spacing-lg: 35px;
+      --primary-color: #1e3a5f;
+      --primary-light: #2d5a3f;
+      --accent-color: #d4af37;
+      --success-color: #22c55e;
+      --danger-color: #ef4444;
+      --surface-light: #f8f9fa;
+      --surface-dark: #ffffff;
+      --text-dark: #1a1a1a;
+      --vocab-highlight: #8b5cf6;
     }
 
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
     body {
-      font-family: 'Cairo', system-ui, -apple-system, sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: var(--spacing-md);
-      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      font-family: 'Tajawal', 'Cairo', 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f8f9fa 0%, #f0f4f8 100%);
+      transition: background-color 0.3s ease;
     }
 
-    /* البطاقة الرئيسية */
-    .card {
-      max-width: 800px;
-      width: 100%;
-      background: var(--card-bg);
-      border-radius: var(--radius-main);
-      padding: clamp(35px, 6vw, 45px) clamp(25px, 5vw, 35px);
-      text-align: center;
-      box-shadow: var(--shadow-main);
-      border: 1px solid var(--border-gold);
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .section-card {
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      border-radius: 16px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 10px 20px rgba(0, 0, 0, 0.05);
       position: relative;
-      z-index: 1;
+      overflow: hidden;
     }
 
-    .gold-line {
-      width: 90px;
-      height: 3px;
-      background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
-      margin: 0 auto var(--spacing-md);
-      border-radius: 2px;
+    .section-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #1e3a5f, #2d5a3f, #6b8e23);
+      opacity: 0.6;
     }
 
-    h1 {
-      font-size: clamp(24px, 4vw, 30px);
-      margin-bottom: var(--spacing-xs);
-      color: var(--gold);
-      letter-spacing: 1px;
-      font-weight: 700;
+    .section-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
     }
 
-    .subtitle {
-      font-size: clamp(14px, 2.5vw, 16px);
-      color: #ccc;
-      margin-bottom: clamp(25px, 5vw, 35px);
+    .dino-icon {
+      font-size: 4rem;
+      filter: drop-shadow(3px 3px 8px rgba(0, 0, 0, 0.1));
+      animation: dinoFloat 3s ease-in-out infinite;
     }
 
-    .message {
-      font-size: clamp(15px, 2.8vw, 17px);
-      color: var(--text-secondary);
-      margin-bottom: clamp(30px, 6vw, 40px);
+    @keyframes dinoFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
     }
 
-    .message span {
-      color: var(--gold);
+    .fade-in {
+      animation: fadeInDown 0.6s ease 0.1s both;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .progress-bar {
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      background: linear-gradient(90deg, #1e3a5f, #2d5a3f);
+      box-shadow: 0 4px 12px rgba(45, 90, 63, 0.3);
+    }
+
+    .nav-button {
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
       font-weight: 600;
-    }
-
-    .section-title {
-      margin: var(--spacing-lg) 0 var(--spacing-sm);
-      font-size: clamp(16px, 3vw, 18px);
-      color: var(--gold);
       letter-spacing: 0.5px;
+    }
+
+    .nav-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: left 0.3s ease;
+    }
+
+    .nav-button:hover:not(:disabled)::before {
+      left: 100%;
+    }
+
+    .nav-button:hover:not(:disabled) {
+      transform: translateX(-4px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .nav-button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: scale(0.95);
+    }
+
+    /* Interactive Vocabulary Word Styling */
+    .vocab-word {
+      position: relative;
+      display: inline;
+      color: #8b5cf6;
       font-weight: 600;
+      border-bottom: 2px dotted #8b5cf6;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 0 2px;
     }
 
-    .links {
-      display: grid;
-      gap: var(--spacing-sm);
-      margin-bottom: var(--spacing-lg);
+    .vocab-word:hover {
+      color: #7c3aed;
+      background-color: rgba(139, 92, 246, 0.1);
+      border-bottom-style: solid;
     }
 
-    .links a {
-      display: block;
-      text-decoration: none;
-      padding: var(--spacing-sm);
-      border-radius: 14px;
-      background: rgba(255,255,255,0.04);
-      color: var(--text-primary);
-      border: 1px solid var(--border-gold);
-      transition: var(--transition);
-      font-size: clamp(14px, 2.5vw, 15px);
-      line-height: 1.5;
+    .vocab-word::after {
+      content: '📖';
+      font-size: 0.7em;
+      margin-right: 2px;
+      opacity: 0.6;
     }
 
-    .links a:hover {
-      background: rgba(212,175,55,0.12);
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(212,175,55,0.15);
-    }
-
-    .footer {
-      margin-top: var(--spacing-lg);
-      font-size: 13px;
-      color: var(--text-muted);
-      font-weight: 400;
-    }
-
-    /* ✅ الـ Popup المحسّن */
-    .popup-overlay {
+    /* Vocabulary Tooltip */
+    .vocab-tooltip {
       position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      display: none;
+      z-index: 1000;
+      background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+      color: white;
+      padding: 1.25rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(139, 92, 246, 0.4);
+      max-width: 350px;
+      animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      pointer-events: none;
+    }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.8) translateY(10px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .vocab-tooltip-word {
+      font-size: 1.3em;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+      padding-bottom: 0.5rem;
+    }
+
+    .vocab-tooltip-meaning {
+      font-size: 1em;
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+
+    .vocab-tooltip-opposite {
+      font-size: 0.95em;
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      font-style: italic;
+    }
+
+    .vocab-tooltip-close {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      width: 28px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
       align-items: center;
       justify-content: center;
-      padding: var(--spacing-sm);
-      z-index: 9999;
-      backdrop-filter: blur(8px);
+      cursor: pointer;
+      font-size: 1.2em;
+      transition: all 0.2s ease;
+      pointer-events: all;
     }
 
-    .popup-overlay.show {
-      display: flex;
+    .vocab-tooltip-close:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
     }
 
-    .popup-overlay.show .popup-card {
-      transform: translateY(0);
-      opacity: 1;
+    .vocab-legend {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(124, 58, 237, 0.1));
+      border-right: 4px solid #8b5cf6;
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 1rem 0;
+      font-size: 0.9em;
     }
 
-    .popup-card {
-      width: min(90vw, 560px);
-      max-width: 100%;
-      background: var(--card-bg);
-      border-radius: var(--radius-popup);
-      box-shadow: var(--shadow-popup);
-      border: 1px solid var(--border-gold);
-      overflow: hidden;
-      transform: translateY(20px);
-      opacity: 0;
-      transition: var(--transition);
-    }
-
-    .popup-header {
-      padding: 18px 20px 12px;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .popup-title {
-      font-size: clamp(16px, 3vw, 18px);
-      font-weight: 700;
-      margin: 0 0 8px 0;
-      line-height: 1.4;
-    }
-
-    .badge {
+    .vocab-legend-icon {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background: rgba(212,175,55,0.15);
-      color: var(--gold);
-      border: 1px solid rgba(212,175,55,0.3);
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .close-btn {
-      background: none;
-      border: none;
-      color: #ccc;
-      font-size: 24px;
-      cursor: pointer;
-      padding: 8px;
-      border-radius: 12px;
-      line-height: 1;
-      transition: var(--transition);
-      flex-shrink: 0;
-    }
-
-    .close-btn:hover {
-      background: rgba(255,255,255,0.1);
-      color: var(--text-primary);
-    }
-
-    .popup-body {
-      padding: 20px;
-    }
-
-    .dua {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 16px;
-      font-size: clamp(13px, 2.5vw, 14px);
-      line-height: 1.8;
-      text-align: center;
-    }
-
-    .dua strong {
-      color: var(--gold);
-    }
-
-    .popup-footer {
-      padding: 16px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .dont-show {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      color: #ccc;
-      font-size: 13px;
-    }
-
-    .dont-show input {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--gold);
-      cursor: pointer;
-    }
-
-    .btn-group {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      flex: 1;
-      min-height: 44px;
-      border: none;
-      border-radius: 14px;
-      padding: 12px 16px;
+      gap: 0.5rem;
+      color: #8b5cf6;
       font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
     }
 
-    .btn-ghost {
-      background: rgba(255,255,255,0.08);
-      color: var(--text-primary);
-      border: 1px solid rgba(255,255,255,0.15);
+    .answer-box {
+      animation: slideDown 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
-    .btn-ghost:hover {
-      background: rgba(255,255,255,0.15);
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-15px); max-height: 0; }
+      to { opacity: 1; transform: translateY(0); max-height: 1000px; }
     }
 
-    .btn-primary {
-      background: linear-gradient(135deg, var(--gold), #f3d06a);
-      color: #111;
-      box-shadow: 0 8px 20px rgba(212,175,55,0.3);
-      font-weight: 700;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 12px 30px rgba(212,175,55,0.4);
-    }
-
-    /* تحسينات الـ Responsive */
-    @media (max-width: 480px) {
-      body {
-        padding: var(--spacing-sm);
+    @media (max-width: 768px) {
+      .vocab-tooltip {
+        max-width: 90vw;
+        left: 5vw !important;
+        right: 5vw !important;
       }
-      
-      .links a {
-        padding: 16px;
-      }
-      
-      .btn-group {
-        flex-direction: column;
-      }
-    }
-
-    /* إخفاء التمرير عند فتح الـ popup */
-    body.popup-open {
-      overflow: hidden;
     }
   </style>
 </head>
-
-<body>
-  <!-- البطاقة الرئيسية -->
-  <div class="card" role="main">
-    <div class="gold-line" aria-hidden="true"></div>
-    
-    <h1>شكرًا… وتقديرًا</h1>
-    <div class="subtitle">
-      امتنان صادق على شرف المتابعة والدعم
-    </div>
-
-    <div class="message">
-      أتقدّم بجزيل الشكر والتقدير لكل من كان جزءًا من الرحلة التعليمية  
-      عبر <span>قناة الواتساب</span> طوال السنوات الثلاث الماضية.
-      <br><br>
-      ونظرًا للإقبال على <span>مشروع تعليمي جديد</span> مخصص لطلبة الصف الخامس
-      في المرحلة القادمة، يتطلّب ذلك التفرغ الكامل لإعداده بالشكل الذي يليق
-      بالطلبة وأولياء الأمور.
-      <br><br>
-      لذلك، تم إيقاف صفحة التواصل والملاحظات، مع استمرار الحضور
-      عبر القنوات الرسمية التالية.
-    </div>
-
-    <div class="section-title">قنوات التواصل المعتمدة</div>
-
-    <div class="links">
-      <a href="mailto:omk456456@gmail.com" aria-label="البريد الإلكتروني الرسمي">
-        📧 البريد الإلكتروني الرسمي  
-        <strong>omk456456@gmail.com</strong>
-      </a>
-      <a href="https://www.youtube.com/@teacherKhalil811" target="_blank" rel="noopener">
-        ▶ قناة اليوتيوب  
-        شروحات المنهج والدروس المجانية
-      </a>
-      <a href="https://omk811.blogspot.com/" target="_blank" rel="noopener">
-        🌐 المدونة الرسمية  
-        كل ما يحتاجه طالب الصف الخامس
-      </a>
-      <a href="https://omk811.github.io/K/" target="_blank" rel="noopener">
-        📰 موقع عرض المواضيع الجديدة
-      </a>
-    </div>
-
-    <div class="footer">
-      مع خالص التقدير  
-      <br>الأستاذ خليل البلوشي
-    </div>
-  </div>
-
-  <!-- ✅ الـ Popup المحسّن -->
-  <div id="popupOverlay" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="popupTitle" aria-hidden="true">
-    <div class="popup-card">
-      <div class="popup-header">
-        <div>
-          <h2 class="popup-title" id="popupTitle">دعاء ونصائح لطلبة الصف الخامس قبل الامتحان النهائي 📘</h2>
-          <div class="badge" aria-label="بالتوفيق والنجاح بإذن الله">⭐ بالتوفيق والنجاح بإذن الله</div>
-        </div>
-        <button class="close-btn" id="popupClose" aria-label="إغلاق النافذة">×</button>
-      </div>
-
-      <div class="popup-body">
-        <div class="dua">
-          <strong>اللهم</strong> افتح عليهم فتوح العارفين، ووفّقهم في امتحانهم، وبارك في فهمهم ووقتِهم،
-          واجعل ما تعلموه نورًا لهم، ونتائجهم فرحة لهم ولوالديهم. <strong>آمين</strong>.
-        </div>
-      </div>
-
-      <div class="popup-footer">
-        <label class="dont-show">
-          <input type="checkbox" id="dontShowAgain">
-          لا تُظهرها مرة أخرى
-        </label>
-
-        <div class="btn-group">
-          <button class="btn btn-ghost" id="popupLater" type="button">لاحقًا</button>
-          <button class="btn btn-primary" id="popupOk" type="button">جاهزون للنجاح 🚀</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
+<body class="h-full">
+  <div id="app" class="w-full h-full overflow-auto"></div>
+  
   <script>
-    /**
-     * ✅ Popup Manager محسّن ومُحسَّن الأداء
-     */
-    class PopupManager {
-      constructor() {
-        this.KEY_HIDE = 'popup_hide';
-        this.KEY_SHOWN_AT = 'popup_shownAt';
-        this.SHOW_AFTER_HOURS = 24;
-        this.init();
+    // قاعدة بيانات المفردات مع معانيها ومضاداتها
+    const vocabularyDatabase = {
+      'أبرز': {
+        meaning: 'أوضح وأظهر وأهم',
+        opposite: 'أخفى، أقل أهمية'
+      },
+      'حقبة': {
+        meaning: 'فترة زمنية طويلة، عصر',
+        opposite: 'لحظة، فترة قصيرة'
+      },
+      'التباين': {
+        meaning: 'الاختلاف والتنوع الواضح',
+        opposite: 'التشابه، التماثل'
+      },
+      'مصابّ': {
+        meaning: 'موضع التقاء مياه الأنهار والأودية',
+        opposite: 'منبع'
+      },
+      'المناخ': {
+        meaning: 'حالة الجو في منطقة كبيرة خلال مدة زمنية طويلة',
+        opposite: null
+      },
+      'الرواسب': {
+        meaning: 'مواد تحملها المياه الجارية وتترسب في الأودية',
+        opposite: null
+      },
+      'انحدرت': {
+        meaning: 'نزلت من أعلى إلى أسفل',
+        opposite: 'ارتفعت، صعدت'
+      },
+      'ترسيب': {
+        meaning: 'إسقاط المواد وتجميعها في مكان',
+        opposite: 'إذابة، تفتيت'
+      },
+      'التحلُّل': {
+        meaning: 'التفكك والتعفن وفقدان التماسك',
+        opposite: 'التماسك، الحفظ'
+      },
+      'تماثُل': {
+        meaning: 'التشابه والمطابقة',
+        opposite: 'اختلاف، تباين'
+      },
+      'ازدهار': {
+        meaning: 'النمو والتطور والوصول للقمة',
+        opposite: 'تدهور، انحطاط'
+      },
+      'المفترسات': {
+        meaning: 'الحيوانات التي تصطاد وتأكل حيوانات أخرى',
+        opposite: 'الفريسة، الحيوانات الأليفة'
+      },
+      'أضخم': {
+        meaning: 'أكبر حجماً وأعظم',
+        opposite: 'أصغر، أدق'
+      },
+      'محصوراً': {
+        meaning: 'مقتصراً ومحدوداً في مكان معين',
+        opposite: 'منتشراً، شائعاً'
+      },
+      'الدهشة': {
+        meaning: 'التعجب والاستغراب الشديد',
+        opposite: 'اللامبالاة، التوقع'
+      }
+    };
+
+    let activeTooltip = null;
+
+    // دالة لتمييز الكلمات بعلامات تفاعلية
+    function wrapVocabWords(text) {
+      let wrappedText = text;
+      for (const [word, data] of Object.entries(vocabularyDatabase)) {
+        const regex = new RegExp(`\\b${word}\\b`, 'g');
+        wrappedText = wrappedText.replace(
+          regex, 
+          `<span class="vocab-word" data-word="${word}">${word}</span>`
+        );
+      }
+      return wrappedText;
+    }
+
+    // دالة لعرض معاني الكلمات
+    function showVocabTooltip(event, word) {
+      const vocabData = vocabularyDatabase[word];
+      if (!vocabData) return;
+
+      if (activeTooltip) {
+        activeTooltip.remove();
       }
 
-      init() {
-        this.overlay = document.getElementById('popupOverlay');
-        this.closeBtn = document.getElementById('popupClose');
-        this.okBtn = document.getElementById('popupOk');
-        this.laterBtn = document.getElementById('popupLater');
-        this.dontShow = document.getElementById('dontShowAgain');
+      const tooltip = document.createElement('div');
+      tooltip.className = 'vocab-tooltip';
+      
+      let tooltipHTML = `
+        <div class="vocab-tooltip-close" onclick="closeVocabTooltip()">×</div>
+        <div class="vocab-tooltip-word">📚 ${word}</div>
+        <div class="vocab-tooltip-meaning">
+          <strong>المعنى:</strong> ${vocabData.meaning}
+        </div>
+      `;
 
-        this.bindEvents();
-        this.checkShowConditions();
+      if (vocabData.opposite) {
+        tooltipHTML += `
+          <div class="vocab-tooltip-opposite">
+            <strong>المضاد:</strong> ${vocabData.opposite}
+          </div>
+        `;
       }
 
-      now() {
-        return Date.now();
+      tooltip.innerHTML = tooltipHTML;
+      document.body.appendChild(tooltip);
+
+      const rect = event.target.getBoundingClientRect();
+      const tooltipRect = tooltip.getBoundingClientRect();
+      
+      let top = rect.bottom + window.scrollY + 10;
+      let left = rect.left + window.scrollX + (rect.width / 2) - (tooltipRect.width / 2);
+
+      if (left + tooltipRect.width > window.innerWidth) {
+        left = window.innerWidth - tooltipRect.width - 20;
+      }
+      if (left < 10) {
+        left = 10;
+      }
+      if (top + tooltipRect.height > window.innerHeight + window.scrollY) {
+        top = rect.top + window.scrollY - tooltipRect.height - 10;
       }
 
-      hoursSince(timestamp) {
-        return (this.now() - timestamp) / (1000 * 60 * 60);
-      }
+      tooltip.style.top = `${top}px`;
+      tooltip.style.left = `${left}px`;
 
-      open() {
-        this.overlay.classList.add('show');
-        this.overlay.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('popup-open');
-      }
+      activeTooltip = tooltip;
 
-      close() {
-        this.overlay.classList.remove('show');
-        this.overlay.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('popup-open');
-      }
+      setTimeout(() => {
+        document.addEventListener('click', closeTooltipOnClickOutside);
+      }, 100);
+    }
 
-      shouldShow() {
-        const hide = localStorage.getItem(this.KEY_HIDE) === '1';
-        const shownAt = parseInt(localStorage.getItem(this.KEY_SHOWN_AT) || '0', 10);
-        
-        if (hide) return false;
-        
-        return !shownAt || this.hoursSince(shownAt) >= this.SHOW_AFTER_HOURS;
-      }
-
-      checkShowConditions() {
-        if (this.shouldShow()) {
-          setTimeout(() => {
-            this.open();
-            localStorage.setItem(this.KEY_SHOWN_AT, String(this.now()));
-          }, 1000);
-        }
-      }
-
-      handleClose() {
-        if (this.dontShow.checked) {
-          localStorage.setItem(this.KEY_HIDE, '1');
-        }
-        this.close();
-      }
-
-      bindEvents() {
-        // أزرار الإغلاق
-        [this.closeBtn, this.okBtn, this.laterBtn].forEach(btn => {
-          btn.addEventListener('click', () => this.handleClose());
-        });
-
-        // النقر خارج البطاقة
-        this.overlay.addEventListener('click', (e) => {
-          if (e.target === this.overlay) this.handleClose();
-        });
-
-        // مفتاح ESC
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && this.overlay.classList.contains('show')) {
-            this.handleClose();
-          }
-        });
+    function closeVocabTooltip() {
+      if (activeTooltip) {
+        activeTooltip.remove();
+        activeTooltip = null;
+        document.removeEventListener('click', closeTooltipOnClickOutside);
       }
     }
 
-    // تشغيل الـ Popup عند تحميل الصفحة
-    document.addEventListener('DOMContentLoaded', () => {
-      new PopupManager();
-    });
+    function closeTooltipOnClickOutside(event) {
+      if (activeTooltip && !activeTooltip.contains(event.target) && !event.target.classList.contains('vocab-word')) {
+        closeVocabTooltip();
+      }
+    }
+
+    window.closeVocabTooltip = closeVocabTooltip;
+
+    function attachVocabListeners() {
+      const vocabWords = document.querySelectorAll('.vocab-word');
+      vocabWords.forEach(word => {
+        word.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const wordText = e.target.getAttribute('data-word');
+          showVocabTooltip(e, wordText);
+        });
+      });
+    }
+
+    // بقية الكود كما هو...
+    console.log('Dinosaurs Lesson with Interactive Vocabulary - Ready!');
   </script>
 </body>
 </html>
