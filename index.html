@@ -890,7 +890,7 @@
                         </div>
                         <div class="options" id="options">
                             ${q.options.map((opt, i) => `
-                                <div class="option" onclick="checkAnswer(${i}, ${q.correct}, '${q.explanation}', ${gameNumber})">${opt}</div>
+                                <div class="option" onclick="checkAnswer(${i}, ${q.correct}, ${gameNumber})">${opt}</div>
                             `).join('')}
                         </div>
                         <div id="feedback"></div>
@@ -902,7 +902,9 @@
             displayQuestion();
         }
 
-        function checkAnswer(selected, correct, explanation, gameNumber) {
+        function checkAnswer(selected, correct, gameNumber) {
+            const game = games[gameNumber];
+            const q = game.questions[currentQuestion];
             const options = document.querySelectorAll('.option');
             const feedback = document.getElementById('feedback');
             const nextBtn = document.getElementById('nextBtn');
@@ -918,9 +920,9 @@
 
             if (selected === correct) {
                 currentScore++;
-                feedback.innerHTML = `<div class="feedback correct">✓ إجابة صحيحة! ${explanation}</div>`;
+                feedback.innerHTML = `<div class="feedback correct">✓ إجابة صحيحة! ${q.explanation}</div>`;
             } else {
-                feedback.innerHTML = `<div class="feedback wrong">✗ إجابة خاطئة. ${explanation}</div>`;
+                feedback.innerHTML = `<div class="feedback wrong">✗ إجابة خاطئة. ${q.explanation}</div>`;
             }
 
             nextBtn.classList.add('show');
@@ -1032,7 +1034,6 @@
             const game = games[3];
             const categories = ['الظواهر الطبيعية', 'عجائب الخلق', 'النعم والرزق', 'إلهام المخلوقات'];
             let powers = [...game.powers].sort(() => Math.random() - 0.5);
-            let categorized = { 'الظواهر الطبيعية': [], 'عجائب الخلق': [], 'النعم والرزق': [], 'إلهام المخلوقات': [] };
             
             const gameContainer = document.getElementById('gameContainer');
             gameContainer.innerHTML = `
@@ -1253,7 +1254,8 @@
             let score = 0;
 
             dropZones.forEach((zone, i) => {
-                if (zone.dataset.verse === correctOrder[i]) {
+                const droppedItem = zone.querySelector('.drag-item');
+                if (droppedItem && droppedItem.dataset.verse === correctOrder[i]) {
                     score++;
                     zone.style.borderColor = '#4caf50';
                     zone.style.background = '#c8e6c9';
