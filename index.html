@@ -2,489 +2,1726 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>نظام رصد السلوكيات الطلابية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>نظام رصد السلوكيات الطلابية - وفق لائحة شؤون الطلبة</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-    
     <style>
+        /* ===== المتغيرات الأساسية ===== */
         :root {
             --primary: #1a4d2e;
+            --primary-light: #2e7d32;
+            --primary-dark: #0d3b1f;
             --secondary: #4f9d69;
             --accent: #d4af37;
+            --accent-dark: #b8941f;
             --danger: #c1292e;
+            --danger-light: #ef5350;
             --warning: #f57c00;
             --info: #0277bd;
             --bg: #f8f9fa;
+            --bg-gradient: linear-gradient(145deg, #f8f9fa 0%, #eef2f5 100%);
             --surface: #ffffff;
+            --surface-glass: rgba(255, 255, 255, 0.95);
             --text: #212121;
+            --text-secondary: #666666;
+            --text-muted: #9e9e9e;
             --border: #e0e0e0;
-            --shadow: rgba(0, 0, 0, 0.08);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --shadow-hover: 0 12px 40px rgba(26, 77, 46, 0.15);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        /* ===== إعادة تعيين ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+        }
 
         body {
             font-family: 'Cairo', sans-serif;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e8eaf0 100%);
+            background: var(--bg-gradient);
             color: var(--text);
             min-height: 100vh;
-            padding: 20px;
+            padding: 16px;
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* تنسيقات الطباعة المحسنة */
-        @media print {
-            body { 
-                background: white !important; 
-                -webkit-print-color-adjust: exact !important; 
-                print-color-adjust: exact !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                height: 100%;
-                overflow: hidden;
-            }
-
-            /* إخفاء كل العناصر غير التقرير */
-            #loginPage, header, .section-card, .buttons-row, .toast, #mainApp > .container > *:not(#reportContainer) {
-                display: none !important;
-            }
-
-            /* إظهار التقرير فقط */
-            #reportContainer {
-                display: block !important;
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                margin: 0 !important;
-                padding: 20px !important;
-                border: none !important;
-                box-shadow: none !important;
-                background: white !important;
-                z-index: 9999;
-            }
-
-            /* تحسين الفواصل للصفحات */
-            .report-section { page-break-inside: avoid; }
-            h1, h2, h3 { page-break-after: avoid; }
+        /* ===== تصميم الحاوية ===== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
         }
 
-        /* تحسينات الهواتف */
-        @media (max-width: 768px) {
-            body { padding: 10px; }
-            .section-card { padding: 15px; }
-            .btn { width: 100%; margin-bottom: 10px; justify-content: center; }
-            .behavior-item label { font-size: 0.95rem; }
-            input[type="checkbox"] { width: 28px; height: 28px; } /* تكبير المربع للمس */
+        /* ===== الهيدر المتحرك ===== */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: clamp(24px, 5vw, 40px);
+            border-radius: var(--radius-xl);
+            margin-bottom: clamp(20px, 3vw, 30px);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            animation: gradientFlow 10s ease infinite;
+            background-size: 200% 200%;
         }
 
-        /* الهيكل العام */
-        .container { max-width: 1000px; margin: 0 auto; }
-        
+        @keyframes gradientFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        header h1 {
+            font-family: 'Amiri', serif;
+            color: white;
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 700;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+            letter-spacing: 1px;
+            word-break: break-word;
+        }
+
+        header p {
+            color: rgba(255,255,255,0.95);
+            text-align: center;
+            margin-top: 10px;
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
+            position: relative;
+            z-index: 1;
+            font-weight: 500;
+        }
+
+        /* ===== بطاقات المحتوى ===== */
         .section-card {
-            background: var(--surface);
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 20px var(--shadow);
-            border: 1px solid var(--border);
+            background: var(--surface-glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            padding: clamp(20px, 4vw, 30px);
+            margin-bottom: 25px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: var(--transition);
+        }
+
+        .section-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--secondary);
         }
 
         .section-title {
             font-family: 'Amiri', serif;
-            font-size: 1.5rem;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
             color: var(--primary);
             margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--accent);
+            padding-bottom: 15px;
+            border-bottom: 4px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
-        /* عناصر النموذج */
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-weight: 700; margin-bottom: 8px; }
-        
-        select, input[type="date"], input[type="text"] {
+        .section-title i {
+            color: var(--accent-dark);
+            font-size: 1.2em;
+        }
+
+        /* ===== النماذج ===== */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 8px;
+            font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+        }
+
+        input, select, textarea {
             width: 100%;
-            padding: 12px;
+            padding: 14px 18px;
             border: 2px solid var(--border);
-            border-radius: 10px;
-            font-family: 'Cairo';
-            font-size: 1rem;
+            border-radius: var(--radius-md);
+            font-family: 'Cairo', sans-serif;
+            font-size: clamp(0.95rem, 2.5vw, 1rem);
+            transition: var(--transition);
+            background: white;
+            -webkit-appearance: none;
+            appearance: none;
         }
 
-        /* شبكة الطلاب */
-        .students-grid {
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 4px rgba(79, 157, 105, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* ===== الشبكات المتجاوبة ===== */
+        .grid-2, .grid-3, .grid-4 {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 10px;
-            margin-top: 10px;
+            gap: 20px;
+            margin-bottom: 20px;
         }
 
-        .student-chip {
-            background: #f1f3f4;
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.2s;
-            font-size: 0.9rem;
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
         }
 
-        .student-chip.selected {
-            background: var(--primary);
-            color: white;
-            border-color: var(--accent);
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
         }
 
-        /* السلوكيات */
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+        }
+
+        /* ===== فئات السلوكيات ===== */
         .behavior-category {
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            border: 2px solid var(--border);
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .behavior-category:hover {
+            border-color: var(--secondary);
+            box-shadow: var(--shadow-md);
         }
 
         .category-header {
-            background: var(--primary);
+            font-weight: 700;
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
             color: white;
-            padding: 8px 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-weight: bold;
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            position: relative;
+            overflow: hidden;
         }
 
+        .category-header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            animation: rotate 15s linear infinite;
+        }
+
+        /* ===== عناصر السلوكيات ===== */
         .behavior-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 8px;
-            border-bottom: 1px solid #eee;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            margin-bottom: 10px;
+            background: white;
+            border: 1px solid var(--border);
+            transition: var(--transition);
         }
-        
-        .behavior-item:last-child { border-bottom: none; }
 
-        input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--primary);
+        .behavior-item:hover {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+            border-color: var(--secondary);
+            transform: translateX(-4px);
+        }
+
+        .behavior-item input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
             cursor: pointer;
+            accent-color: var(--secondary);
+            -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+            margin: 0;
         }
 
-        /* الأزرار */
+        .behavior-item label {
+            margin: 0;
+            flex: 1;
+            cursor: pointer;
+            font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* ===== الأزرار المتجاوبة ===== */
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: 'Cairo', sans-serif;
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            flex: 0 1 auto;
+            min-width: 140px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--info) 0%, #0288d1 100%);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning) 0%, #ff9800 100%);
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ===== صف الأزرار ===== */
         .buttons-row {
             display: flex;
-            gap: 10px;
-            justify-content: center;
+            gap: 15px;
             flex-wrap: wrap;
-            margin-top: 20px;
+            margin-top: 30px;
+            justify-content: center;
+            align-items: center;
         }
 
-        .btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 10px;
-            font-family: 'Cairo';
-            font-weight: bold;
+        @media (max-width: 768px) {
+            .buttons-row {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+
+        /* ===== بطاقات الطلاب ===== */
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .student-chip {
+            background: white;
+            padding: 16px 20px;
+            border-radius: var(--radius-md);
+            border: 2px solid var(--border);
+            font-weight: 500;
+            text-align: center;
+            transition: var(--transition);
             cursor: pointer;
+            font-size: clamp(0.9rem, 2.2vw, 1rem);
+            word-break: break-word;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .student-chip:hover {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
             color: white;
+            border-color: var(--primary);
+            transform: scale(1.03) translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .student-chip.selected {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 8px 20px rgba(26, 77, 46, 0.3);
+            font-weight: 700;
+        }
+
+        /* ===== تقرير الطباعة المحسن ===== */
+        #reportOutput {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: clamp(20px, 4vw, 30px);
+            margin-top: 25px;
+            white-space: pre-wrap;
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.8;
+            direction: rtl;
+            display: none;
+            box-shadow: var(--shadow-lg);
+        }
+
+        #reportOutput.show {
+            display: block;
+            animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== تصميم خاص للطباعة ===== */
+        @media print {
+            /* إخفاء كل شيء */
+            body {
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                min-height: auto !important;
+            }
+            
+            .container {
+                max-width: 100% !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            
+            /* إخفاء كل العناصر ما عدا التقرير */
+            #loginPage,
+            header,
+            .section-card,
+            .buttons-row,
+            #studentsSection,
+            #toast,
+            .container > *:not(#reportOutput):not(style):not(script) {
+                display: none !important;
+                visibility: hidden !important;
+                height: 0 !important;
+                width: 0 !important;
+                overflow: hidden !important;
+                position: absolute !important;
+                top: -9999px !important;
+                left: -9999px !important;
+            }
+            
+            /* إظهار التقرير فقط */
+            #reportOutput {
+                display: block !important;
+                visibility: visible !important;
+                position: relative !important;
+                width: 100% !important;
+                height: auto !important;
+                min-height: 100vh !important;
+                padding: 15px !important;
+                margin: 0 auto !important;
+                background: white !important;
+                border: none !important;
+                box-shadow: none !important;
+                page-break-inside: avoid !important;
+                page-break-after: avoid !important;
+                page-break-before: avoid !important;
+                font-size: 12pt !important;
+                line-height: 1.5 !important;
+                overflow: visible !important;
+            }
+            
+            /* محتوى التقرير */
+            #reportOutput * {
+                visibility: visible !important;
+                page-break-inside: avoid !important;
+                page-break-after: avoid !important;
+                page-break-before: avoid !important;
+                color: black !important;
+                background: white !important;
+            }
+            
+            /* إعدادات الصفحة */
+            @page {
+                size: A4 portrait;
+                margin: 1.5cm;
+                padding: 0;
+                background: white;
+            }
+            
+            html, body {
+                height: auto !important;
+                overflow: visible !important;
+                background: white !important;
+            }
+            
+            /* إخفاء عناصر التفاعل */
+            .btn, .student-chip, .behavior-item input, 
+            button, select, input, textarea {
+                display: none !important;
+            }
+            
+            /* إظهار نص التقرير فقط */
+            .report-content {
+                display: block !important;
+            }
+        }
+
+        /* ===== صفحة تسجيل الدخول ===== */
+        #loginPage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 16px;
+        }
+
+        #loginPage.hidden {
+            display: none;
+        }
+
+        .login-card {
+            background: white;
+            padding: clamp(30px, 6vw, 50px);
+            border-radius: var(--radius-xl);
+            box-shadow: 0 25px 70px rgba(0,0,0,0.25);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            animation: scaleIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .login-card h1 {
+            font-family: 'Amiri', serif;
+            color: var(--primary);
+            font-size: clamp(1.8rem, 5vw, 2.2rem);
+            margin-bottom: 15px;
+        }
+
+        .login-card p {
+            color: var(--text-secondary);
+            margin-bottom: 35px;
+            font-size: clamp(1rem, 3vw, 1.1rem);
+        }
+
+        .login-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* ===== تنسيقات متقدمة للشاشات الصغيرة ===== */
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+            
+            .section-card {
+                padding: 18px;
+            }
+            
+            .behavior-item {
+                padding: 10px 12px;
+            }
+            
+            .behavior-item label {
+                font-size: 0.95rem;
+            }
+            
+            .student-chip {
+                padding: 14px 16px;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            header h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* ===== دعم الشاشات الكبيرة ===== */
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1600px;
+            }
+            
+            html {
+                font-size: 18px;
+            }
+        }
+
+        /* ===== إشعارات توست محسنة ===== */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 10000;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1rem;
             display: flex;
             align-items: center;
-            gap: 8px;
-            transition: transform 0.2s;
+            gap: 10px;
+            direction: rtl;
+            max-width: 90%;
+            text-align: center;
         }
 
-        .btn:active { transform: scale(0.98); }
-        .btn-primary { background: var(--primary); }
-        .btn-success { background: #2e7d32; }
-        .btn-danger { background: var(--danger); }
-
-        /* منطقة التقرير (مخفية في الوضع العادي) */
-        #reportContainer {
-            display: none;
-            background: white;
-            padding: 30px;
-            border: 2px dashed var(--primary);
-            margin-top: 20px;
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
         }
 
-        #reportContainer.show { display: block; }
-
-        /* صفحة الدخول */
-        #loginPage {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex; align-items: center; justify-content: center;
-            z-index: 1000;
+        /* ===== عناصر إضافية متجاوبة ===== */
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 0 5px;
         }
-        .login-card {
-            background: white; padding: 40px; border-radius: 20px;
-            text-align: center; width: 90%; max-width: 400px;
+
+        .badge-level-1 {
+            background: #e3f2fd;
+            color: #0277bd;
+        }
+
+        .badge-level-2 {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .badge-level-3 {
+            background: #ffebee;
+            color: #c1292e;
+        }
+
+        /* ===== تأثيرات التحميل ===== */
+        .loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: calc(50% - 15px);
+            left: calc(50% - 15px);
+            width: 30px;
+            height: 30px;
+            border: 3px solid var(--border);
+            border-top-color: var(--secondary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-
+    <!-- صفحة تسجيل الدخول -->
     <div id="loginPage">
         <div class="login-card">
-            <div style="font-size: 3rem; margin-bottom: 10px;">🔐</div>
-            <h2 style="color: var(--primary); margin-bottom: 10px;">تسجيل الدخول</h2>
-            <p style="color: #666; margin-bottom: 20px;">نظام رصد السلوكيات الطلابية</p>
-            <input type="number" id="employeeId" placeholder="رقم الموظف (1234)" style="text-align: center; letter-spacing: 2px;">
-            <button class="btn btn-primary" onclick="login()" style="width: 100%; margin-top: 15px; justify-content: center;">دخول</button>
-            <p id="loginError" style="color: red; display: none; margin-top: 10px; font-size: 0.9rem;">الرقم الوظيفي غير صحيح</p>
+            <div class="login-icon">🔐</div>
+            <h1>تسجيل الدخول</h1>
+            <p>نظام رصد السلوكيات الطلابية</p>
+            
+            <input type="text" id="employeeId" placeholder="أدخل الرقم الوظيفي" maxlength="8" autocomplete="off" inputmode="numeric" pattern="[0-9]*">
+            
+            <button class="btn btn-primary" id="loginBtn" onclick="login()" style="width: 100%; padding: 16px;">
+                دخول النظام
+            </button>
+            
+            <div id="errorMessage" class="error-message" style="display: none; color: var(--danger); background: #ffebee; padding: 12px; border-radius: var(--radius-md); margin-top: 20px;">
+                ❌ الرقم الوظيفي غير صحيح!
+            </div>
         </div>
     </div>
 
+    <!-- التطبيق الرئيسي -->
     <div id="mainApp" style="display: none;">
+        <div id="toast" class="toast"></div>
+        
         <div class="container">
-            <header style="text-align: center; margin-bottom: 20px; color: var(--primary);">
-                <h1 style="font-family: 'Amiri';">نظام المتابعة السلوكية</h1>
+            <header>
+                <h1>🎓 نظام رصد السلوكيات الطلابية</h1>
+                <p>وفقًا للائحة شؤون الطلبة - القرار الوزاري رقم 2017/234</p>
             </header>
 
             <div class="section-card">
-                <div class="section-title">بيانات الطالب</div>
-                <div class="form-group">
-                    <label>تاريخ الرصد:</label>
-                    <input type="date" id="dateInput">
+                <h2 class="section-title">📋 معلومات الطالب</h2>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="className">🏫 الشعبة الدراسية:</label>
+                        <select id="className" onchange="loadStudents()">
+                            <option value="">اختر الشعبة...</option>
+                            <option value="5-1">الخامس 1</option>
+                            <option value="5-2">الخامس 2</option>
+                            <option value="5-3">الخامس 3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">📅 التاريخ:</label>
+                        <input type="date" id="date">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>الشعبة:</label>
-                    <select id="classSelect" onchange="loadStudents()">
-                        <option value="">-- اختر الشعبة --</option>
-                        <option value="class1">الصف الخامس / 1</option>
-                        <option value="class2">الصف الخامس / 2</option>
-                        <option value="class3">الصف الخامس / 3</option>
-                    </select>
+                
+                <div id="studentsSection" style="display: none;">
+                    <div class="form-group">
+                        <label>👤 اختر الطالب:</label>
+                        <div class="students-grid" id="studentsGrid"></div>
+                    </div>
                 </div>
+                
                 <div class="form-group">
-                    <label>الطالب:</label>
-                    <div id="studentsGrid" class="students-grid"></div>
-                    <input type="hidden" id="selectedStudentName">
+                    <label for="studentName">✅ الطالب المختار:</label>
+                    <input type="text" id="studentName" readonly placeholder="اختر الشعبة أولاً ثم اختر الطالب..." style="background: #f8f9fa; cursor: default; font-weight: 600;">
+                </div>
+            </div>
+
+            <!-- باقي المحتوى كما هو مع إضافة الـ id للفئات -->
+            <div class="section-card">
+                <h2 class="section-title">📊 السلوكيات والملاحظات السلبية</h2>
+                
+                <!-- السلوكيات الصفية -->
+                <div class="behavior-category" id="classroom-behaviors">
+                    <div class="category-header">📚 السلوكيات الصفية</div>
+                    
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="b1" value="الحديث الجانبي المستمر أثناء الحصة"><label for="b1">الحديث الجانبي المستمر أثناء الحصة</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="b2" value="الضحك والقهقهة بلا مبرر"><label for="b2">الضحك والقهقهة بلا مبرر</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="b3" value="التحرك من المقعد دون استئذان"><label for="b3">التحرك من المقعد دون استئذان</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="b4" value="اللعب بالأدوات المدرسية أثناء الشرح"><label for="b4">اللعب بالأدوات المدرسية أثناء الشرح</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="b5" value="التشويش والإزعاج المتعمد"><label for="b5">التشويش والإزعاج المتعمد</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="b6" value="عدم الإنصات لتوجيهات المعلم"><label for="b6">عدم الإنصات لتوجيهات المعلم</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="b7" value="المقاطعة المتكررة للمعلم"><label for="b7">المقاطعة المتكررة للمعلم</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="b8" value="الخروج من الصف دون إذن"><label for="b8">الخروج من الصف دون إذن</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="b9" value="طلبات الخروج للحمام بشكل متكرر"><label for="b9">طلبات الخروج للحمام بشكل متكرر في كل حصة</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="b10" value="شرب الماء بشكل مبالغ فيه"><label for="b10">شرب الماء بشكل مبالغ فيه دون ضرورة</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="b11" value="تناول المأكولات أثناء الحصة"><label for="b11">تناول المأكولات أو المشروبات أثناء الحصة</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="b12" value="النوم أو وضع الرأس على الطاولة"><label for="b12">النوم أو وضع الرأس على الطاولة</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="b13" value="الانشغال بالهاتف أو الأجهزة الإلكترونية"><label for="b13">الانشغال بالهاتف أو الأجهزة الإلكترونية</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="b14" value="التأخر المتكرر عن الحصص"><label for="b14">التأخر المتكرر عن الحصص</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="b15" value="عدم الالتزام بالزي المدرسي"><label for="b15">عدم الالتزام بالزي المدرسي</label></div>
+                </div>
+
+                <!-- الملاحظات التحصيلية -->
+                <div class="behavior-category">
+                    <div class="category-header" style="background: linear-gradient(135deg, #f57c00 0%, #ef6c00 100%);">📝 الملاحظات التحصيلية</div>
+                    
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="t1" value="عدم إحضار الكتب والدفاتر"><label for="t1">عدم إحضار الكتب والدفاتر المدرسية</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="t2" value="الإهمال في أداء الواجبات المنزلية"><label for="t2">الإهمال المستمر في أداء الواجبات المنزلية</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="t3" value="عدم إكمال الأنشطة الصفية"><label for="t3">عدم إكمال الأنشطة الصفية</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="t4" value="ضعف التركيز والانتباه"><label for="t4">ضعف التركيز والانتباه أثناء الشرح</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="t5" value="عدم المشاركة في الأنشطة الصفية"><label for="t5">عدم المشاركة في الأنشطة الصفية</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="t6" value="الكتابة غير المنظمة والمشوهة"><label for="t6">الكتابة غير المنظمة والمشوهة</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="t7" value="عدم الاستعداد للاختبارات"><label for="t7">عدم الاستعداد للاختبارات والتقييمات</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="t8" value="ضعف في مهارات القراءة"><label for="t8">ضعف في مهارات القراءة</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="t9" value="ضعف في مهارات الكتابة"><label for="t9">ضعف في مهارات الكتابة والإملاء</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="t10" value="صعوبة في فهم المفاهيم الأساسية"><label for="t10">صعوبة في فهم المفاهيم الأساسية</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="t11" value="التراجع الملحوظ في المستوى الدراسي"><label for="t11">التراجع الملحوظ في المستوى الدراسي</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="t12" value="عدم متابعة الدروس السابقة"><label for="t12">عدم متابعة الدروس والمراجعة السابقة</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="t13" value="الغياب المتكرر عن الحصص"><label for="t13">الغياب المتكرر عن الحصص</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="t14" value="عدم الاحتفاظ بالدفاتر منظمة"><label for="t14">عدم الاحتفاظ بالدفاتر والأوراق منظمة</label></div>
+                </div>
+
+                <!-- السلوكيات الاجتماعية -->
+                <div class="behavior-category">
+                    <div class="category-header" style="background: linear-gradient(135deg, #c1292e 0%, #b71c1c 100%);">👥 السلوكيات الاجتماعية</div>
+                    
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="s1" value="الإساءة اللفظية للزملاء"><label for="s1">الإساءة اللفظية للزملاء</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="s2" value="الشجار والمشادات مع الزملاء"><label for="s2">الشجار والمشادات مع الزملاء</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="s3" value="النميمة ونقل الكلام بين الطلبة"><label for="s3">النميمة ونقل الكلام بين الطلبة</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="s4" value="إثارة المشاكل والفتن عمداً"><label for="s4">إثارة المشاكل والفتن بين الطلبة عمداً</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="s5" value="التنمر على الزملاء"><label for="s5">التنمر على الزملاء (لفظي أو جسدي)</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="s6" value="الاستيلاء على ممتلكات الزملاء"><label for="s6">الاستيلاء على ممتلكات الزملاء</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="s7" value="السخرية والاستهزاء بالآخرين"><label for="s7">السخرية والاستهزاء بالآخرين</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="s8" value="العزلة وعدم الاندماج مع الزملاء"><label for="s8">العزلة وعدم الاندماج مع الزملاء</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="s9" value="التكبر والغرور"><label for="s9">التكبر والغرور في التعامل</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="negative-behavior" id="s10" value="عدم احترام المعلمين والإداريين"><label for="s10">عدم احترام المعلمين والإداريين</label></div>
+                </div>
+            </div>
+
+            <div class="section-card" style="border: 3px solid #2e7d32;">
+                <h2 class="section-title" style="color: #2e7d32; border-color: #2e7d32;">⭐ الملاحظات الإيجابية</h2>
+                <div style="background: #e8f5e9; padding: 15px; border-radius: var(--radius-md); margin-bottom: 20px; border-right: 4px solid #2e7d32;">
+                    <p style="margin: 0; color: #1b5e20; font-weight: 600;">
+                        ⚠️ تنبيه: عند اختيار أي ملاحظة إيجابية، لن يمكنك اختيار أي سلوكيات سلبية والعكس صحيح.
+                    </p>
+                </div>
+                
+                <div class="behavior-category" style="border: 2px solid #2e7d32;">
+                    <div class="category-header" style="background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);">⭐ ملاحظات التميز والتحسن</div>
+                    
+                    <div class="behavior-item"><input type="checkbox" class="positive-behavior" id="p1" value="طالب متميز في المشاركة الصفية"><label for="p1">طالب متميز في المشاركة الصفية</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="positive-behavior" id="p2" value="يظهر تحسناً ملحوظاً في الأداء"><label for="p2">يظهر تحسناً ملحوظاً في الأداء</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="positive-behavior" id="p3" value="منظم ومرتب في أعماله"><label for="p3">منظم ومرتب في أعماله</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="positive-behavior" id="p4" value="يتعاون مع زملائه بشكل جيد"><label for="p4">يتعاون مع زملائه بشكل جيد</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="positive-behavior" id="p5" value="ملتزم بالواجبات والأنشطة"><label for="p5">ملتزم بالواجبات والأنشطة</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="positive-behavior" id="p6" value="يحتاج إلى التشجيع والتحفيز"><label for="p6">يحتاج إلى التشجيع والتحفيز المستمر</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="positive-behavior" id="p7" value="يبدي اهتماماً واضحاً بالتعلم"><label for="p7">يبدي اهتماماً واضحاً بالتعلم</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="positive-behavior" id="p8" value="محترم في تعامله مع الجميع"><label for="p8">محترم في تعامله مع الجميع</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="positive-behavior" id="p9" value="يساعد زملاءه ويقدم لهم الدعم"><label for="p9">يساعد زملاءه ويقدم لهم الدعم</label></div>
+                    <div class="behavior-item"><input type="checkbox" class="positive-behavior" id="p10" value="نموذج يحتذى به في السلوك"><label for="p10">نموذج يحتذى به في السلوك</label></div>
                 </div>
             </div>
 
             <div class="section-card">
-                <div class="section-title">رصد السلوكيات</div>
-                
-                <div class="behavior-category" style="border-color: #ef5350;">
-                    <div class="category-header" style="background: #c62828;">⚠️ مخالفات وسلوكيات سلبية</div>
-                    <div id="negativeList">
-                        </div>
-                </div>
-
-                <div class="behavior-category" style="border-color: #66bb6a;">
-                    <div class="category-header" style="background: #2e7d32;">⭐ تعزيز وتميز سلوكي</div>
-                    <div id="positiveList">
-                        </div>
-                </div>
-
+                <h2 class="section-title">📝 ملاحظات إضافية</h2>
                 <div class="form-group">
-                    <label>إجراءات المعلم / ملاحظات إضافية:</label>
-                    <textarea id="teacherNotes" rows="3" style="width: 100%; border: 2px solid var(--border); border-radius: 10px; padding: 10px;" placeholder="اكتب وصفاً للإجراء المتخذ (تنبيه شفهي، نقل مكان، استدعاء ولي أمر...)"></textarea>
+                    <label for="notes">التفاصيل والملاحظات:</label>
+                    <textarea id="notes" rows="4" placeholder="أضف أي ملاحظات أو تفاصيل إضافية..."></textarea>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2 class="section-title">⚖️ الإجراء المتخذ</h2>
+                <div class="form-group">
+                    <label for="action">نوع الإجراء:</label>
+                    <select id="action">
+                        <option value="">اختر الإجراء...</option>
+                        <option value="نصح - الملحق رقم (3)">نصح - الملحق رقم (3)</option>
+                        <option value="تنبيه - الملحق رقم (4)">تنبيه - الملحق رقم (4)</option>
+                        <option value="إنذار وتعهد - الملحق رقم (5) و (6)">إنذار وتعهد - الملحق رقم (5) و (6)</option>
+                        <option value="إحالة للأخصائي الاجتماعي">إحالة للأخصائي الاجتماعي</option>
+                        <option value="إبلاغ ولي الأمر">إبلاغ ولي الأمر</option>
+                    </select>
                 </div>
             </div>
 
             <div class="buttons-row">
-                <button class="btn btn-success" onclick="generateReport()">
-                    <span>📄 إنشاء التقرير</span>
+                <button class="btn btn-primary" onclick="generateReport()">
+                    📋 إنشاء التقرير
                 </button>
-                <button class="btn btn-danger" onclick="resetForm()">
-                    <span>🔄 تفريغ الحقول</span>
+                <button class="btn btn-secondary" onclick="printReport()">
+                    🖨️ طباعة التقرير
+                </button>
+                <button class="btn btn-success" onclick="shareWhatsApp()">
+                    📱 إرسال عبر واتساب
+                </button>
+                <button class="btn btn-success" onclick="shareWhatsAppToNumber()" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);">
+                    📞 إرسال لرقم محدد
+                </button>
+                <button class="btn btn-warning" onclick="saveData()">
+                    💾 حفظ البيانات
+                </button>
+                <button class="btn btn-warning" onclick="resetForm()" style="background: linear-gradient(135deg, #9e9e9e 0%, #757575 100%);">
+                    🔄 تفريغ الحقول
                 </button>
             </div>
 
-            <div id="reportContainer">
-                <div style="border: 3px double #000; padding: 20px; min-height: 800px; position: relative;">
-                    <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 20px;">
-                        <h2 style="font-family: 'Amiri'; margin-bottom: 5px;">تقرير متابعة سلوكية</h2>
-                        <p style="font-size: 0.9rem;">وزارة التربية والتعليم - لائحة شؤون الطلبة</p>
-                    </div>
-
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; background: #f9f9f9; padding: 15px; border: 1px solid #ccc;">
-                        <div><strong>اسم الطالب:</strong> <span id="r_name"></span></div>
-                        <div><strong>الصف/الشعبة:</strong> <span id="r_class"></span></div>
-                        <div><strong>التاريخ:</strong> <span id="r_date"></span></div>
-                        <div><strong>المعلم الراصد:</strong> <span id="r_teacher">--</span></div>
-                    </div>
-
-                    <div class="report-section">
-                        <h3 style="background: #eee; padding: 8px; border-right: 4px solid #333; margin-bottom: 10px;">الملاحظات المرصودة:</h3>
-                        <ul id="r_behaviors" style="padding-right: 25px; line-height: 1.8;"></ul>
-                    </div>
-
-                    <div class="report-section" style="margin-top: 20px;">
-                        <h3 style="background: #eee; padding: 8px; border-right: 4px solid #333; margin-bottom: 10px;">الإجراءات والملاحظات:</h3>
-                        <p id="r_notes" style="padding: 10px; border: 1px solid #ddd; min-height: 80px;"></p>
-                    </div>
-
-                    <div style="margin-top: 50px; display: flex; justify-content: space-between; padding: 0 30px;">
-                        <div style="text-align: center;">
-                            <p>توقيع المعلم</p>
-                            <p>..................</p>
-                        </div>
-                        <div style="text-align: center;">
-                            <p>يعتمد مدير المدرسة</p>
-                            <p>..................</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div style="text-align: center; margin-top: 20px;" class="no-print">
-                    <button class="btn btn-primary" onclick="window.print()" style="display: inline-flex; width: auto;">🖨️ طباعة الآن</button>
-                    <button class="btn btn-danger" onclick="document.getElementById('reportContainer').classList.remove('show')" style="display: inline-flex; width: auto; margin-right: 10px;">إغلاق</button>
-                </div>
-            </div>
+            <!-- مكان عرض التقرير -->
+            <div id="reportOutput"></div>
         </div>
     </div>
 
     <script>
-        // === 1. البيانات ===
+        // ===== الثوابت والمتغيرات العامة =====
+        const CORRECT_EMPLOYEE_ID = "16117945";
+        
+        // بيانات الطلاب
         const studentsData = {
-            "class1": ["أحمد محمد", "خالد علي", "سعيد عمر", "يوسف حسن", "عبدالله إبراهيم"],
-            "class2": ["فهد سالم", "ناصر حمد", "عمر عبدالعزيز", "تركي فيصل", "ماجد عبدالله"],
-            "class3": ["محمد يحيى", "علي حسين", "حسن مصطفى", "إبراهيم خليل", "زكريا عيسى"]
+            "5-1": [
+                "أحمد بن حمدان بن مهنا سيف المعمري",
+                "أحمد بن خلفان بن سعيد خلفان اليحيائي",
+                "أحمد بن موسى بن احمد عبدالله السعدي",
+                "احمد بن علي بن عبدالله سعيد الريسي",
+                "احمد بن محمد بن راشد سعيد المخمري",
+                "المعتصم بن احمد بن عبدالعزيز محمد العوضي",
+                "بسام بن يوسف بن علي محمد المجيني",
+                "تركي بن بدر بن عبدالله بخشوه البلوشي",
+                "تميم بن علي بن محمد ابراهيم العبري",
+                "حارث بن وائل بن سعيد محمد الكلباني",
+                "راشد بن أحمد بن راشد علي الريسي",
+                "زياد بن علي بن سعيد عبدالله الريسي",
+                "صالح بن مبارك بن مطر مبارك البلوشي",
+                "عبدالعزيز بن احمد بن سلطان عبدالله المعمري",
+                "عبدالله بن سالم بن سيف سنان السعدي",
+                "علي بن أحمد بن محمد أحمد السعدي",
+                "علي بن حمد بن محمد ناصر المخمري",
+                "عمر بن عبدالله بن سعيد عبيد السعدي",
+                "غيث بن محمد بن سعيد عامر الخزيمي",
+                "فيصل بن احمد بن سالم حزيم المخمري",
+                "محمد بن ادريس بن اسماعيل أحمد البلوشي",
+                "محمد بن جاسم بن محمد أحمد البلوشي",
+                "محمد بن سعيد بن عبدالله محمد المعمري",
+                "محمد بن سعيد بن محمد سيف السعدي",
+                "محمد بن عبدالله بن سعيد عبدالله الشرقي",
+                "محمد بن عيد بن مسعود سعيد البلوشي",
+                "محمد بن عيسى بن كرم محمد البلوشي",
+                "محمد بن هارون بن محمد عبدالله الهاشمي",
+                "مشاري بن أحمد بن غريب عبدالله البلوشي",
+                "مشعل بن أحمد بن غريب عبدالله البلوشي",
+                "معاذ بن خالد بن محمد عبدالله المعمري",
+                "مكتوم بن خالد بن عامر سعيد العيسائي",
+                "موسى بن حسن بن محمد ابراهيم البلوشي",
+                "ناصر بن عثمان بن ناصر حميد المكتومي",
+                "نواف بن صالح بن علي محمد الكعبي",
+                "يزيد بن محمد بن خميس شنين المعمري"
+            ],
+            "5-2": [
+                "أحمد بن عبدالله بن سالم أحمد الخزيمي",
+                "أحمد بن علي بن عبدالله علي الشرقي",
+                "أحمد بن محمد بن أحمد عبدالله السعدي",
+                "أحمد بن محمد بن بخيت بريك المخمري",
+                "أمير بن خالد بن احمد حمدان المعمري",
+                "اسعد بن سعيد بن عبيد مطر المقبالي",
+                "بدر بن عبدالله بن علي محمد المزروعي",
+                "تيمور بن جمعه بن علي ابراهيم البلوشي",
+                "حسين بن عبدالعزيز بن حسين بركت البلوشي",
+                "حمدان بن محمد بن أحمد سعيد البلوشي",
+                "حمزه بن سالم بن عيسى سالم الصالحي",
+                "خميس بن سلطان بن خميس غريب المزروعي",
+                "راشد بن عبدالله بن ناصر خلفان المعمري",
+                "سعود بن خالد بن علي محمد البلوشي",
+                "سيف بن أحمد بن محمد هلال السعدي",
+                "صالح بن محمد بن صالح محمد السعدي",
+                "عبدالحكيم بن محمد بن يوسف ابراهيم البلوشي",
+                "عبدالعزيز بن مازن بن عبدالعزيز محمد العوضي",
+                "عبدالله بن راشد بن عبدالله حمدان البلوشي",
+                "عبدالله بن طلال بن محمد سعيد البلوشي",
+                "عبدالله بن علي بن محمد علي المخمري",
+                "عمار بن عادل بن عبدالله محمد المعمري",
+                "عمر بن نوح بن أحمد عبدالله السعدي",
+                "مايد بن يوسف بن محمد أحمد السعدي",
+                "محمد بن أحمد بن محمد بريك المخمري",
+                "محمد بن راشد بن ربيع ثني البوسعيدي",
+                "محمد بن سالم بن محمد علي السعدي",
+                "محمد بن سعيد بن محمد سعيد البلوشي",
+                "محمد بن سلطان بن محمد علي السعدي",
+                "محمد بن عبدالله بن محمد أحمد السعدي",
+                "محمد بن علي بن محمد علي السعدي",
+                "محمد بن مبارك بن محمد خلفان المقبالي",
+                "معاذ بن هلال بن خليفه عبدالله الربيعي",
+                "ناصر بن علي بن خلفان عبدالله البلوشي",
+                "وليد بن سعيد بن سلطان سالم المزروعي"
+            ],
+            "5-3": [
+                "أحمد بن عبدالله بن علي محمد الكعبي",
+                "أحمد بن عبدالله بن محمد عبيد السعدي",
+                "أحمد بن مانع بن احمد سعيد البلوشي",
+                "أيمن بن داود بن سليمان حمد المعمري",
+                "احمد بن حميد بن حمد حميد البلوشي",
+                "تركي بن فيصل بن سيف خلفان المعمري",
+                "جهاد بن جمال بن ماجد سليمان الريسي",
+                "حمد بن خليفه بن هلال حمد المعمري",
+                "حمد بن خميس بن أحمد خلفان المزروعي",
+                "راشد بن فيصل بن عبدالله سعيد المخمري",
+                "سلطان بن عبدالله بن سيف محمد الكلباني",
+                "سلمان بن ابراهيم بن عبدالله سعيد المخمري",
+                "سيف بن أحمد بن سيف عبدالله الريسي",
+                "سيف بن خالد بن سيف محمد الكلباني",
+                "عبدالرحمن بن سالم بن ناصر عبدالله الكلباني",
+                "عبدالله بن أحمد بن عبدالله اسماعيل السعدي",
+                "عبدالله بن خلفان بن العبد خلفان الشحي",
+                "عبدالله بن سليمان بن سيف عبدالله الرئيسي",
+                "عبدالله بن محمد بن عبدالله هلال السعدي",
+                "عبدالملك بن محمد بن عبدالله محمد المزروعي",
+                "عزان بن علي بن محمد ابراهيم البلوشي",
+                "علي بن أحمد بن محمد علي البلوشي",
+                "علي بن عامر بن علي محمد البلوشي",
+                "علي بن عبدالكريم بن عباس عبدالله البلوشي",
+                "علي بن محمد بن سيف محمد البلوشي",
+                "غيث بن عبدالله بن حميد سيف الريسي",
+                "فارس بن راشد بن علي محمد الكعبي",
+                "محمد بن حزيم بن محمد غاشم المانعي",
+                "محمد بن حسين بن محمد نورالدين الأنصاري",
+                "محمد بن راشد بن سيف راشد المزروعي",
+                "محمد بن سيف بن عبدالله سيف السعدي",
+                "محمد بن عبدالله بن محمد شاهين البلوشي",
+                "محمد بن غريب بن عبدالله ابراهيم البلوشي",
+                "محمد بن مسعود بن عباس محمد البلوشي",
+                "هيثم بن هاشم بن عبدالله علي الشرقي"
+            ]
         };
 
-        const negativeBehaviors = [
-            "الحديث الجانبي أثناء الحصة", "كثرة الحركة والخروج من المقعد",
-            "عدم إحضار الأدوات المدرسية", "النوم داخل الفصل",
-            "استخدام الهاتف النقال", "التأخر عن دخول الحصة",
-            "مقاطعة المعلم باستمرار", "المشاجرة مع الزملاء"
-        ];
-
-        const positiveBehaviors = [
-            "المشاركة الفعالة في الحصة", "إنجاز الواجبات بانتظام",
-            "التعاون مع الزملاء", "الهدوء والانضباط",
-            "نظافة الكتب والدفاتر", "تحسن ملحوظ في المستوى"
-        ];
-
-        // === 2. تهيئة الصفحة ===
-        window.onload = function() {
-            document.getElementById('dateInput').valueAsDate = new Date();
-            renderCheckboxes('negativeList', negativeBehaviors, 'neg');
-            renderCheckboxes('positiveList', positiveBehaviors, 'pos');
-        };
-
-        function renderCheckboxes(containerId, list, type) {
-            const container = document.getElementById(containerId);
-            list.forEach((item, index) => {
-                const id = `${type}_${index}`;
-                container.innerHTML += `
-                    <div class="behavior-item">
-                        <input type="checkbox" id="${id}" value="${item}" onchange="handleExclusive('${type}')">
-                        <label for="${id}">${item}</label>
-                    </div>
-                `;
-            });
-        }
-
-        // === 3. الوظائف ===
+        // ===== دوال تسجيل الدخول المحسنة =====
         function login() {
-            const id = document.getElementById('employeeId').value;
-            if (id === "1234") {
-                document.getElementById('loginPage').style.display = 'none';
+            const employeeId = document.getElementById('employeeId').value.trim();
+            const errorMessage = document.getElementById('errorMessage');
+            
+            if (employeeId === CORRECT_EMPLOYEE_ID) {
+                document.getElementById('loginPage').classList.add('hidden');
                 document.getElementById('mainApp').style.display = 'block';
+                document.getElementById('mainApp').classList.add('show');
+                
+                sessionStorage.setItem('isLoggedIn', 'true');
+                
+                // تعيين التاريخ الحالي
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('date').value = today;
+                
+                showToast('✅ مرحباً بك في النظام', 'success');
             } else {
-                const err = document.getElementById('loginError');
-                err.style.display = 'block';
-                setTimeout(() => err.style.display = 'none', 3000);
+                errorMessage.style.display = 'block';
+                document.getElementById('employeeId').value = '';
+                document.getElementById('employeeId').focus();
+                
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 3000);
+                
+                showToast('❌ الرقم الوظيفي غير صحيح', 'error');
             }
         }
 
-        function loadStudents() {
-            const classVal = document.getElementById('classSelect').value;
-            const grid = document.getElementById('studentsGrid');
-            grid.innerHTML = "";
-            document.getElementById('selectedStudentName').value = "";
-
-            if (classVal && studentsData[classVal]) {
-                studentsData[classVal].forEach(name => {
-                    const chip = document.createElement('div');
-                    chip.className = 'student-chip';
-                    chip.innerText = name;
-                    chip.onclick = function() {
-                        document.querySelectorAll('.student-chip').forEach(c => c.classList.remove('selected'));
-                        this.classList.add('selected');
-                        document.getElementById('selectedStudentName').value = name;
-                    };
-                    grid.appendChild(chip);
-                });
+        // التحقق من حالة تسجيل الدخول
+        window.addEventListener('load', function() {
+            if (sessionStorage.getItem('isLoggedIn') === 'true') {
+                document.getElementById('loginPage').classList.add('hidden');
+                document.getElementById('mainApp').style.display = 'block';
+                document.getElementById('mainApp').classList.add('show');
+                
+                // تعيين التاريخ الحالي
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('date').value = today;
             }
-        }
+        });
 
-        // منطق: إذا اختار إيجابي، يتم تعطيل السلبي والعكس (اختياري، يمكن إزالته)
-        function handleExclusive(type) {
-            const isNegative = type === 'neg';
-            const opposingSelector = isNegative ? 'input[id^="pos_"]' : 'input[id^="neg_"]';
-            const currentSelector = isNegative ? 'input[id^="neg_"]' : 'input[id^="pos_"]';
-            
-            const anyChecked = Array.from(document.querySelectorAll(currentSelector)).some(c => c.checked);
-            
-            document.querySelectorAll(opposingSelector).forEach(el => {
-                el.disabled = anyChecked;
-                if(anyChecked) el.parentElement.style.opacity = "0.5";
-                else el.parentElement.style.opacity = "1";
+        // الدخول بضغط Enter
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('employeeId').addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    login();
+                }
             });
+        });
+
+        // ===== تحميل الطلاب =====
+        function loadStudents() {
+            const className = document.getElementById('className').value;
+            const studentsSection = document.getElementById('studentsSection');
+            const studentsGrid = document.getElementById('studentsGrid');
+            const studentNameInput = document.getElementById('studentName');
+            
+            if (!className) {
+                studentsSection.style.display = 'none';
+                studentNameInput.value = '';
+                return;
+            }
+            
+            const students = studentsData[className] || [];
+            studentsGrid.innerHTML = '';
+            
+            students.forEach(student => {
+                const chip = document.createElement('div');
+                chip.className = 'student-chip';
+                chip.textContent = student;
+                chip.setAttribute('onclick', 'selectStudent(this)');
+                chip.setAttribute('data-name', student);
+                studentsGrid.appendChild(chip);
+            });
+            
+            studentsSection.style.display = 'block';
+            studentNameInput.value = '';
+        }
+
+        function selectStudent(element) {
+            document.querySelectorAll('.student-chip').forEach(c => c.classList.remove('selected'));
+            element.classList.add('selected');
+            document.getElementById('studentName').value = element.getAttribute('data-name');
+            showToast('✅ تم اختيار الطالب', 'success');
+        }
+
+        // ===== منع التعارض بين السلوكيات =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const negativeCheckboxes = document.querySelectorAll('.negative-behavior');
+            const positiveCheckboxes = document.querySelectorAll('.positive-behavior');
+
+            negativeCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        positiveCheckboxes.forEach(positive => {
+                            positive.disabled = true;
+                            positive.parentElement.style.opacity = '0.5';
+                            positive.parentElement.style.cursor = 'not-allowed';
+                        });
+                    } else {
+                        const anyNegativeChecked = Array.from(negativeCheckboxes).some(cb => cb.checked);
+                        if (!anyNegativeChecked) {
+                            positiveCheckboxes.forEach(positive => {
+                                positive.disabled = false;
+                                positive.parentElement.style.opacity = '1';
+                                positive.parentElement.style.cursor = 'pointer';
+                            });
+                        }
+                    }
+                });
+            });
+
+            positiveCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        negativeCheckboxes.forEach(negative => {
+                            negative.disabled = true;
+                            negative.parentElement.style.opacity = '0.5';
+                            negative.parentElement.style.cursor = 'not-allowed';
+                        });
+                    } else {
+                        const anyPositiveChecked = Array.from(positiveCheckboxes).some(cb => cb.checked);
+                        if (!anyPositiveChecked) {
+                            negativeCheckboxes.forEach(negative => {
+                                negative.disabled = false;
+                                negative.parentElement.style.opacity = '1';
+                                negative.parentElement.style.cursor = 'pointer';
+                            });
+                        }
+                    }
+                });
+            });
+        });
+
+        // ===== دوال التقرير والطباعة =====
+        function getSelectedBehaviors() {
+            const behaviors = [];
+            const allCheckboxes = document.querySelectorAll('.negative-behavior:checked, .positive-behavior:checked');
+            allCheckboxes.forEach(cb => {
+                behaviors.push(cb.value);
+            });
+            return behaviors;
+        }
+
+        function isPositiveReport() {
+            const positiveCheckboxes = document.querySelectorAll('.positive-behavior:checked');
+            return positiveCheckboxes.length > 0;
+        }
+
+        function getBehaviorLevel(behavior) {
+            const level1Keywords = ['الإخلال', 'الحديث الجانبي', 'تناول المأكولات', 'شرب الماء', 'الخروج للحمام', 'الإساءة بالقول', 'عدم الإنصات', 'الإهمال'];
+            const level3Keywords = ['الشجار', 'النميمة', 'إثارة المشاكل', 'ألفاظ نابية', 'التنمر', 'الاستيلاء'];
+            
+            for (let keyword of level3Keywords) {
+                if (behavior.includes(keyword)) return 3;
+            }
+            for (let keyword of level1Keywords) {
+                if (behavior.includes(keyword)) return 1;
+            }
+            return 2;
         }
 
         function generateReport() {
-            // التحقق من المدخلات
-            const studentName = document.getElementById('selectedStudentName').value;
-            const className = document.getElementById('classSelect').options[document.getElementById('classSelect').selectedIndex].text;
-            
+            const className = document.getElementById('className').value;
+            const studentName = document.getElementById('studentName').value;
+            const date = document.getElementById('date').value;
+            const behaviors = getSelectedBehaviors();
+            const notes = document.getElementById('notes').value;
+            const action = document.getElementById('action').value;
+            const isPositive = isPositiveReport();
+
             if (!studentName) {
-                alert("الرجاء اختيار طالب أولاً!");
+                showToast('⚠️ يرجى اختيار الطالب', 'warning');
                 return;
             }
-
-            // جمع البيانات
-            const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
-            if (checkedBoxes.length === 0) {
-                alert("الرجاء اختيار سلوك واحد على الأقل!");
-                return;
-            }
-
-            // تعبئة التقرير
-            document.getElementById('r_name').innerText = studentName;
-            document.getElementById('r_class').innerText = className;
-            document.getElementById('r_date').innerText = document.getElementById('dateInput').value;
             
-            const list = document.getElementById('r_behaviors');
-            list.innerHTML = "";
-            checkedBoxes.forEach(box => {
-                const li = document.createElement('li');
-                li.innerText = box.value;
-                // تلوين حسب النوع
-                if(box.id.startsWith('neg')) li.style.color = "#c62828";
-                else li.style.color = "#2e7d32";
-                list.appendChild(li);
+            if (!date) {
+                showToast('⚠️ يرجى تحديد التاريخ', 'warning');
+                return;
+            }
+            
+            if (behaviors.length === 0) {
+                showToast('⚠️ يرجى اختيار سلوك واحد على الأقل', 'warning');
+                return;
+            }
+
+            const formattedDate = new Date(date).toLocaleDateString('ar-EG', {
+                year: 'numeric', 
+                month: '2-digit', 
+                day: '2-digit'
             });
 
-            document.getElementById('r_notes').innerText = document.getElementById('teacherNotes').value || "لا توجد ملاحظات إضافية.";
+            // تحديد نوع التقرير
+            const reportTitle = isPositive ? 'تقرير تقدير وتميز طلابي' : 'تقرير السلوك الطلابي';
+            const reportColor = isPositive ? '#2e7d32' : '#1a4d2e';
+            const behaviorTitle = isPositive ? 'نقاط التميز والإيجابيات:' : 'السلوكيات المخالفة:';
 
-            // إظهار التقرير والتمرير إليه
-            const reportContainer = document.getElementById('reportContainer');
-            reportContainer.classList.add('show');
-            reportContainer.scrollIntoView({behavior: "smooth"});
+            // تقرير محسن للطباعة
+            let reportHTML = `
+<div style="font-family: 'Cairo', sans-serif; padding: 20px; max-width: 100%; direction: rtl;" class="report-content">
+    
+    <!-- شعار وتاريخ -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid ${reportColor}; padding-bottom: 15px;">
+        <div style="font-size: 14px; color: #666;">
+            📅 ${formattedDate}
+        </div>
+        <div style="font-size: 14px; color: #666;">
+            القرار الوزاري 2017/234
+        </div>
+    </div>
+    
+    <!-- عنوان التقرير -->
+    <div style="text-align: center; margin-bottom: 25px;">
+        <h1 style="font-size: 24px; color: ${reportColor}; font-family: 'Amiri', serif; margin: 0 0 5px 0; font-weight: 700;">
+            ${reportTitle}
+        </h1>
+        <p style="font-size: 14px; color: #666; margin: 0;">
+            المادة (39) من لائحة شؤون الطلبة
+        </p>
+    </div>
+
+    <!-- معلومات الطالب -->
+    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 25px; border-right: 4px solid ${reportColor};">
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            <tr>
+                <td style="padding: 8px; font-weight: 600; width: 15%;">الطالب:</td>
+                <td style="padding: 8px; font-weight: 700; color: ${reportColor};">${studentName}</td>
+                <td style="padding: 8px; font-weight: 600; width: 15%;">الشعبة:</td>
+                <td style="padding: 8px;">${className || 'غير محدد'}</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- السلوكيات -->
+    <div style="margin-bottom: 25px;">
+        <div style="background: ${reportColor}; color: white; padding: 10px 15px; border-radius: 6px; font-size: 16px; font-weight: 600; margin-bottom: 15px;">
+            ${behaviorTitle}
+        </div>
+        <ul style="margin: 0; padding-right: 25px; list-style: none;">`;
+
+            behaviors.forEach((behavior, index) => {
+                if (isPositive) {
+                    reportHTML += `
+            <li style="margin-bottom: 10px; padding: 8px 15px; background: #f1f8e9; border-radius: 6px; border-right: 3px solid #2e7d32;">
+                <span style="display: inline-block; background: #2e7d32; color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-left: 10px;">⭐</span>
+                ${behavior}
+            </li>`;
+                } else {
+                    const level = getBehaviorLevel(behavior);
+                    let badge = '', color = '', bgColor = '';
+                    
+                    if (level === 1) { 
+                        badge = 'نصح'; 
+                        color = '#0277bd'; 
+                        bgColor = '#e3f2fd';
+                    } else if (level === 2) { 
+                        badge = 'تنبيه'; 
+                        color = '#f57c00'; 
+                        bgColor = '#fff3e0';
+                    } else { 
+                        badge = 'إنذار'; 
+                        color = '#c1292e'; 
+                        bgColor = '#ffebee';
+                    }
+                    
+                    reportHTML += `
+            <li style="margin-bottom: 10px; padding: 8px 15px; background: ${bgColor}; border-radius: 6px; border-right: 3px solid ${color};">
+                <span style="display: inline-block; background: ${color}; color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-left: 10px;">${badge}</span>
+                ${behavior}
+            </li>`;
+                }
+            });
+
+            reportHTML += `</ul></div>`;
+
+            // الملاحظات
+            if (notes) {
+                const notesColor = isPositive ? '#2e7d32' : '#4f9d69';
+                const notesBg = isPositive ? '#e8f5e9' : '#f8f9fa';
+                reportHTML += `
+    <div style="margin-bottom: 25px;">
+        <div style="background: ${notesColor}; color: white; padding: 10px 15px; border-radius: 6px; font-size: 16px; font-weight: 600; margin-bottom: 15px;">
+            📝 الملاحظات:
+        </div>
+        <div style="padding: 15px; background: ${notesBg}; border-radius: 6px; border-right: 4px solid ${notesColor}; font-size: 14px; line-height: 1.8;">
+            ${notes.replace(/\n/g, '<br>')}
+        </div>
+    </div>`;
+            }
+
+            // الإجراء المتخذ
+            if (!isPositive && action) {
+                reportHTML += `
+    <div style="margin-bottom: 25px;">
+        <div style="background: #d4af37; color: white; padding: 10px 15px; border-radius: 6px; font-size: 16px; font-weight: 600; margin-bottom: 15px;">
+            ⚖️ الإجراء المتخذ:
+        </div>
+        <div style="padding: 15px; background: #fffbf0; border: 1px solid #d4af37; border-radius: 6px; font-size: 14px; font-weight: 600;">
+            ${action}
+        </div>
+    </div>`;
+            }
+
+            // التوقيعات
+            reportHTML += `
+    <div style="display: flex; justify-content: space-between; margin-top: 40px; gap: 20px;">
+        <div style="flex: 1; text-align: center;">
+            <div style="border-bottom: 2px solid #000; height: 50px; margin-bottom: 8px;"></div>
+            <p style="margin: 0; font-size: 14px; font-weight: 600;">توقيع المعلم</p>
+            <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">الاسم: ......................</p>
+        </div>
+        <div style="flex: 1; text-align: center;">
+            <div style="border-bottom: 2px solid #000; height: 50px; margin-bottom: 8px;"></div>
+            <p style="margin: 0; font-size: 14px; font-weight: 600;">توقيع ولي الأمر</p>
+            <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">الاسم: ......................</p>
+        </div>
+    </div>
+    
+    <!-- ختم المدرسة -->
+    <div style="margin-top: 30px; text-align: left; color: #666; font-size: 12px;">
+        <p style="margin: 0;">ختم المدرسة: ......................</p>
+    </div>
+</div>`;
+
+            const reportDiv = document.getElementById('reportOutput');
+            reportDiv.innerHTML = reportHTML;
+            reportDiv.classList.add('show');
+            
+            // تمرير سلس للتقرير
+            reportDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            showToast('✅ تم إنشاء التقرير بنجاح', 'success');
+        }
+
+        // ===== دالة الطباعة المحسنة =====
+        function printReport() {
+            const reportDiv = document.getElementById('reportOutput');
+            
+            if (!reportDiv.classList.contains('show')) {
+                showToast('⚠️ يرجى إنشاء التقرير أولاً', 'warning');
+                return;
+            }
+
+            try {
+                // تخزين المحتوى الأصلي
+                const originalTitle = document.title;
+                const reportContent = reportDiv.innerHTML;
+                
+                // إنشاء نافذة طباعة جديدة
+                const printWindow = window.open('', '_blank', 'width=800,height=600');
+                
+                if (!printWindow) {
+                    // إذا منع المتصفح النوافذ المنبثقة، استخدم الطباعة العادية
+                    showToast('⚠️ يرجى السماح بالنوافذ المنبثقة للطباعة', 'warning');
+                    window.print();
+                    return;
+                }
+                
+                // كتابة محتوى الطباعة
+                printWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html dir="rtl" lang="ar">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>تقرير السلوك الطلابي</title>
+                        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+                        <style>
+                            body {
+                                font-family: 'Cairo', sans-serif;
+                                padding: 20px;
+                                margin: 0;
+                                background: white;
+                                color: black;
+                                line-height: 1.6;
+                            }
+                            @media print {
+                                body {
+                                    padding: 0;
+                                }
+                                @page {
+                                    size: A4;
+                                    margin: 1.5cm;
+                                }
+                            }
+                            .report-content {
+                                max-width: 100%;
+                                direction: rtl;
+                            }
+                            h1, h2, h3, h4 {
+                                font-family: 'Amiri', serif;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        ${reportContent}
+                        <script>
+                            window.onload = function() {
+                                window.print();
+                                window.onafterprint = function() {
+                                    window.close();
+                                };
+                            };
+                        <\/script>
+                    </body>
+                    </html>
+                `);
+                
+                printWindow.document.close();
+                
+                showToast('🖨️ جاري تجهيز التقرير للطباعة...', 'info');
+                
+            } catch (error) {
+                console.error('خطأ في الطباعة:', error);
+                // استخدام الطريقة البديلة
+                window.print();
+            }
+        }
+
+        // ===== دوال المشاركة والحفظ =====
+        function shareWhatsApp() {
+            const reportDiv = document.getElementById('reportOutput');
+            if (!reportDiv.classList.contains('show')) {
+                showToast('⚠️ يرجى إنشاء التقرير أولاً', 'warning');
+                return;
+            }
+
+            const studentName = document.getElementById('studentName').value;
+            const className = document.getElementById('className').value;
+            const date = document.getElementById('date').value;
+            const behaviors = getSelectedBehaviors();
+            const notes = document.getElementById('notes').value;
+            const action = document.getElementById('action').value;
+            const isPositive = isPositiveReport();
+
+            const formattedDate = new Date(date).toLocaleDateString('ar-EG', {
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric'
+            });
+
+            let message = '';
+
+            if (isPositive) {
+                message = `السلام عليكم ورحمة الله وبركاته
+
+⭐ *تقرير تقدير وتميز طلابي* ⭐
+
+📅 التاريخ: ${formattedDate}
+🏫 الشعبة: ${className || 'غير محدد'}
+👤 الطالب: ${studentName}
+
+✨ *نقاط التميز والإيجابيات:*
+`;
+                behaviors.forEach((behavior, index) => {
+                    message += `\n${index + 1}. ⭐ ${behavior}`;
+                });
+
+            } else {
+                message = `السلام عليكم ورحمة الله وبركاته
+
+📋 *تقرير السلوك الطلابي* 📋
+
+📅 التاريخ: ${formattedDate}
+🏫 الشعبة: ${className || 'غير محدد'}
+👤 الطالب: ${studentName}
+
+📌 *السلوكيات المخالفة:*
+`;
+                behaviors.forEach((behavior, index) => {
+                    const level = getBehaviorLevel(behavior);
+                    let badge = '';
+                    if (level === 1) badge = '🔵 نصح';
+                    else if (level === 2) badge = '🟠 تنبيه';
+                    else badge = '🔴 إنذار';
+                    
+                    message += `\n${index + 1}. ${badge}\n   ${behavior}`;
+                });
+            }
+
+            if (notes) {
+                message += `\n\n📝 *الملاحظات:*\n${notes}`;
+            }
+
+            if (!isPositive && action) {
+                message += `\n\n⚖️ *الإجراء المتخذ:*\n${action}`;
+            }
+
+            if (isPositive) {
+                message += `\n\nنشكركم على دعمكم المستمر لابنكم/ابنتكم\nونتمنى له/لها مزيداً من التفوق والتميز 🌟`;
+            } else {
+                message += `\n\nنرجو منكم التعاون معنا لتحسين سلوك الطالب/ة\nشكراً لكم.`;
+            }
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+            showToast('📱 جاري فتح واتساب...', 'info');
+        }
+
+        function shareWhatsAppToNumber() {
+            const reportDiv = document.getElementById('reportOutput');
+            if (!reportDiv.classList.contains('show')) {
+                showToast('⚠️ يرجى إنشاء التقرير أولاً', 'warning');
+                return;
+            }
+
+            const phoneNumber = prompt('أدخل رقم واتساب ولي الأمر (مع رمز الدولة):\nمثال: 96899123456');
+            
+            if (!phoneNumber) {
+                return;
+            }
+
+            const cleanNumber = phoneNumber.replace(/[\s\-\+\(\)]/g, '');
+            
+            if (cleanNumber.length < 10) {
+                showToast('⚠️ الرقم غير صحيح', 'error');
+                return;
+            }
+
+            const studentName = document.getElementById('studentName').value;
+            const className = document.getElementById('className').value;
+            const date = document.getElementById('date').value;
+            const behaviors = getSelectedBehaviors();
+            const notes = document.getElementById('notes').value;
+            const action = document.getElementById('action').value;
+            const isPositive = isPositiveReport();
+
+            const formattedDate = new Date(date).toLocaleDateString('ar-EG', {
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric'
+            });
+
+            let message = `السلام عليكم ورحمة الله وبركاته\nولي أمر الطالب/ة: *${studentName}*\n\n`;
+
+            if (isPositive) {
+                message += `⭐ *تقرير تقدير وتميز طلابي* ⭐\n\n📅 التاريخ: ${formattedDate}\n🏫 الشعبة: ${className || 'غير محدد'}\n\n✨ *نقاط التميز والإيجابيات:*\n`;
+                behaviors.forEach((behavior, index) => {
+                    message += `\n${index + 1}. ⭐ ${behavior}`;
+                });
+            } else {
+                message += `📋 *تقرير السلوك الطلابي* 📋\n\n📅 التاريخ: ${formattedDate}\n🏫 الشعبة: ${className || 'غير محدد'}\n\n📌 *السلوكيات المخالفة:*\n`;
+                behaviors.forEach((behavior, index) => {
+                    const level = getBehaviorLevel(behavior);
+                    let badge = '';
+                    if (level === 1) badge = '🔵 نصح';
+                    else if (level === 2) badge = '🟠 تنبيه';
+                    else badge = '🔴 إنذار';
+                    
+                    message += `\n${index + 1}. ${badge}\n   ${behavior}`;
+                });
+            }
+
+            if (notes) {
+                message += `\n\n📝 *الملاحظات:*\n${notes}`;
+            }
+
+            if (!isPositive && action) {
+                message += `\n\n⚖️ *الإجراء المتخذ:*\n${action}`;
+            }
+
+            if (isPositive) {
+                message += `\n\nنشكركم على دعمكم المستمر لابنكم/ابنتكم\nونتمنى له/لها مزيداً من التفوق والتميز 🌟`;
+            } else {
+                message += `\n\nنرجو منكم التعاون معنا لتحسين سلوك الطالب/ة\nشكراً لكم.`;
+            }
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/${cleanNumber}?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+            showToast('📱 جاري فتح واتساب...', 'info');
+        }
+
+        function saveData() {
+            const studentName = document.getElementById('studentName').value;
+            
+            if (!studentName) {
+                showToast('⚠️ لا توجد بيانات للحفظ', 'warning');
+                return;
+            }
+
+            const data = {
+                className: document.getElementById('className').value,
+                studentName: studentName,
+                date: document.getElementById('date').value,
+                behaviors: getSelectedBehaviors(),
+                notes: document.getElementById('notes').value,
+                action: document.getElementById('action').value,
+                timestamp: new Date().toISOString()
+            };
+
+            const allRecords = JSON.parse(localStorage.getItem('behaviorRecords') || '[]');
+            allRecords.push(data);
+            localStorage.setItem('behaviorRecords', JSON.stringify(allRecords));
+
+            showToast('✅ تم حفظ البيانات بنجاح', 'success');
         }
 
         function resetForm() {
-            if(confirm("هل أنت متأكد من مسح جميع البيانات؟")) {
-                document.getElementById('classSelect').value = "";
-                document.getElementById('studentsGrid').innerHTML = "";
-                document.getElementById('selectedStudentName').value = "";
-                document.getElementById('teacherNotes').value = "";
-                document.querySelectorAll('input[type="checkbox"]').forEach(c => {
-                    c.checked = false;
-                    c.disabled = false;
-                    c.parentElement.style.opacity = "1";
+            if (confirm('هل أنت متأكد من تفريغ جميع الحقول؟')) {
+                // إلغاء تحديد جميع الخيارات
+                document.querySelectorAll('.negative-behavior, .positive-behavior').forEach(cb => {
+                    cb.checked = false;
+                    cb.disabled = false;
+                    cb.parentElement.style.opacity = '1';
+                    cb.parentElement.style.cursor = 'pointer';
                 });
-                document.getElementById('reportContainer').classList.remove('show');
+                
+                // تفريغ الحقول
+                document.getElementById('notes').value = '';
+                document.getElementById('action').value = '';
+                
+                // إزالة التحديد من الطلاب
+                document.querySelectorAll('.student-chip').forEach(c => c.classList.remove('selected'));
+                document.getElementById('studentName').value = '';
+                
+                showToast('✅ تم تفريغ الحقول', 'success');
             }
         }
+
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            
+            // تخصيص اللون حسب النوع
+            if (type === 'success') {
+                toast.style.background = 'linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%)';
+            } else if (type === 'error') {
+                toast.style.background = 'linear-gradient(135deg, #c1292e 0%, #b71c1c 100%)';
+            } else if (type === 'warning') {
+                toast.style.background = 'linear-gradient(135deg, #f57c00 0%, #ef6c00 100%)';
+            } else {
+                toast.style.background = 'linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%)';
+            }
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // حفظ تلقائي كل 30 ثانية
+        setInterval(() => {
+            const studentName = document.getElementById('studentName').value;
+            if (studentName && getSelectedBehaviors().length > 0) {
+                saveData();
+            }
+        }, 30000);
+
+        // إضافة دعم للوحة المفاتيح
+        document.addEventListener('keydown', function(e) {
+            // Ctrl + P للطباعة
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                printReport();
+            }
+            // Ctrl + S للحفظ
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                saveData();
+            }
+        });
     </script>
 </body>
 </html>
