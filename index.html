@@ -2,1308 +2,488 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة قدرة الله تعالى - سورة النحل</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>نظام رصد السلوكيات الطلابية</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary: #1a4d2e;
+            --secondary: #4f9d69;
+            --accent: #d4af37;
+            --danger: #c1292e;
+            --warning: #f57c00;
+            --info: #0277bd;
+            --bg: #f8f9fa;
+            --surface: #ffffff;
+            --text: #212121;
+            --border: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.08);
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: 'Cairo', sans-serif;
-            background: linear-gradient(135deg, #0f9b8e 0%, #1e8449 100%);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e8eaf0 100%);
+            color: var(--text);
             min-height: 100vh;
             padding: 20px;
-            direction: rtl;
-        }
-
-        .quran-text {
-            font-family: 'Amiri', serif;
-            font-size: 1.4em;
-            line-height: 2;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            color: white;
-            margin-bottom: 30px;
-            animation: slideDown 0.6s ease-out;
-        }
-
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
-        }
-
-        .subtitle {
-            font-size: 1.2em;
-            opacity: 0.95;
-            margin-bottom: 5px;
-        }
-
-        .quran-ref {
-            font-size: 1em;
-            opacity: 0.9;
-            font-weight: 600;
-        }
-
-        .menu-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        .menu-card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            animation: fadeIn 0.6s ease-out forwards;
-            opacity: 0;
-        }
-
-        .menu-card:nth-child(1) { animation-delay: 0.1s; }
-        .menu-card:nth-child(2) { animation-delay: 0.2s; }
-        .menu-card:nth-child(3) { animation-delay: 0.3s; }
-        .menu-card:nth-child(4) { animation-delay: 0.4s; }
-        .menu-card:nth-child(5) { animation-delay: 0.5s; }
-        .menu-card:nth-child(6) { animation-delay: 0.6s; }
-
-        .menu-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        .menu-card .icon {
-            font-size: 3.5em;
-            margin-bottom: 15px;
-            color: #0f9b8e;
-        }
-
-        .menu-card h2 {
-            color: #0f9b8e;
-            font-size: 1.5em;
-            margin-bottom: 10px;
-        }
-
-        .menu-card p {
-            color: #666;
-            font-size: 0.95em;
-        }
-
-        .game-container {
-            display: none;
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            animation: scaleIn 0.4s ease-out;
-        }
-
-        .game-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 3px solid #0f9b8e;
-        }
-
-        .back-btn {
-            background: #0f9b8e;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-family: 'Cairo', sans-serif;
-            font-size: 1em;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .back-btn:hover {
-            background: #0d8577;
-            transform: scale(1.05);
-        }
-
-        .score-display {
-            font-size: 1.3em;
-            font-weight: 700;
-            color: #0f9b8e;
-        }
-
-        .question-container {
-            margin-bottom: 30px;
-        }
-
-        .question {
-            font-size: 1.3em;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 25px;
-            padding: 20px;
-            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-            border-radius: 15px;
-            border-right: 5px solid #0f9b8e;
-        }
-
-        .options {
-            display: grid;
-            gap: 15px;
-        }
-
-        .option {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 12px;
-            border: 2px solid #e0e0e0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.1em;
-        }
-
-        .option:hover {
-            background: #e8f5e9;
-            border-color: #0f9b8e;
-            transform: translateX(-5px);
-        }
-
-        .option.correct {
-            background: #4caf50;
-            color: white;
-            border-color: #4caf50;
-        }
-
-        .option.wrong {
-            background: #f44336;
-            color: white;
-            border-color: #f44336;
-        }
-
-        .option.disabled {
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
-
-        .feedback {
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 12px;
-            font-size: 1.1em;
-            text-align: center;
-            animation: slideUp 0.4s ease-out;
-        }
-
-        .feedback.correct {
-            background: #c8e6c9;
-            color: #2e7d32;
-            border: 2px solid #4caf50;
-        }
-
-        .feedback.wrong {
-            background: #ffcdd2;
-            color: #c62828;
-            border: 2px solid #f44336;
-        }
-
-        .next-btn {
-            display: none;
-            margin: 20px auto;
-            background: #0f9b8e;
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-family: 'Cairo', sans-serif;
-            font-size: 1.1em;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .next-btn:hover {
-            background: #0d8577;
-            transform: scale(1.05);
-        }
-
-        .next-btn.show {
-            display: block;
-        }
-
-        .drag-items-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .drag-item {
-            background: #0f9b8e;
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            cursor: move;
-            text-align: center;
-            font-size: 1.1em;
-            transition: all 0.3s ease;
-            border: 2px solid #0d8577;
-        }
-
-        .drag-item:hover {
-            background: #1e8449;
-            transform: scale(1.05);
-        }
-
-        .drag-item.dragging {
-            opacity: 0.5;
-        }
-
-        .drop-zones-container {
-            margin-top: 30px;
-        }
-
-        .drop-zone {
-            min-height: 70px;
-            padding: 15px;
-            margin: 15px 0;
-            background: #fff;
-            border: 3px dashed #0f9b8e;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-            transition: all 0.3s ease;
-            font-size: 1.1em;
-        }
-
-        .drop-zone.drag-over {
-            background: #e8f5e9;
-            border-color: #1e8449;
-        }
-
-        .drop-zone.filled {
-            background: #c8e6c9;
-            border-style: solid;
-            color: #2e7d32;
-            font-weight: 600;
-        }
-
-        .matching-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-top: 20px;
-        }
-
-        .matching-column {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 15px;
-        }
-
-        .matching-column h3 {
-            color: #0f9b8e;
-            margin-bottom: 20px;
-            font-size: 1.3em;
-            text-align: center;
-        }
-
-        .matching-item {
-            background: white;
-            padding: 20px;
-            margin: 10px 0;
-            border-radius: 10px;
-            border: 2px solid #e0e0e0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.1em;
-        }
-
-        .matching-item:hover {
-            border-color: #0f9b8e;
-            transform: scale(1.02);
-        }
-
-        .matching-item.selected {
-            background: #0f9b8e;
-            color: white;
-            border-color: #0f9b8e;
-        }
-
-        .matching-item.matched {
-            background: #4caf50;
-            color: white;
-            border-color: #4caf50;
-            cursor: default;
-        }
-
-        .verse-display {
-            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-            padding: 30px;
-            border-radius: 15px;
-            margin: 20px 0;
-            border: 3px solid #0f9b8e;
-        }
-
-        .ayah {
-            font-family: 'Amiri', serif;
-            font-size: 1.6em;
-            line-height: 2.2;
-            color: #1e8449;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .word-box {
-            display: inline-block;
-            background: #0f9b8e;
-            color: white;
-            padding: 10px 20px;
-            margin: 5px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.1em;
-        }
-
-        .word-box:hover {
-            background: #1e8449;
-            transform: scale(1.05);
-        }
-
-        .word-box.used {
-            background: #ccc;
-            cursor: not-allowed;
-            opacity: 0.5;
-        }
-
-        .blank-space {
-            display: inline-block;
-            min-width: 150px;
-            padding: 10px 20px;
-            margin: 5px;
-            border-bottom: 3px solid #0f9b8e;
-            text-align: center;
-            font-weight: 600;
-            color: #0f9b8e;
-            font-family: 'Amiri', serif;
-            font-size: 1.3em;
-        }
-
-        .final-score {
-            text-align: center;
-            padding: 40px;
-        }
-
-        .final-score h2 {
-            font-size: 2.5em;
-            color: #0f9b8e;
-            margin-bottom: 20px;
-        }
-
-        .final-score .score {
-            font-size: 4em;
-            font-weight: 800;
-            color: #1e8449;
-            margin: 20px 0;
-        }
-
-        .final-score .message {
-            font-size: 1.5em;
-            color: #555;
-            margin-bottom: 30px;
-        }
-
-        .restart-btn {
-            background: #4caf50;
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-family: 'Cairo', sans-serif;
-            font-size: 1.2em;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .restart-btn:hover {
-            background: #45a049;
-            transform: scale(1.05);
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background: #e0e0e0;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #0f9b8e 0%, #1e8449 100%);
-            transition: width 0.3s ease;
-        }
-
-        footer {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            margin-top: 30px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        .footer-content {
-            color: #0f9b8e;
-            font-size: 1.1em;
-            font-weight: 600;
-        }
-
-        .footer-content .teacher-name {
-            font-size: 1.3em;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #1e8449;
-        }
-
-        .footer-content .school-name {
-            font-size: 1em;
-            color: #666;
-            font-weight: 500;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+            line-height: 1.6;
+        }
+
+        /* تنسيقات الطباعة المحسنة */
+        @media print {
+            body { 
+                background: white !important; 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                height: 100%;
+                overflow: hidden;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+
+            /* إخفاء كل العناصر غير التقرير */
+            #loginPage, header, .section-card, .buttons-row, .toast, #mainApp > .container > *:not(#reportContainer) {
+                display: none !important;
             }
+
+            /* إظهار التقرير فقط */
+            #reportContainer {
+                display: block !important;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                margin: 0 !important;
+                padding: 20px !important;
+                border: none !important;
+                box-shadow: none !important;
+                background: white !important;
+                z-index: 9999;
+            }
+
+            /* تحسين الفواصل للصفحات */
+            .report-section { page-break-inside: avoid; }
+            h1, h2, h3 { page-break-after: avoid; }
         }
 
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes scaleIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
+        /* تحسينات الهواتف */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 1.8em;
-            }
+            body { padding: 10px; }
+            .section-card { padding: 15px; }
+            .btn { width: 100%; margin-bottom: 10px; justify-content: center; }
+            .behavior-item label { font-size: 0.95rem; }
+            input[type="checkbox"] { width: 28px; height: 28px; } /* تكبير المربع للمس */
+        }
 
-            .matching-container {
-                grid-template-columns: 1fr;
-            }
+        /* الهيكل العام */
+        .container { max-width: 1000px; margin: 0 auto; }
+        
+        .section-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px var(--shadow);
+            border: 1px solid var(--border);
+        }
 
-            .menu-container {
-                grid-template-columns: 1fr;
-            }
+        .section-title {
+            font-family: 'Amiri', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent);
+        }
 
-            .game-container {
-                padding: 20px;
-            }
+        /* عناصر النموذج */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: 700; margin-bottom: 8px; }
+        
+        select, input[type="date"], input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-family: 'Cairo';
+            font-size: 1rem;
+        }
 
-            .ayah {
-                font-size: 1.3em;
-            }
+        /* شبكة الطلاب */
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .student-chip {
+            background: #f1f3f4;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .student-chip.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* السلوكيات */
+        .behavior-category {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .category-header {
+            background: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .behavior-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .behavior-item:last-child { border-bottom: none; }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* الأزرار */
+        .buttons-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Cairo';
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s;
+        }
+
+        .btn:active { transform: scale(0.98); }
+        .btn-primary { background: var(--primary); }
+        .btn-success { background: #2e7d32; }
+        .btn-danger { background: var(--danger); }
+
+        /* منطقة التقرير (مخفية في الوضع العادي) */
+        #reportContainer {
+            display: none;
+            background: white;
+            padding: 30px;
+            border: 2px dashed var(--primary);
+            margin-top: 20px;
+        }
+
+        #reportContainer.show { display: block; }
+
+        /* صفحة الدخول */
+        #loginPage {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex; align-items: center; justify-content: center;
+            z-index: 1000;
+        }
+        .login-card {
+            background: white; padding: 40px; border-radius: 20px;
+            text-align: center; width: 90%; max-width: 400px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>📖 قدرة الله تعالى 🌟</h1>
-            <p class="subtitle">آيات من سورة النحل</p>
-            <p class="quran-ref">الآيات (65-69) - المحور الخامس</p>
-        </header>
 
-        <div id="menu" class="menu-container">
-            <div class="menu-card" onclick="startGame(1)">
-                <div class="icon"><i class="fas fa-book-open"></i></div>
-                <h2>أسئلة الفهم والتدبر</h2>
-                <p>اختبر فهمك لمعاني الآيات الكريمة</p>
+    <div id="loginPage">
+        <div class="login-card">
+            <div style="font-size: 3rem; margin-bottom: 10px;">🔐</div>
+            <h2 style="color: var(--primary); margin-bottom: 10px;">تسجيل الدخول</h2>
+            <p style="color: #666; margin-bottom: 20px;">نظام رصد السلوكيات الطلابية</p>
+            <input type="number" id="employeeId" placeholder="رقم الموظف (1234)" style="text-align: center; letter-spacing: 2px;">
+            <button class="btn btn-primary" onclick="login()" style="width: 100%; margin-top: 15px; justify-content: center;">دخول</button>
+            <p id="loginError" style="color: red; display: none; margin-top: 10px; font-size: 0.9rem;">الرقم الوظيفي غير صحيح</p>
+        </div>
+    </div>
+
+    <div id="mainApp" style="display: none;">
+        <div class="container">
+            <header style="text-align: center; margin-bottom: 20px; color: var(--primary);">
+                <h1 style="font-family: 'Amiri';">نظام المتابعة السلوكية</h1>
+            </header>
+
+            <div class="section-card">
+                <div class="section-title">بيانات الطالب</div>
+                <div class="form-group">
+                    <label>تاريخ الرصد:</label>
+                    <input type="date" id="dateInput">
+                </div>
+                <div class="form-group">
+                    <label>الشعبة:</label>
+                    <select id="classSelect" onchange="loadStudents()">
+                        <option value="">-- اختر الشعبة --</option>
+                        <option value="class1">الصف الخامس / 1</option>
+                        <option value="class2">الصف الخامس / 2</option>
+                        <option value="class3">الصف الخامس / 3</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>الطالب:</label>
+                    <div id="studentsGrid" class="students-grid"></div>
+                    <input type="hidden" id="selectedStudentName">
+                </div>
             </div>
 
-            <div class="menu-card" onclick="startGame(2)">
-                <div class="icon"><i class="fas fa-link"></i></div>
-                <h2>التوصيل والمطابقة</h2>
-                <p>صل المفردات القرآنية بمعانيها</p>
+            <div class="section-card">
+                <div class="section-title">رصد السلوكيات</div>
+                
+                <div class="behavior-category" style="border-color: #ef5350;">
+                    <div class="category-header" style="background: #c62828;">⚠️ مخالفات وسلوكيات سلبية</div>
+                    <div id="negativeList">
+                        </div>
+                </div>
+
+                <div class="behavior-category" style="border-color: #66bb6a;">
+                    <div class="category-header" style="background: #2e7d32;">⭐ تعزيز وتميز سلوكي</div>
+                    <div id="positiveList">
+                        </div>
+                </div>
+
+                <div class="form-group">
+                    <label>إجراءات المعلم / ملاحظات إضافية:</label>
+                    <textarea id="teacherNotes" rows="3" style="width: 100%; border: 2px solid var(--border); border-radius: 10px; padding: 10px;" placeholder="اكتب وصفاً للإجراء المتخذ (تنبيه شفهي، نقل مكان، استدعاء ولي أمر...)"></textarea>
+                </div>
             </div>
 
-            <div class="menu-card" onclick="startGame(3)">
-                <div class="icon"><i class="fas fa-bullseye"></i></div>
-                <h2>مظاهر قدرة الله</h2>
-                <p>صنف مظاهر القدرة الإلهية في الآيات</p>
+            <div class="buttons-row">
+                <button class="btn btn-success" onclick="generateReport()">
+                    <span>📄 إنشاء التقرير</span>
+                </button>
+                <button class="btn btn-danger" onclick="resetForm()">
+                    <span>🔄 تفريغ الحقول</span>
+                </button>
             </div>
 
-            <div class="menu-card" onclick="startGame(4)">
-                <div class="icon"><i class="fas fa-pen"></i></div>
-                <h2>أكمل الآيات</h2>
-                <p>أكمل الفراغات في الآيات الكريمة</p>
-            </div>
+            <div id="reportContainer">
+                <div style="border: 3px double #000; padding: 20px; min-height: 800px; position: relative;">
+                    <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 20px;">
+                        <h2 style="font-family: 'Amiri'; margin-bottom: 5px;">تقرير متابعة سلوكية</h2>
+                        <p style="font-size: 0.9rem;">وزارة التربية والتعليم - لائحة شؤون الطلبة</p>
+                    </div>
 
-            <div class="menu-card" onclick="startGame(5)">
-                <div class="icon"><i class="fas fa-sort-numeric-down"></i></div>
-                <h2>ترتيب الآيات</h2>
-                <p>رتب الآيات حسب تسلسلها الصحيح</p>
-            </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; background: #f9f9f9; padding: 15px; border: 1px solid #ccc;">
+                        <div><strong>اسم الطالب:</strong> <span id="r_name"></span></div>
+                        <div><strong>الصف/الشعبة:</strong> <span id="r_class"></span></div>
+                        <div><strong>التاريخ:</strong> <span id="r_date"></span></div>
+                        <div><strong>المعلم الراصد:</strong> <span id="r_teacher">--</span></div>
+                    </div>
 
-            <div class="menu-card" onclick="startGame(6)">
-                <div class="icon"><i class="fas fa-lightbulb"></i></div>
-                <h2>الدروس المستفادة</h2>
-                <p>تعرف على الدروس والعبر من الآيات</p>
+                    <div class="report-section">
+                        <h3 style="background: #eee; padding: 8px; border-right: 4px solid #333; margin-bottom: 10px;">الملاحظات المرصودة:</h3>
+                        <ul id="r_behaviors" style="padding-right: 25px; line-height: 1.8;"></ul>
+                    </div>
+
+                    <div class="report-section" style="margin-top: 20px;">
+                        <h3 style="background: #eee; padding: 8px; border-right: 4px solid #333; margin-bottom: 10px;">الإجراءات والملاحظات:</h3>
+                        <p id="r_notes" style="padding: 10px; border: 1px solid #ddd; min-height: 80px;"></p>
+                    </div>
+
+                    <div style="margin-top: 50px; display: flex; justify-content: space-between; padding: 0 30px;">
+                        <div style="text-align: center;">
+                            <p>توقيع المعلم</p>
+                            <p>..................</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <p>يعتمد مدير المدرسة</p>
+                            <p>..................</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;" class="no-print">
+                    <button class="btn btn-primary" onclick="window.print()" style="display: inline-flex; width: auto;">🖨️ طباعة الآن</button>
+                    <button class="btn btn-danger" onclick="document.getElementById('reportContainer').classList.remove('show')" style="display: inline-flex; width: auto; margin-right: 10px;">إغلاق</button>
+                </div>
             </div>
         </div>
-
-        <div id="gameContainer" class="game-container"></div>
-
-        <footer>
-            <div class="footer-content">
-                <div class="teacher-name">إعداد الأستاذ خليل البلوشي</div>
-                <div class="school-name">مدرسة سعد بن معاذ للتعليم الأساسي</div>
-            </div>
-        </footer>
     </div>
 
     <script>
-        let currentScore = 0;
-        let totalQuestions = 0;
-        let currentQuestion = 0;
-
-        const games = {
-            1: {
-                title: 'أسئلة الفهم والتدبر',
-                questions: [
-                    {
-                        question: 'ماذا ينزل الله تعالى من السماء حسب الآية 65؟',
-                        options: ['المطر', 'الملائكة', 'الرزق', 'الضياء'],
-                        correct: 0,
-                        explanation: 'قال تعالى: "وَاللَّهُ أَنزَلَ مِنَ السَّمَاءِ مَاءً فَأَحْيَا بِهِ الْأَرْضَ بَعْدَ مَوْتِهَا"'
-                    },
-                    {
-                        question: 'ما الذي يحدث للأرض بعد نزول المطر؟',
-                        options: ['تجف', 'تحيا بعد موتها', 'تتشقق', 'تغرق'],
-                        correct: 1,
-                        explanation: 'قال تعالى: "فَأَحْيَا بِهِ الْأَرْضَ بَعْدَ مَوْتِهَا"، أي تعود للحياة بعد الجفاف'
-                    },
-                    {
-                        question: 'في الآية إشارة إلى أي نوع من الناس؟',
-                        options: ['الذين يسمعون', 'الذين يبصرون', 'الذين يعقلون', 'الذين يقرؤون'],
-                        correct: 0,
-                        explanation: 'قال تعالى: "إِنَّ فِي ذَلِكَ لَآيَةً لِقَوْمٍ يَسْمَعُونَ"'
-                    },
-                    {
-                        question: 'ما الذي يسقي الله الإنسان من بطون الأنعام؟',
-                        options: ['الماء', 'اللبن', 'العسل', 'الدم'],
-                        correct: 1,
-                        explanation: 'قال تعالى: "نُسْقِيكُم مِّمَّا فِي بُطُونِهِ مِن بَيْنِ فَرْثٍ وَدَمٍ لَّبَنًا خَالِصًا"'
-                    },
-                    {
-                        question: 'كيف وصف الله اللبن في الآية؟',
-                        options: ['أبيض نقي', 'خالصاً سائغاً للشاربين', 'طيب الطعم', 'كثير النفع'],
-                        correct: 1,
-                        explanation: 'قال تعالى: "لَّبَنًا خَالِصًا سَائِغًا لِلشَّارِبِينَ"'
-                    },
-                    {
-                        question: 'من أين يستخرج الإنسان الرزق الحسن حسب الآية 67؟',
-                        options: ['من البحر', 'من ثمرات النخيل والأعناب', 'من الحيوانات', 'من الحبوب'],
-                        correct: 1,
-                        explanation: 'قال تعالى: "وَمِن ثَمَرَاتِ النَّخِيلِ وَالْأَعْنَابِ تَتَّخِذُونَ مِنْهُ سَكَرًا وَرِزْقًا حَسَنًا"'
-                    },
-                    {
-                        question: 'إلى أين أوحى الله للنحل أن تتخذ بيوتاً؟',
-                        options: ['في الأشجار فقط', 'في الجبال والشجر وما يعرشون', 'في الأرض فقط', 'في الماء'],
-                        correct: 1,
-                        explanation: 'قال تعالى: "وَأَوْحَى رَبُّكَ إِلَى النَّحْلِ أَنِ اتَّخِذِي مِنَ الْجِبَالِ بُيُوتًا وَمِنَ الشَّجَرِ وَمِمَّا يَعْرِشُونَ"'
-                    },
-                    {
-                        question: 'ماذا أمر الله النحل أن تفعل؟',
-                        options: ['أن تطير', 'أن تأكل من كل الثمرات', 'أن تسلك سبل ربها ذللاً', 'أن تبني البيوت'],
-                        correct: 2,
-                        explanation: 'قال تعالى: "ثُمَّ كُلِي مِن كُلِّ الثَّمَرَاتِ فَاسْلُكِي سُبُلَ رَبِّكِ ذُلُلًا"'
-                    },
-                    {
-                        question: 'ما الذي يخرج من بطون النحل؟',
-                        options: ['ماء عذب', 'شراب مختلف ألوانه', 'عسل أبيض', 'رحيق'],
-                        correct: 1,
-                        explanation: 'قال تعالى: "يَخْرُجُ مِن بُطُونِهَا شَرَابٌ مُّخْتَلِفٌ أَلْوَانُهُ فِيهِ شِفَاءٌ لِلنَّاسِ"'
-                    },
-                    {
-                        question: 'ما فائدة العسل حسب الآية؟',
-                        options: ['طعام فقط', 'فيه شفاء للناس', 'شراب فقط', 'للزينة'],
-                        correct: 1,
-                        explanation: 'قال تعالى: "فِيهِ شِفَاءٌ لِلنَّاسِ"، أي أن العسل فيه شفاء ودواء'
-                    },
-                    {
-                        question: 'لمن الآيات في هذه السورة؟',
-                        options: ['لقوم يتفكرون', 'لقوم يعلمون', 'لقوم يسمعون', 'كل ما سبق'],
-                        correct: 3,
-                        explanation: 'الآيات موجهة لأصحاب العقول الذين يتفكرون ويتدبرون في خلق الله'
-                    },
-                    {
-                        question: 'ما أهم درس نستفيده من هذه الآيات؟',
-                        options: ['أهمية الزراعة', 'عظمة قدرة الله في خلقه', 'أهمية النحل', 'فوائد العسل'],
-                        correct: 1,
-                        explanation: 'الآيات تدل على عظمة قدرة الله تعالى وإبداعه في خلقه وتسخير الكون لخدمة الإنسان'
-                    }
-                ]
-            },
-            2: {
-                title: 'التوصيل والمطابقة',
-                pairs: [
-                    { word: 'أَحْيَا بِهِ الْأَرْضَ', meaning: 'جعلها حية بالنبات بعد الجفاف' },
-                    { word: 'لَآيَةً', meaning: 'دليل وعلامة على قدرة الله' },
-                    { word: 'قَوْمٍ يَسْمَعُونَ', meaning: 'الذين يستمعون ويتدبرون' },
-                    { word: 'نُسْقِيكُم', meaning: 'نجعلكم تشربون' },
-                    { word: 'فَرْثٍ وَدَمٍ', meaning: 'بقايا الطعام في الكرش والدم' },
-                    { word: 'خَالِصًا سَائِغًا', meaning: 'نقياً سهل البلع' },
-                    { word: 'سَكَرًا', meaning: 'ما يُسكر من الثمار' },
-                    { word: 'رِزْقًا حَسَنًا', meaning: 'طعام طيب حلال' },
-                    { word: 'أَوْحَى', meaning: 'ألهم وأرشد' },
-                    { word: 'يَعْرِشُونَ', meaning: 'يبنون من السقوف والبيوت' },
-                    { word: 'ذُلُلًا', meaning: 'طرقاً مسهلة منقادة' },
-                    { word: 'شِفَاءٌ', meaning: 'دواء وعلاج' }
-                ]
-            },
-            3: {
-                title: 'مظاهر قدرة الله',
-                powers: [
-                    { name: 'إنزال المطر من السماء', category: 'الظواهر الطبيعية' },
-                    { name: 'إحياء الأرض بعد موتها', category: 'الظواهر الطبيعية' },
-                    { name: 'إخراج اللبن من بين فرث ودم', category: 'عجائب الخلق' },
-                    { name: 'نقاء اللبن وطيب طعمه', category: 'عجائب الخلق' },
-                    { name: 'إنبات النخيل والأعناب', category: 'النعم والرزق' },
-                    { name: 'إخراج الرزق الحسن من الثمار', category: 'النعم والرزق' },
-                    { name: 'إلهام النحل لبناء البيوت', category: 'إلهام المخلوقات' },
-                    { name: 'تسهيل الطرق للنحل', category: 'إلهام المخلوقات' },
-                    { name: 'إخراج العسل من النحل', category: 'عجائب الخلق' },
-                    { name: 'جعل الشفاء في العسل', category: 'النعم والرزق' }
-                ]
-            },
-            4: {
-                title: 'أكمل الآيات',
-                verses: [
-                    {
-                        text: 'وَاللَّهُ أَنزَلَ مِنَ السَّمَاءِ _____ فَأَحْيَا بِهِ الْأَرْضَ بَعْدَ مَوْتِهَا',
-                        words: ['مَاءً', 'رِزْقًا', 'نُورًا', 'مَلائِكَةً'],
-                        correct: 'مَاءً'
-                    },
-                    {
-                        text: 'إِنَّ فِي ذَلِكَ لَآيَةً لِقَوْمٍ _____',
-                        words: ['يَسْمَعُونَ', 'يُبْصِرُونَ', 'يَعْقِلُونَ', 'يَتَفَكَّرُونَ'],
-                        correct: 'يَسْمَعُونَ'
-                    },
-                    {
-                        text: 'نُسْقِيكُم مِّمَّا فِي بُطُونِهِ مِن بَيْنِ فَرْثٍ وَدَمٍ _____ خَالِصًا',
-                        words: ['لَّبَنًا', 'مَاءً', 'عَسَلاً', 'شَرَابًا'],
-                        correct: 'لَّبَنًا'
-                    },
-                    {
-                        text: 'لَّبَنًا خَالِصًا _____ لِلشَّارِبِينَ',
-                        words: ['سَائِغًا', 'طَيِّبًا', 'عَذْبًا', 'نَقِيًّا'],
-                        correct: 'سَائِغًا'
-                    },
-                    {
-                        text: 'وَمِن ثَمَرَاتِ النَّخِيلِ وَالْأَعْنَابِ تَتَّخِذُونَ مِنْهُ سَكَرًا وَرِزْقًا _____',
-                        words: ['حَسَنًا', 'كَثِيرًا', 'طَيِّبًا', 'كَرِيمًا'],
-                        correct: 'حَسَنًا'
-                    },
-                    {
-                        text: 'وَأَوْحَى رَبُّكَ إِلَى _____ أَنِ اتَّخِذِي مِنَ الْجِبَالِ بُيُوتًا',
-                        words: ['النَّحْلِ', 'النَّمْلِ', 'الطَّيْرِ', 'النَّاسِ'],
-                        correct: 'النَّحْلِ'
-                    },
-                    {
-                        text: 'ثُمَّ كُلِي مِن كُلِّ الثَّمَرَاتِ فَاسْلُكِي سُبُلَ رَبِّكِ _____',
-                        words: ['ذُلُلًا', 'سَهْلَةً', 'وَاسِعَةً', 'مُسْتَقِيمَةً'],
-                        correct: 'ذُلُلًا'
-                    },
-                    {
-                        text: 'يَخْرُجُ مِن بُطُونِهَا شَرَابٌ مُّخْتَلِفٌ _____ فِيهِ شِفَاءٌ لِلنَّاسِ',
-                        words: ['أَلْوَانُهُ', 'طَعْمُهُ', 'رَائِحَتُهُ', 'أَنْوَاعُهُ'],
-                        correct: 'أَلْوَانُهُ'
-                    }
-                ]
-            },
-            5: {
-                title: 'ترتيب الآيات',
-                verses: [
-                    'وَاللَّهُ أَنزَلَ مِنَ السَّمَاءِ مَاءً فَأَحْيَا بِهِ الْأَرْضَ بَعْدَ مَوْتِهَا',
-                    'إِنَّ فِي ذَلِكَ لَآيَةً لِقَوْمٍ يَسْمَعُونَ',
-                    'وَإِنَّ لَكُمْ فِي الْأَنْعَامِ لَعِبْرَةً نُسْقِيكُم مِّمَّا فِي بُطُونِهِ',
-                    'مِن بَيْنِ فَرْثٍ وَدَمٍ لَّبَنًا خَالِصًا سَائِغًا لِلشَّارِبِينَ',
-                    'وَمِن ثَمَرَاتِ النَّخِيلِ وَالْأَعْنَابِ تَتَّخِذُونَ مِنْهُ سَكَرًا وَرِزْقًا حَسَنًا',
-                    'وَأَوْحَى رَبُّكَ إِلَى النَّحْلِ أَنِ اتَّخِذِي مِنَ الْجِبَالِ بُيُوتًا وَمِنَ الشَّجَرِ وَمِمَّا يَعْرِشُونَ',
-                    'ثُمَّ كُلِي مِن كُلِّ الثَّمَرَاتِ فَاسْلُكِي سُبُلَ رَبِّكِ ذُلُلًا',
-                    'يَخْرُجُ مِن بُطُونِهَا شَرَابٌ مُّخْتَلِفٌ أَلْوَانُهُ فِيهِ شِفَاءٌ لِلنَّاسِ'
-                ]
-            },
-            6: {
-                title: 'الدروس المستفادة',
-                questions: [
-                    {
-                        question: 'ما الدرس المستفاد من إنزال المطر وإحياء الأرض؟',
-                        options: ['أهمية الزراعة', 'قدرة الله على البعث بعد الموت', 'حاجة الأرض للماء', 'جمال الطبيعة'],
-                        correct: 1,
-                        explanation: 'إحياء الأرض بعد موتها دليل على قدرة الله على إحياء الموتى يوم القيامة'
-                    },
-                    {
-                        question: 'لماذا ذكر الله تعالى اللبن من بين فرث ودم؟',
-                        options: ['لبيان أهمية اللبن', 'لإظهار عظمة القدرة الإلهية', 'لتعليم العلوم', 'لتشجيع الزراعة'],
-                        correct: 1,
-                        explanation: 'خروج اللبن النقي من بين الفرث والدم معجزة تدل على عظمة الخالق وقدرته'
-                    },
-                    {
-                        question: 'ما الحكمة من ذكر النخيل والأعناب تحديداً؟',
-                        options: ['لأنهما أجمل الأشجار', 'لأنهما يُخرجان أطيب الثمار والرزق الحسن', 'لأنهما موجودان في كل مكان', 'لأنهما أكبر الأشجار'],
-                        correct: 1,
-                        explanation: 'النخيل والأعناب من أفضل الثمار التي تُخرج رزقاً حسناً ومنافع كثيرة'
-                    },
-                    {
-                        question: 'ماذا نتعلم من إلهام الله للنحل؟',
-                        options: ['أهمية العسل', 'قدرة الله على هداية المخلوقات', 'ضرورة بناء البيوت', 'أهمية النظام'],
-                        correct: 1,
-                        explanation: 'إلهام الله للنحل الصغيرة يدل على أن الله يهدي كل مخلوق لما يصلحه'
-                    },
-                    {
-                        question: 'لماذا سمى الله العسل "شراب"؟',
-                        options: ['لأنه سائل', 'لأنه يُشرب مع الماء', 'لبيان أنه نعمة ورزق وشفاء', 'لأنه حلو المذاق'],
-                        correct: 2,
-                        explanation: 'تسميته شراباً وذكر ألوانه وشفائه يبين عظمة هذه النعمة'
-                    },
-                    {
-                        question: 'ما واجبنا تجاه هذه النعم؟',
-                        options: ['الاستفادة منها فقط', 'شكر الله وحمده عليها', 'بيعها والتجارة بها', 'الاحتفاظ بها'],
-                        correct: 1,
-                        explanation: 'واجبنا شكر الله على نعمه واستخدامها في طاعته'
-                    },
-                    {
-                        question: 'لمن موجهة هذه الآيات؟',
-                        options: ['للعلماء فقط', 'للمؤمنين العقلاء المتدبرين', 'للزراع فقط', 'للنحالين'],
-                        correct: 1,
-                        explanation: 'الآيات موجهة لمن يتفكر ويتدبر في خلق الله وعظمته'
-                    },
-                    {
-                        question: 'ما علاقة هذه الآيات بتوحيد الله؟',
-                        options: ['لا علاقة لها', 'تدل على أن الله وحده الخالق المستحق للعبادة', 'تدل على قوة الطبيعة', 'تدل على أهمية العلم'],
-                        correct: 1,
-                        explanation: 'كل هذه المظاهر تدل على وحدانية الله وأنه وحده المستحق للعبادة'
-                    }
-                ]
-            }
+        // === 1. البيانات ===
+        const studentsData = {
+            "class1": ["أحمد محمد", "خالد علي", "سعيد عمر", "يوسف حسن", "عبدالله إبراهيم"],
+            "class2": ["فهد سالم", "ناصر حمد", "عمر عبدالعزيز", "تركي فيصل", "ماجد عبدالله"],
+            "class3": ["محمد يحيى", "علي حسين", "حسن مصطفى", "إبراهيم خليل", "زكريا عيسى"]
         };
 
-        function startGame(gameNumber) {
-            document.getElementById('menu').style.display = 'none';
-            const gameContainer = document.getElementById('gameContainer');
-            gameContainer.style.display = 'block';
-            gameContainer.innerHTML = '';
-            
-            currentScore = 0;
-            currentQuestion = 0;
+        const negativeBehaviors = [
+            "الحديث الجانبي أثناء الحصة", "كثرة الحركة والخروج من المقعد",
+            "عدم إحضار الأدوات المدرسية", "النوم داخل الفصل",
+            "استخدام الهاتف النقال", "التأخر عن دخول الحصة",
+            "مقاطعة المعلم باستمرار", "المشاجرة مع الزملاء"
+        ];
 
-            if (gameNumber === 1 || gameNumber === 6) {
-                showQuizGame(gameNumber);
-            } else if (gameNumber === 2) {
-                showMatchingGame();
-            } else if (gameNumber === 3) {
-                showCategorizationGame();
-            } else if (gameNumber === 4) {
-                showCompletionGame();
-            } else if (gameNumber === 5) {
-                showOrderingGame();
-            }
-        }
+        const positiveBehaviors = [
+            "المشاركة الفعالة في الحصة", "إنجاز الواجبات بانتظام",
+            "التعاون مع الزملاء", "الهدوء والانضباط",
+            "نظافة الكتب والدفاتر", "تحسن ملحوظ في المستوى"
+        ];
 
-        function showQuizGame(gameNumber) {
-            const game = games[gameNumber];
-            totalQuestions = game.questions.length;
+        // === 2. تهيئة الصفحة ===
+        window.onload = function() {
+            document.getElementById('dateInput').valueAsDate = new Date();
+            renderCheckboxes('negativeList', negativeBehaviors, 'neg');
+            renderCheckboxes('positiveList', positiveBehaviors, 'pos');
+        };
 
-            function displayQuestion() {
-                const gameContainer = document.getElementById('gameContainer');
-                const q = game.questions[currentQuestion];
-                
-                const progress = ((currentQuestion + 1) / totalQuestions) * 100;
-                
-                gameContainer.innerHTML = `
-                    <div class="game-header">
-                        <button class="back-btn" onclick="backToMenu()">← العودة للقائمة</button>
-                        <h2>${game.title}</h2>
-                        <div class="score-display">النقاط: ${currentScore}/${totalQuestions}</div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${progress}%"></div>
-                    </div>
-                    <div class="question-container">
-                        <div class="question">
-                            السؤال ${currentQuestion + 1} من ${totalQuestions}: ${q.question}
-                        </div>
-                        <div class="options" id="options">
-                            ${q.options.map((opt, i) => `
-                                <div class="option" onclick="checkAnswer(${i}, ${q.correct}, ${gameNumber})">${opt}</div>
-                            `).join('')}
-                        </div>
-                        <div id="feedback"></div>
-                        <button class="next-btn" id="nextBtn" onclick="nextQuestion(${gameNumber})">السؤال التالي ←</button>
+        function renderCheckboxes(containerId, list, type) {
+            const container = document.getElementById(containerId);
+            list.forEach((item, index) => {
+                const id = `${type}_${index}`;
+                container.innerHTML += `
+                    <div class="behavior-item">
+                        <input type="checkbox" id="${id}" value="${item}" onchange="handleExclusive('${type}')">
+                        <label for="${id}">${item}</label>
                     </div>
                 `;
-            }
-
-            displayQuestion();
+            });
         }
 
-        function checkAnswer(selected, correct, gameNumber) {
-            const game = games[gameNumber];
-            const q = game.questions[currentQuestion];
-            const options = document.querySelectorAll('.option');
-            const feedback = document.getElementById('feedback');
-            const nextBtn = document.getElementById('nextBtn');
-            
-            options.forEach((opt, i) => {
-                opt.classList.add('disabled');
-                if (i === correct) {
-                    opt.classList.add('correct');
-                } else if (i === selected && selected !== correct) {
-                    opt.classList.add('wrong');
-                }
-            });
-
-            if (selected === correct) {
-                currentScore++;
-                feedback.innerHTML = `<div class="feedback correct">✓ إجابة صحيحة! ${q.explanation}</div>`;
+        // === 3. الوظائف ===
+        function login() {
+            const id = document.getElementById('employeeId').value;
+            if (id === "1234") {
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('mainApp').style.display = 'block';
             } else {
-                feedback.innerHTML = `<div class="feedback wrong">✗ إجابة خاطئة. ${q.explanation}</div>`;
-            }
-
-            nextBtn.classList.add('show');
-        }
-
-        function nextQuestion(gameNumber) {
-            currentQuestion++;
-            if (currentQuestion < games[gameNumber].questions.length) {
-                showQuizGame(gameNumber);
-            } else {
-                showFinalScore();
+                const err = document.getElementById('loginError');
+                err.style.display = 'block';
+                setTimeout(() => err.style.display = 'none', 3000);
             }
         }
 
-        function showMatchingGame() {
-            const game = games[2];
-            let leftItems = [...game.pairs].sort(() => Math.random() - 0.5);
-            let rightItems = [...game.pairs].sort(() => Math.random() - 0.5);
-            let selectedLeft = null;
-            let selectedRight = null;
-            let matches = 0;
+        function loadStudents() {
+            const classVal = document.getElementById('classSelect').value;
+            const grid = document.getElementById('studentsGrid');
+            grid.innerHTML = "";
+            document.getElementById('selectedStudentName').value = "";
+
+            if (classVal && studentsData[classVal]) {
+                studentsData[classVal].forEach(name => {
+                    const chip = document.createElement('div');
+                    chip.className = 'student-chip';
+                    chip.innerText = name;
+                    chip.onclick = function() {
+                        document.querySelectorAll('.student-chip').forEach(c => c.classList.remove('selected'));
+                        this.classList.add('selected');
+                        document.getElementById('selectedStudentName').value = name;
+                    };
+                    grid.appendChild(chip);
+                });
+            }
+        }
+
+        // منطق: إذا اختار إيجابي، يتم تعطيل السلبي والعكس (اختياري، يمكن إزالته)
+        function handleExclusive(type) {
+            const isNegative = type === 'neg';
+            const opposingSelector = isNegative ? 'input[id^="pos_"]' : 'input[id^="neg_"]';
+            const currentSelector = isNegative ? 'input[id^="neg_"]' : 'input[id^="pos_"]';
             
-            const gameContainer = document.getElementById('gameContainer');
-            gameContainer.innerHTML = `
-                <div class="game-header">
-                    <button class="back-btn" onclick="backToMenu()">← العودة للقائمة</button>
-                    <h2>${game.title}</h2>
-                    <div class="score-display">المطابقات: <span id="matchCount">0</span>/${game.pairs.length}</div>
-                </div>
-                <div style="margin: 30px 0;">
-                    <h3 style="color: #0f9b8e; text-align: center; margin-bottom: 20px;">انقر على الكلمة ثم انقر على معناها</h3>
-                    <div class="matching-container">
-                        <div class="matching-column">
-                            <h3>الكلمات القرآنية</h3>
-                            <div id="leftColumn">
-                                ${leftItems.map((item, i) => `
-                                    <div class="matching-item quran-text" data-word="${item.word}" data-meaning="${item.meaning}" onclick="selectLeft(this)">
-                                        ${item.word}
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                        <div class="matching-column">
-                            <h3>المعاني</h3>
-                            <div id="rightColumn">
-                                ${rightItems.map((item, i) => `
-                                    <div class="matching-item" data-word="${item.word}" data-meaning="${item.meaning}" onclick="selectRight(this)">
-                                        ${item.meaning}
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            window.selectLeft = function(element) {
-                if (element.classList.contains('matched')) return;
-                
-                document.querySelectorAll('#leftColumn .matching-item').forEach(item => {
-                    item.classList.remove('selected');
-                });
-                element.classList.add('selected');
-                selectedLeft = element;
-                checkMatch();
-            };
-
-            window.selectRight = function(element) {
-                if (element.classList.contains('matched')) return;
-                
-                document.querySelectorAll('#rightColumn .matching-item').forEach(item => {
-                    item.classList.remove('selected');
-                });
-                element.classList.add('selected');
-                selectedRight = element;
-                checkMatch();
-            };
-
-            function checkMatch() {
-                if (selectedLeft && selectedRight) {
-                    if (selectedLeft.dataset.word === selectedRight.dataset.word) {
-                        selectedLeft.classList.add('matched');
-                        selectedRight.classList.add('matched');
-                        selectedLeft.classList.remove('selected');
-                        selectedRight.classList.remove('selected');
-                        matches++;
-                        document.getElementById('matchCount').textContent = matches;
-                        
-                        if (matches === game.pairs.length) {
-                            currentScore = matches;
-                            totalQuestions = game.pairs.length;
-                            setTimeout(() => {
-                                showFinalScore();
-                            }, 1000);
-                        }
-                    } else {
-                        setTimeout(() => {
-                            selectedLeft.classList.remove('selected');
-                            selectedRight.classList.remove('selected');
-                        }, 500);
-                    }
-                    selectedLeft = null;
-                    selectedRight = null;
-                }
-            }
-        }
-
-        function showCategorizationGame() {
-            const game = games[3];
-            const categories = ['الظواهر الطبيعية', 'عجائب الخلق', 'النعم والرزق', 'إلهام المخلوقات'];
-            let powers = [...game.powers].sort(() => Math.random() - 0.5);
+            const anyChecked = Array.from(document.querySelectorAll(currentSelector)).some(c => c.checked);
             
-            const gameContainer = document.getElementById('gameContainer');
-            gameContainer.innerHTML = `
-                <div class="game-header">
-                    <button class="back-btn" onclick="backToMenu()">← العودة للقائمة</button>
-                    <h2>${game.title}</h2>
-                    <div class="score-display">اسحب المظاهر إلى التصنيف المناسب</div>
-                </div>
-                <div style="margin: 30px 0;">
-                    <h3 style="color: #0f9b8e; margin-bottom: 20px;">المظاهر المتاحة:</h3>
-                    <div class="drag-items-container" id="dragItems">
-                        ${powers.map((item, i) => `
-                            <div class="drag-item" draggable="true" data-name="${item.name}" data-category="${item.category}">
-                                ${item.name}
-                            </div>
-                        `).join('')}
-                    </div>
-                    <div class="drop-zones-container">
-                        ${categories.map(cat => `
-                            <h3 style="color: #0f9b8e; margin-top: 20px;">${cat}:</h3>
-                            <div class="drop-zone" data-category="${cat}">
-                                اسحب المظاهر هنا
-                            </div>
-                        `).join('')}
-                    </div>
-                    <button class="next-btn show" onclick="checkCategorization()" style="margin-top: 30px;">تحقق من التصنيف</button>
-                </div>
-            `;
-
-            setupDragAndDrop();
-        }
-
-        function setupDragAndDrop() {
-            const items = document.querySelectorAll('.drag-item');
-            const dropZones = document.querySelectorAll('.drop-zone');
-            let draggedElement = null;
-
-            items.forEach(item => {
-                item.addEventListener('dragstart', function(e) {
-                    draggedElement = this;
-                    this.classList.add('dragging');
-                });
-
-                item.addEventListener('dragend', function() {
-                    this.classList.remove('dragging');
-                });
-            });
-
-            dropZones.forEach(zone => {
-                zone.addEventListener('dragover', function(e) {
-                    e.preventDefault();
-                    this.classList.add('drag-over');
-                });
-
-                zone.addEventListener('dragleave', function() {
-                    this.classList.remove('drag-over');
-                });
-
-                zone.addEventListener('drop', function(e) {
-                    e.preventDefault();
-                    this.classList.remove('drag-over');
-                    
-                    if (draggedElement) {
-                        const itemName = draggedElement.dataset.name;
-                        const itemCategory = draggedElement.dataset.category;
-                        
-                        if (!this.innerHTML.includes(itemName)) {
-                            const newItem = document.createElement('div');
-                            newItem.className = 'drag-item';
-                            newItem.textContent = itemName;
-                            newItem.dataset.name = itemName;
-                            newItem.dataset.category = itemCategory;
-                            newItem.style.cursor = 'default';
-                            newItem.style.marginTop = '10px';
-                            
-                            this.appendChild(newItem);
-                            this.classList.add('filled');
-                            draggedElement.style.display = 'none';
-                        }
-                    }
-                });
+            document.querySelectorAll(opposingSelector).forEach(el => {
+                el.disabled = anyChecked;
+                if(anyChecked) el.parentElement.style.opacity = "0.5";
+                else el.parentElement.style.opacity = "1";
             });
         }
 
-        function checkCategorization() {
-            const dropZones = document.querySelectorAll('.drop-zone');
-            let score = 0;
-            let total = 0;
-
-            dropZones.forEach(zone => {
-                const zoneCategory = zone.dataset.category;
-                const items = zone.querySelectorAll('.drag-item');
-                
-                items.forEach(item => {
-                    total++;
-                    if (item.dataset.category === zoneCategory) {
-                        score++;
-                        item.style.background = '#4caf50';
-                    } else {
-                        item.style.background = '#f44336';
-                    }
-                });
-            });
-
-            currentScore = score;
-            totalQuestions = total;
-
-            setTimeout(() => {
-                showFinalScore();
-            }, 2000);
-        }
-
-        function showCompletionGame() {
-            const game = games[4];
-            totalQuestions = game.verses.length;
-            let currentVerse = 0;
-            let score = 0;
-
-            function displayVerse() {
-                const verse = game.verses[currentVerse];
-                const gameContainer = document.getElementById('gameContainer');
-                
-                const progress = ((currentVerse + 1) / totalQuestions) * 100;
-                
-                gameContainer.innerHTML = `
-                    <div class="game-header">
-                        <button class="back-btn" onclick="backToMenu()">← العودة للقائمة</button>
-                        <h2>${game.title}</h2>
-                        <div class="score-display">النقاط: ${score}/${totalQuestions}</div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${progress}%"></div>
-                    </div>
-                    <div class="verse-display">
-                        <div class="ayah" id="ayah">
-                            ${verse.text}
-                        </div>
-                        <div style="text-align: center; margin-top: 30px;">
-                            ${verse.words.map(word => `
-                                <span class="word-box quran-text" onclick="selectWord('${word}', '${verse.correct}')">${word}</span>
-                            `).join('')}
-                        </div>
-                        <div id="feedback"></div>
-                    </div>
-                `;
+        function generateReport() {
+            // التحقق من المدخلات
+            const studentName = document.getElementById('selectedStudentName').value;
+            const className = document.getElementById('classSelect').options[document.getElementById('classSelect').selectedIndex].text;
+            
+            if (!studentName) {
+                alert("الرجاء اختيار طالب أولاً!");
+                return;
             }
 
-            window.selectWord = function(selected, correct) {
-                const feedback = document.getElementById('feedback');
-                const wordBoxes = document.querySelectorAll('.word-box');
-                
-                wordBoxes.forEach(box => {
-                    box.classList.add('used');
-                });
-
-                const ayahDiv = document.getElementById('ayah');
-                ayahDiv.innerHTML = ayahDiv.innerHTML.replace('_____', `<span style="color: #1e8449; font-weight: 700;">${selected}</span>`);
-
-                if (selected === correct) {
-                    score++;
-                    feedback.innerHTML = '<div class="feedback correct">✓ إجابة صحيحة! بارك الله فيك</div>';
-                } else {
-                    feedback.innerHTML = `<div class="feedback wrong">✗ الإجابة الصحيحة: ${correct}</div>`;
-                }
-
-                setTimeout(() => {
-                    currentVerse++;
-                    if (currentVerse < totalQuestions) {
-                        displayVerse();
-                    } else {
-                        currentScore = score;
-                        showFinalScore();
-                    }
-                }, 2000);
-            };
-
-            displayVerse();
-        }
-
-        function showOrderingGame() {
-            const game = games[5];
-            let verses = [...game.verses].sort(() => Math.random() - 0.5);
-            
-            const gameContainer = document.getElementById('gameContainer');
-            gameContainer.innerHTML = `
-                <div class="game-header">
-                    <button class="back-btn" onclick="backToMenu()">← العودة للقائمة</button>
-                    <h2>${game.title}</h2>
-                    <div class="score-display">رتب الآيات بالترتيب الصحيح</div>
-                </div>
-                <div style="margin: 30px 0;">
-                    <h3 style="color: #0f9b8e; margin-bottom: 20px;">اسحب الآيات وأفلتها بالترتيب الصحيح:</h3>
-                    <div id="verses">
-                        ${verses.map((verse, i) => `
-                            <div class="drag-item quran-text" draggable="true" data-verse="${verse}" style="margin: 10px 0; padding: 20px; font-size: 1.2em;">
-                                ${verse}
-                            </div>
-                        `).join('')}
-                    </div>
-                    <h3 style="color: #0f9b8e; margin: 30px 0 20px;">الترتيب:</h3>
-                    <div id="dropZones">
-                        ${Array(8).fill(0).map((_, i) => `
-                            <div class="drop-zone" data-position="${i}" style="margin: 10px 0;">
-                                الموضع ${i + 1}
-                            </div>
-                        `).join('')}
-                    </div>
-                    <button class="next-btn show" onclick="checkOrder()" style="margin-top: 30px;">تحقق من الترتيب</button>
-                </div>
-            `;
-
-            setupDragAndDrop();
-        }
-
-        function checkOrder() {
-            const dropZones = document.querySelectorAll('.drop-zone');
-            const correctOrder = games[5].verses;
-            let score = 0;
-
-            dropZones.forEach((zone, i) => {
-                const droppedItem = zone.querySelector('.drag-item');
-                if (droppedItem && droppedItem.dataset.verse === correctOrder[i]) {
-                    score++;
-                    zone.style.borderColor = '#4caf50';
-                    zone.style.background = '#c8e6c9';
-                } else {
-                    zone.style.borderColor = '#f44336';
-                    zone.style.background = '#ffcdd2';
-                }
-            });
-
-            currentScore = score;
-            totalQuestions = 8;
-
-            setTimeout(() => {
-                showFinalScore();
-            }, 2000);
-        }
-
-        function showFinalScore() {
-            const gameContainer = document.getElementById('gameContainer');
-            const percentage = Math.round((currentScore / totalQuestions) * 100);
-            
-            let message = '';
-            if (percentage >= 90) {
-                message = '🌟 ممتاز! بارك الله فيك! أحسنت التدبر';
-            } else if (percentage >= 70) {
-                message = '👍 جيد جداً! وفقك الله';
-            } else if (percentage >= 50) {
-                message = '✨ جيد! واصل التعلم والتدبر';
-            } else {
-                message = '💪 حاول مرة أخرى وتدبر الآيات جيداً';
+            // جمع البيانات
+            const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            if (checkedBoxes.length === 0) {
+                alert("الرجاء اختيار سلوك واحد على الأقل!");
+                return;
             }
 
-            gameContainer.innerHTML = `
-                <div class="final-score">
-                    <h2>🎉 انتهت اللعبة! 🎉</h2>
-                    <div class="score">${currentScore}/${totalQuestions}</div>
-                    <div class="message">${message}</div>
-                    <div style="font-size: 3em; margin: 20px 0;">${percentage}%</div>
-                    <button class="restart-btn" onclick="backToMenu()">العودة للقائمة الرئيسية</button>
-                </div>
-            `;
+            // تعبئة التقرير
+            document.getElementById('r_name').innerText = studentName;
+            document.getElementById('r_class').innerText = className;
+            document.getElementById('r_date').innerText = document.getElementById('dateInput').value;
+            
+            const list = document.getElementById('r_behaviors');
+            list.innerHTML = "";
+            checkedBoxes.forEach(box => {
+                const li = document.createElement('li');
+                li.innerText = box.value;
+                // تلوين حسب النوع
+                if(box.id.startsWith('neg')) li.style.color = "#c62828";
+                else li.style.color = "#2e7d32";
+                list.appendChild(li);
+            });
+
+            document.getElementById('r_notes').innerText = document.getElementById('teacherNotes').value || "لا توجد ملاحظات إضافية.";
+
+            // إظهار التقرير والتمرير إليه
+            const reportContainer = document.getElementById('reportContainer');
+            reportContainer.classList.add('show');
+            reportContainer.scrollIntoView({behavior: "smooth"});
         }
 
-        function backToMenu() {
-            document.getElementById('menu').style.display = 'grid';
-            document.getElementById('gameContainer').style.display = 'none';
-            currentScore = 0;
-            currentQuestion = 0;
+        function resetForm() {
+            if(confirm("هل أنت متأكد من مسح جميع البيانات؟")) {
+                document.getElementById('classSelect').value = "";
+                document.getElementById('studentsGrid').innerHTML = "";
+                document.getElementById('selectedStudentName').value = "";
+                document.getElementById('teacherNotes').value = "";
+                document.querySelectorAll('input[type="checkbox"]').forEach(c => {
+                    c.checked = false;
+                    c.disabled = false;
+                    c.parentElement.style.opacity = "1";
+                });
+                document.getElementById('reportContainer').classList.remove('show');
+            }
         }
     </script>
 </body>
