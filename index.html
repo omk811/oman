@@ -2,1474 +2,242 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المحبرة | الأستاذ خليل</title>
-
-    <link rel="manifest" href="manifest.json">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="الأستاذ خليل">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3429/3429149.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="المحبرة - مساحة مخصصة لمتابعة واجبات وتنبيهات الأستاذ خليل البلوشي للصف الخامس.">
+    <title>المحبرة | أ. خليل البلوشي</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;700&family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
-        /* المتغيرات الأساسية للألوان والتنسيقات */
         :root {
-            --primary: #1a5276;
-            --secondary: #2e86c1;
-            --accent: #f39c12;
-            --success: #27ae60;
-            --danger: #e74c3c;
-            --border-light: #e1eef7;
-            --bg-body: #f4f9fd;
-            --text-muted: #7f8c8d;
-            --text-main: #2c3e50;
-            --shadow-sm: 0 4px 15px rgba(26, 82, 118, 0.05);
-            --shadow-md: 0 10px 30px rgba(26, 82, 118, 0.08);
+            --primary: #1e3a7a;
+            --accent: #d4922a;
+            --bg-body: #f0f4fa;
+            --white: #ffffff;
+            --text-main: #1a2744;
+            --text-muted: #64748b;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --shadow: 0 10px 25px rgba(30, 58, 122, 0.05);
             --transition: all 0.3s ease;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        /* Dark Mode */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-body: #0f172a;
+                --white: #1e293b;
+                --text-main: #f1f5f9;
+                --text-muted: #94a3b8;
+            }
         }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Tajawal', sans-serif;
-            background: var(--bg-body);
+            font-family: 'Baloo Bhaijaan 2', sans-serif;
+            background-color: var(--bg-body);
             color: var(--text-main);
-            min-height: 100vh;
             line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
-        /* تنسيق الروابط */
-        .clickable-link {
-            color: var(--secondary);
-            text-decoration: none;
-            font-weight: 700;
-            word-break: break-all;
-            border-bottom: 1px dashed var(--secondary);
-            transition: var(--transition);
-        }
-        
-        .clickable-link:hover {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-        }
-
-        /* ترويسة الموقع */
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #fff;
-            box-shadow: 0 4px 20px rgba(26, 82, 118, 0.15);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 5%;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .brand h1 {
-            font-size: 1.4rem;
-            font-weight: 800;
-            margin-bottom: 2px;
-        }
-        
-        .brand p {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-
-        .header-right {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 8px;
-        }
-
-        #hdate {
-            font-size: 0.85rem;
-            text-align: right;
-            opacity: 0.9;
-            font-weight: 500;
-        }
-
-        .btn-login {
-            color: white;
-            text-decoration: none;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 6px 16px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            transition: var(--transition);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .btn-login:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-1px);
-        }
-
-        /* شريط التبويبات (الأقسام) */
-        .tabs-container {
-            display: flex;
-            padding: 0 5%;
-            background: rgba(0, 0, 0, 0.1);
-            overflow-x: auto;
-            scrollbar-width: none;
-        }
-
-        .tabs-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        .ctab {
-            padding: 16px 20px;
-            background: transparent;
-            color: rgba(255, 255, 255, 0.7);
-            border: none;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 0.95rem;
-            font-weight: 700;
-            border-bottom: 3px solid transparent;
-            white-space: nowrap;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-        }
-
-        .ctab:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .ctab.active {
-            color: #fff;
-            border-bottom-color: var(--accent);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .cbdg {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--accent);
-            color: #fff;
-            border-radius: 50px;
-            padding: 0 8px;
-            height: 22px;
-            font-size: 0.75rem;
-            margin-left: 8px;
-            font-weight: 800;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        /* الهيكل الرئيسي */
-        main {
+        /* Container */
+        .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 30px 5%;
-            display: grid;
-            grid-template-columns: 1fr 380px;
-            gap: 24px;
+            padding: 0 20px;
         }
 
-        /* بطاقة الترحيب */
-        .welcome-card {
-            background: linear-gradient(135deg, var(--secondary), var(--primary));
-            border-radius: 20px;
-            padding: 24px 30px;
-            color: #fff;
-            box-shadow: var(--shadow-md);
-            grid-column: 1 / -1;
+        /* Header Modernization */
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section { display: flex; align-items: center; gap: 12px; }
+        .logo-icon {
+            background: var(--accent);
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
-            gap: 20px;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), #3a7bb8);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            color: white;
+            margin: 25px 0;
             position: relative;
             overflow: hidden;
         }
-        
-        .welcome-card::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.05)" stroke-width="2" fill="none"/></svg>') repeat;
-            opacity: 0.5;
-            pointer-events: none;
+
+        .hero h2 { font-family: 'Cairo', sans-serif; font-size: 2rem; margin-bottom: 10px; }
+
+        /* Main Grid Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            margin-bottom: 50px;
         }
 
-        .welcome-icon {
-            font-size: 45px;
-            background: rgba(255, 255, 255, 0.15);
-            width: 80px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            z-index: 1;
-        }
-        
-        .welcome-text { z-index: 1; }
-        .welcome-text h2 { font-size: 1.5rem; margin-bottom: 5px; }
-        .welcome-text p { font-size: 1rem; opacity: 0.9; }
-
-        /* البطاقات العامة */
-        .content-card {
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: var(--shadow-sm);
-            overflow: hidden;
-            margin-bottom: 24px;
-            border: 1px solid var(--border-light);
-        }
-
-        .card-header {
-            padding: 18px 24px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid var(--border-light);
-            background: #fcfcfc;
-            color: var(--primary);
-            font-weight: 800;
-            font-size: 1.1rem;
-        }
-
-        .card-body {
-            padding: 24px;
-        }
-
-        /* الملاحظات */
-        .notice-item {
-            border-radius: 14px;
-            padding: 20px;
-            border-right: 5px solid transparent;
-            margin-bottom: 18px;
-            transition: var(--transition);
-        }
-
-        .notice-item:hover {
-            transform: translateX(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        .notice-item.homework { background: #f4f9fd; border-color: var(--secondary); }
-        .notice-item.activity { background: #eefaf3; border-color: var(--success); }
-        .notice-item.alert { background: #fffaf0; border-color: var(--accent); }
-
-        .notice-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            margin-bottom: 12px;
-            color: var(--text-muted);
-        }
-
-        .notice-meta b { color: var(--text-main); }
-
-        .notice-item strong {
-            display: block;
-            font-size: 1.25rem;
-            line-height: 1.4;
-            margin-bottom: 8px;
-            color: var(--primary);
-        }
-
-        .notice-details {
-            font-size: 1.05rem;
-            line-height: 1.8;
-            color: #34495e;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-
-        .notice-img {
-            cursor: pointer;
-            transition: var(--transition);
-            width: 100%;
-            max-height: 350px;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-top: 15px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        
-        .notice-img:hover {
-            opacity: 0.9;
-        }
-
-        /* قسم الاستفسارات (النموذج) */
-        .form-container {
-            background: linear-gradient(135deg, #2c3e50, var(--primary));
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: var(--shadow-md);
-            color: #fff;
-            position: sticky;
-            top: 100px;
-        }
-
-        .form-container h2 {
+        /* Cards Style */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 25px;
             margin-bottom: 20px;
-            font-size: 1.3rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.02);
+            transition: var(--transition);
+        }
+
+        .card:hover { transform: translateY(-5px); }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1024px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .sidebar { order: 2; }
+            .content { order: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .hero { padding: 25px; text-align: center; }
+            .hero h2 { font-size: 1.5rem; }
+            .logo-section h1 { font-size: 1.2rem; }
+            .nav-wrapper { flex-direction: column; gap: 15px; }
+        }
+
+        /* Tabs Mobile-Friendly */
+        .tabs-container {
             display: flex;
-            align-items: center;
+            overflow-x: auto;
             gap: 10px;
+            padding: 10px 0;
+            scrollbar-width: none;
         }
-
-        .form-group {
-            margin-bottom: 15px;
+        .tab-btn {
+            background: var(--white);
+            padding: 8px 20px;
+            border-radius: 50px;
+            border: none;
+            font-family: inherit;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: var(--shadow);
         }
+        .tab-btn.active { background: var(--accent); color: white; }
 
+        /* Form Styling */
+        .form-group { margin-bottom: 15px; }
         .form-control {
             width: 100%;
-            padding: 14px 16px;
-            border-radius: 12px;
-            border: 2px solid rgba(255,255,255,0.1);
-            background: rgba(255,255,255,0.95);
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid var(--bg-body);
+            background: var(--bg-body);
             font-family: inherit;
-            font-size: 0.95rem;
-            color: #333;
-            transition: var(--transition);
         }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--accent);
-            background: #fff;
-            box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.2);
-        }
-
         .btn-submit {
             width: 100%;
-            padding: 16px;
-            background: var(--accent);
-            color: #fff;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
             border: none;
             border-radius: 12px;
-            font-weight: 800;
+            font-weight: bold;
             cursor: pointer;
-            font-size: 1.1rem;
-            transition: var(--transition);
-            margin-top: 5px;
-        }
-
-        .btn-submit:hover {
-            background: #e67e22;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.4);
-        }
-        
-        .btn-submit:disabled {
-            background: #bdc3c7;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        /* الاستفسارات المجاب عليها */
-        .answered-query {
-            border-right: 4px solid var(--success);
-            background: #fff;
-            margin-bottom: 18px;
-            border: 1px solid var(--border-light);
-            border-right-width: 4px;
-            padding: 20px;
-            border-radius: 14px;
-            transition: var(--transition);
-        }
-        
-        .answered-query:hover {
-            box-shadow: var(--shadow-sm);
-        }
-
-        .aq-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            align-items: center;
-        }
-
-        .aq-title {
-            font-weight: 800;
-            color: var(--primary);
-            font-size: 1.05rem;
-        }
-
-        .aq-date {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .aq-question {
-            font-size: 1rem;
-            margin-bottom: 15px;
-            color: #444;
-            line-height: 1.7;
-        }
-
-        .aq-answer {
-            background: #f0fdf4;
-            border: 1px solid #bce8d1;
-            padding: 16px;
-            border-radius: 12px;
-            color: #166534;
-        }
-
-        .aq-answer strong {
-            display: block;
-            margin-bottom: 8px;
-            color: #14532d;
-            font-size: 1.05rem;
-        }
-
-        /* عارض الصور (Modal) */
-        .image-modal {
-            display: none;
-            position: fixed;
-            z-index: 10000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 23, 42, 0.95);
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            max-width: 90%;
-            max-height: 85vh;
-            border-radius: 16px;
-            animation: zoom 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        }
-
-        @keyframes zoom {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        /* الإشعارات (Toast) */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: #333;
-            color: #fff;
-            padding: 14px 28px;
-            border-radius: 50px;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            z-index: 10000;
-            font-weight: 700;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-        }
-
-        /* التجاوب مع الشاشات الصغيرة */
-        @media (max-width: 992px) {
-            main {
-                grid-template-columns: 1fr;
-            }
-            .form-container {
-                position: relative;
-                top: 0;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .welcome-card {
-                flex-direction: column;
-                text-align: center;
-                padding: 30px 20px;
-            }
-            .brand h1 {
-                font-size: 1.2rem;
-            }
-            .ctab {
-                padding: 14px 16px;
-                font-size: 0.9rem;
-            }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="header-top">
-        <div class="brand">
-            <div class="logo">📚</div>
+    <div class="container nav-wrapper">
+        <div class="logo-section">
+            <div class="logo-icon">✒️</div>
             <div>
                 <h1>المحبرة</h1>
-                <p>اللغة العربية · الصف الخامس</p>
+                <p style="font-size: 0.7rem; opacity: 0.8;">أ. خليل البلوشي</p>
             </div>
         </div>
-        <div class="header-right">
-            <div id="hdate"></div>
-            <a href="teacher.html" class="btn-login">دخول المعلم</a>
-        </div>
-    </div>
-    
-    <div class="tabs-container">
-        <button class="ctab active" onclick="setClass('all')">📋 جميع الملاحظات</button>
-        <button class="ctab" onclick="setClass('5A')">خامس 1 <span class="cbdg" id="b5A">0</span></button>
-        <button class="ctab" onclick="setClass('5B')">خامس 2 <span class="cbdg" id="b5B">0</span></button>
-        <button class="ctab" onclick="setClass('5C')">خامس 3 <span class="cbdg" id="b5C">0</span></button>
+        <div id="hdate" class="date-box">الجمعة، 6 مارس 2026</div>
     </div>
 </header>
 
-<main>
-    <div class="welcome-card">
-        <div class="welcome-icon">👋</div>
-        <div class="welcome-text">
-            <h2>أهلاً بأولياء الأمور</h2>
-            <p>هذه المساحة مخصصة لمتابعة كل ما يخص المادة العلمية والواجبات اليومية لأبنائكم.</p>
-        </div>
+<main class="container">
+    <section class="hero">
+        <h2>مرحباً بكم في مساحتكم التعليمية</h2>
+        <p>هنا تجدون كافة الواجبات، التنبيهات، والتواصل المباشر مع الأستاذ.</p>
+    </section>
+
+    <div class="tabs-container">
+        <button class="tab-btn active">الكل</button>
+        <button class="tab-btn">خامس / 1</button>
+        <button class="tab-btn">خامس / 2</button>
+        <button class="tab-btn">خامس / 3</button>
     </div>
 
-    <div class="content-section">
-        <div class="content-card">
-            <div class="card-header">📌 الملاحظات والتنبيهات</div>
-            <div class="card-body" id="nList">
-                <div style="text-align:center; padding:30px; color:var(--text-muted); font-weight: 500;">
-                    ⏳ جاري تحميل البيانات...
-                </div>
+    <div class="main-layout">
+        <div class="content">
+            <div class="card">
+                <h3 style="color: var(--primary); margin-bottom: 15px;">📌 آخر التنبيهات</h3>
+                <p>لا توجد تنبيهات جديدة اليوم. استمتع بوقتك!</p>
+            </div>
+            
+            <div class="card" style="border-right: 5px solid var(--accent);">
+                <span style="background: #fff3e0; color: #e65100; padding: 2px 10px; border-radius: 5px; font-size: 0.8rem;">واجب منزلي</span>
+                <h3 style="margin: 10px 0;">حل تدريبات سورة النبأ</h3>
+                <p style="color: var(--text-muted);">يرجى حل الصفحة 12 في كتاب النشاط وتسليمها يوم الأحد القادم.</p>
             </div>
         </div>
 
-        <div class="content-card" id="myCard" style="display:none">
-            <div class="card-header">💬 استفسارات مجاب عليها</div>
-            <div class="card-body" id="myList"></div>
-        </div>
-    </div>
-
-    <div class="sidebar-section">
-        <div class="form-container">
-            <h2>💌 إرسال استفسار للأستاذ</h2>
-            
-            <div class="form-group">
-                <input type="text" class="form-control" id="pN" placeholder="اسم ولي الأمر الكريم">
+        <aside class="sidebar">
+            <div class="card">
+                <h3 style="margin-bottom: 20px; font-family: 'Cairo';">✉️ أرسل استفسارك</h3>
+                <form>
+                    <div class="form-group">
+                        <label>الاسم الثلاثي</label>
+                        <input type="text" class="form-control" placeholder="أدخل اسم الطالب">
+                    </div>
+                    <div class="form-group">
+                        <label>الفصل</label>
+                        <select class="form-control">
+                            <option>خامس / 1</option>
+                            <option>خامس / 2</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>رسالتك</label>
+                        <textarea class="form-control" rows="4" placeholder="اكتب سؤالك هنا..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">إرسال الآن</button>
+                </form>
             </div>
-            
-            <div class="form-group">
-                <input type="text" class="form-control" id="pS" placeholder="اسم الطالب الثلاثي">
-            </div>
-            
-            <div class="form-group">
-                <select class="form-control" id="pC">
-                    <option value="">— اختر الشعبة —</option>
-                    <option value="5A">الخامس 1</option>
-                    <option value="5B">الخامس 2</option>
-                    <option value="5C">الخامس 3</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <textarea class="form-control" id="pM" rows="4" placeholder="اكتب سؤالك أو استفسارك هنا..."></textarea>
-            </div>
-            
-            <button class="btn-submit" id="sendBtn" onclick="submitQ()">📤 إرسال الآن</button>
-        </div>
+        </aside>
     </div>
 </main>
 
-<div id="imageModal" class="image-modal" onclick="this.style.display='none'">
-    <img class="modal-content" id="fullImage" alt="صورة مكبرة">
-</div>
-
-<div class="toast" id="toast"></div>
-
-<script>
-    // الإعدادات الثابتة (لا تقم بتغييرها لضمان عمل الـ Backend)
-    const API_URL = 'https://script.google.com/macros/s/AKfycbxao2vzL5tPFhirn-Bb98Dx9XobBJEH0M89Dzsma2aqvshgzSL4dx6ebPhSgR8WO-WoRQ/exec';
-    const STORAGE_KEY = 'school_data_v2';
-    const MY_KEY = 'my_query_ids';
-    const CN = { all: 'عام', '5A': 'خامس 1', '5B': 'خامس 2', '5C': 'خامس 3' };
-    const TN = { homework: 'واجب 📝', activity: 'نشاط 🎯', alert: 'تنبيه 🔔' };
-    
-    let curClass = 'all';
-    let cachedData = null;
-
-    // دالة لتحويل الروابط النصية إلى روابط قابلة للنقر
-    function makeLinksClickable(text) {
-        if (!text) return '';
-        const urlPattern = /(https?:\/\/[^\s]+)|(www\.[^\s]+)/gi;
-        return text.toString().replace(urlPattern, function(url) {
-            let href = url.startsWith('http') ? url : 'http://' + url;
-            return `<a href="${href}" class="clickable-link" target="_blank">${url}</a>`;
-        });
-    }
-
-    // تفعيل نافذة عرض الصور عند النقر على أي صورة ملاحظة
-    document.addEventListener('click', e => {
-        if (e.target.classList.contains('notice-img')) {
-            const modal = document.getElementById('imageModal');
-            document.getElementById('fullImage').src = e.target.src;
-            modal.style.display = 'flex';
-        }
-    });
-
-    // جلب البيانات من Google Apps Script أو التخزين المحلي
-    async function loadData() {
-        try {
-            const res = await fetch(`${API_URL}?action=loadData&t=${Date.now()}`);
-            const result = await res.json();
-            if (result.status === 'success') {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(result.data));
-                return result.data;
-            }
-        } catch (e) {
-            console.error("Error loading data:", e);
-        }
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { notices: [], queries: [], qId: 100 };
-    }
-
-    // تغيير الشعبة وتحديث واجهة المستخدم
-    function setClass(c) {
-        curClass = c;
-        const tabs = document.querySelectorAll('.ctab');
-        const classIndexes = ['all', '5A', '5B', '5C'];
-        
-        tabs.forEach((tab, index) => {
-            tab.classList.toggle('active', c === classIndexes[index]);
-        });
-        
-        renderUI();
-    }
-
-    // رسم واجهة الملاحظات والبيانات
-    async function renderUI() {
-        if (!cachedData) cachedData = await loadData();
-        
-        const listElement = document.getElementById('nList');
-        let filteredNotices = cachedData.notices.filter(n => curClass === 'all' || n.cls === 'all' || n.cls === curClass);
-        
-        if (!filteredNotices.length) {
-            listElement.innerHTML = `
-                <div style="text-align:center; padding:40px 20px; opacity:0.6;">
-                    <div style="font-size:40px; margin-bottom:10px;">s📭</div>
-                    لا توجد تحديثات أو ملاحظات لهذه الشعبة حالياً
-                </div>`;
-        } else {
-            listElement.innerHTML = filteredNotices.map(n => `
-                <div class="notice-item ${n.type}">
-                    <div class="notice-meta">
-                        <span><b>${CN[n.cls]}</b> | ${TN[n.type]}</span>
-                        <span>${n.date}</span>
-                    </div>
-                    <strong>${n.title}</strong>
-                    <div class="notice-details">${makeLinksClickable(n.det)}</div>
-                    ${n.img ? `<img src="${n.img}" class="notice-img" alt="مرفق توضيحي">` : ''}
-                </div>`).join('');
-        }
-        
-        // تحديث العدادات (Badges) في التبويبات
-        ['5A', '5B', '5C'].forEach(c => {
-            const count = cachedData.notices.filter(n => n.cls === c || n.cls === 'all').length;
-            const badge = document.getElementById('b' + c);
-            if (badge) badge.textContent = count;
-        });
-        
-        renderMyMsg();
-    }
-
-    // عرض الاستفسارات المجاب عليها
-    function renderMyMsg() {
-        const data = cachedData;
-        if (!data || !data.queries) return;
-
-        const answeredQueries = data.queries.filter(q => q.status === 'replied');
-        const card = document.getElementById('myCard');
-        const listElement = document.getElementById('myList');
-        
-        if (!answeredQueries.length) {
-            card.style.display = 'none';
-            return;
-        }
-
-        card.style.display = 'block';
-        listElement.innerHTML = answeredQueries.map(q => `
-            <div class="answered-query">
-                <div class="aq-header">
-                    <span class="aq-title">❓ استفسار من ولي أمر (${CN[q.cls] || q.cls})</span>
-                    <span class="aq-date">${q.date}</span>
-                </div>
-                <div class="aq-question">${makeLinksClickable(q.msg)}</div>
-                <div class="aq-answer">
-                    <strong>✅ رد الأستاذ خليل:</strong>
-                    <div style="line-height:1.6;">${makeLinksClickable(q.reply)}</div>
-                </div>
-            </div>`).join('');
-    }
-
-    // إرسال استفسار جديد
-    async function submitQ() {
-        const parentName = document.getElementById('pN').value.trim();
-        const studentName = document.getElementById('pS').value.trim();
-        const className = document.getElementById('pC').value;
-        const message = document.getElementById('pM').value.trim();
-        
-        if (!parentName || !studentName || !className || !message) {
-            return toast('⚠️ الرجاء إكمال كافة الحقول قبل الإرسال', 'var(--danger)');
-        }
-
-        const btn = document.getElementById('sendBtn');
-        btn.disabled = true;
-        btn.innerHTML = '⏳ جاري الإرسال...';
-        
-        const newId = (cachedData.qId || 200) + 1;
-        const newQuery = { 
-            id: newId, 
-            name: parentName, 
-            student: studentName, 
-            cls: className, 
-            msg: message, 
-            date: new Date().toLocaleDateString('ar-OM') + ' ' + new Date().toLocaleTimeString('ar-OM', { hour: '2-digit', minute: '2-digit' }), 
-            status: 'new', 
-            reply: '' 
-        };
-        
-        // تحديث البيانات محلياً لتظهر فوراً إن لزم الأمر
-        cachedData.queries.unshift(newQuery); 
-        cachedData.qId = newId;
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(cachedData));
-        
-        toast('✅ تم إرسال رسالتك للأستاذ بنجاح');
-        
-        // تفريغ الحقول بعد الإرسال
-        ['pN', 'pS', 'pM'].forEach(id => document.getElementById(id).value = '');
-        document.getElementById('pC').value = '';
-        
-        renderUI();
-        
-        btn.disabled = false;
-        btn.innerHTML = '📤 إرسال الآن';
-        
-        // الإرسال الفعلي لقاعدة البيانات (Google Script)
-        fetch(API_URL, {
-            method: 'POST', 
-            body: new URLSearchParams({ action: 'saveQueries', data: JSON.stringify(cachedData.queries) })
-        }).catch(err => console.error("Error saving query:", err));
-    }
-
-    // دالة إظهار الإشعارات العائمة
-    function toast(msg, bg = 'var(--success)') {
-        const toastEl = document.getElementById('toast');
-        toastEl.style.background = bg;
-        toastEl.innerHTML = msg;
-        toastEl.classList.add('show');
-        setTimeout(() => toastEl.classList.remove('show'), 3500);
-    }
-
-    // تحديث الساعة والتاريخ الحي في الترويسة
-    function upDate() {
-        const now = new Date();
-        const dateEl = document.getElementById('hdate');
-        if (dateEl) {
-            dateEl.innerHTML = now.toLocaleTimeString('ar-OM', { hour: '2-digit', minute: '2-digit' }) + 
-                              '<br>' + 
-                              now.toLocaleDateString('ar-OM', { month: 'short', day: 'numeric' });
-        }
-    }
-    
-    // التهيئة الأولية
-    setInterval(upDate, 30000); 
-    upDate();
-    renderUI();
-
-</script>
-</body>
-</html>
-      margin: 0 auto 22px;
-      position: relative;
-    }
-
-    .icon-wrap svg {
-      width: 80px;
-      height: 80px;
-    }
-
-    .page-header h1 {
-      font-family: 'Amiri', serif;
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--cream);
-      margin-bottom: 8px;
-      line-height: 1.3;
-    }
-
-    .page-header p {
-      color: var(--muted);
-      font-size: .93rem;
-      font-weight: 300;
-    }
-
-    .divider {
-      width: 48px;
-      height: 3px;
-      background: linear-gradient(90deg, var(--gold), var(--teal));
-      border-radius: 99px;
-      margin: 16px auto 0;
-    }
-
-    /* ============ بطاقة البحث ============ */
-    .search-box {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 560px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 20px;
-      padding: 28px 28px 24px;
-      backdrop-filter: blur(12px);
-      margin-bottom: 24px;
-    }
-
-    .input-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 0;
-    }
-
-    .field {
-      flex: 1;
-      position: relative;
-    }
-
-    .field input {
-      width: 100%;
-      background: rgba(255,255,255,.06);
-      border: 1.5px solid rgba(255,255,255,.1);
-      border-radius: 12px;
-      padding: 14px 48px 14px 18px;
-      font-family: inherit;
-      font-size: 1.05rem;
-      color: var(--white);
-      transition: border .25s, box-shadow .25s;
-      direction: ltr;
-      text-align: center;
-      letter-spacing: .05em;
-    }
-
-    .field input::placeholder { color: var(--muted); letter-spacing: 0; direction: rtl; text-align: right; }
-
-    .field input:focus {
-      outline: none;
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(226,185,111,.15);
-    }
-
-    .field-icon {
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--gold);
-      opacity: .7;
-      pointer-events: none;
-    }
-
-    .btn-search {
-      background: linear-gradient(135deg, var(--gold), var(--gold2));
-      color: var(--ink);
-      border: none;
-      border-radius: 12px;
-      padding: 0 22px;
-      font-family: inherit;
-      font-size: .97rem;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: transform .2s, box-shadow .2s;
-      box-shadow: 0 6px 20px rgba(226,185,111,.25);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-search:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(226,185,111,.35); }
-    .btn-search:active { transform: translateY(0); }
-
-    .msg {
-      font-size: .88rem;
-      margin-top: 14px;
-      padding: 10px 14px;
-      border-radius: 10px;
-      display: none;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .msg.error   { display:flex; background:rgba(224,123,84,.15); border:1px solid rgba(224,123,84,.3); color:#f4a484; }
-    .msg.loading { display:flex; background:rgba(226,185,111,.1); border:1px solid rgba(226,185,111,.2); color:var(--gold); }
-    .msg.ok      { display:flex; background:rgba(76,175,131,.12); border:1px solid rgba(76,175,131,.28); color:#7ddcb0; }
-
-    .spinner {
-      width: 14px; height: 14px;
-      border: 2px solid rgba(226,185,111,.3);
-      border-top-color: var(--gold);
-      border-radius: 50%;
-      animation: spin .7s linear infinite;
-      flex-shrink: 0;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ============ بطاقة النتيجة ============ */
-    .result-card {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 560px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 24px;
-      overflow: hidden;
-      animation: fadeUp .5s ease;
-      display: none;
-    }
-
-    .result-card.show { display: block; }
-
-    @keyframes fadeUp {
-      from { opacity:0; transform:translateY(20px); }
-      to   { opacity:1; transform:translateY(0); }
-    }
-
-    /* رأس البطاقة */
-    .rc-top {
-      background: linear-gradient(135deg, var(--mid), var(--deep));
-      padding: 26px 28px 22px;
-      border-bottom: 1px solid rgba(255,255,255,.07);
-    }
-
-    .rc-label {
-      font-size: .8rem;
-      color: var(--muted);
-      margin-bottom: 4px;
-      font-weight: 500;
-    }
-
-    .rc-name {
-      font-family: 'Amiri', serif;
-      font-size: 1.45rem;
-      color: var(--cream);
-      margin-bottom: 14px;
-    }
-
-    .badge-grade {
-      display: inline-block;
-      padding: 5px 16px;
-      border-radius: 50px;
-      font-size: .85rem;
-      font-weight: 700;
-    }
-
-    .badge-grade.a { background: rgba(76,175,131,.2); border: 1px solid rgba(76,175,131,.4); color: #7ddcb0; }
-    .badge-grade.b { background: rgba(78,205,196,.15); border: 1px solid rgba(78,205,196,.35); color: var(--teal); }
-    .badge-grade.c { background: rgba(226,185,111,.15); border: 1px solid rgba(226,185,111,.3); color: var(--gold); }
-    .badge-grade.d { background: rgba(224,123,84,.15); border: 1px solid rgba(224,123,84,.3); color: #f4a484; }
-    .badge-grade.e { background: rgba(239,68,68,.15); border: 1px solid rgba(239,68,68,.3); color: #fca5a5; }
-
-    /* مقياس الدرجات */
-    .score-hero {
-      padding: 28px 28px 10px;
-      display: flex;
-      align-items: flex-end;
-      gap: 0;
-    }
-
-    .score-big {
-      font-size: 5rem;
-      font-weight: 800;
-      line-height: 1;
-      background: linear-gradient(135deg, var(--gold), var(--teal));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .score-denom {
-      font-size: 1.4rem;
-      color: var(--muted);
-      margin-bottom: 12px;
-      margin-right: 4px;
-    }
-
-    .progress-bar {
-      margin: 4px 28px 22px;
-      height: 8px;
-      background: rgba(255,255,255,.08);
-      border-radius: 99px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      border-radius: 99px;
-      background: linear-gradient(90deg, var(--gold2), var(--teal));
-      transition: width 1s cubic-bezier(.22,1,.36,1);
-    }
-
-    /* تفاصيل الدرجات */
-    .score-details {
-      padding: 0 28px 10px;
-    }
-
-    .detail-label {
-      font-size: .78rem;
-      color: var(--muted);
-      font-weight: 500;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-      letter-spacing: .06em;
-    }
-
-    .detail-rows {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .detail-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255,255,255,.05);
-      font-size: .93rem;
-    }
-
-    .detail-row:last-child { border-bottom: none; }
-
-    .dr-name { color: rgba(255,255,255,.75); }
-    .dr-max  { color: var(--muted); font-size: .82rem; }
-
-    .dr-score {
-      font-weight: 700;
-      font-size: 1rem;
-      min-width: 32px;
-      text-align: center;
-    }
-
-    .dr-score.high   { color: var(--pass); }
-    .dr-score.mid    { color: var(--gold); }
-    .dr-score.low    { color: var(--warn); }
-    .dr-score.dash   { color: var(--muted); }
-
-    /* قسمان رئيسيان */
-    .two-blocks {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      padding: 16px 28px;
-    }
-
-    .block {
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.07);
-      border-radius: 14px;
-      padding: 16px;
-      text-align: center;
-    }
-
-    .block-label {
-      font-size: .78rem;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .block-val {
-      font-size: 1.6rem;
-      font-weight: 800;
-    }
-
-    .block-val.class-work { color: var(--teal); }
-    .block-val.final-exam { color: var(--gold); }
-
-    .block-max {
-      font-size: .8rem;
-      color: var(--muted);
-    }
-
-    /* زر الطباعة */
-    .rc-footer {
-      padding: 16px 28px 26px;
-    }
-
-    .btn-print {
-      width: 100%;
-      background: transparent;
-      border: 1.5px solid rgba(226,185,111,.3);
-      border-radius: 12px;
-      padding: 12px;
-      color: var(--gold);
-      font-family: inherit;
-      font-size: .93rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: background .2s, border-color .2s;
-    }
-
-    .btn-print:hover {
-      background: rgba(226,185,111,.1);
-      border-color: var(--gold);
-    }
-
-    /* ============ Footer ============ */
-    .page-footer {
-      position: relative;
-      z-index: 1;
-      margin-top: 40px;
-      color: rgba(255,255,255,.25);
-      font-size: .82rem;
-      text-align: center;
-    }
-
-    /* ============ طباعة ============ */
-    @media print {
-      body { background: #fff !important; color: #000; padding: 0; }
-      body::before, .page-header, .search-box, .page-footer, .btn-print { display: none !important; }
-      .result-card {
-        background: #fff !important;
-        border: none !important;
-        border-radius: 0 !important;
-        max-width: 100% !important;
-        display: block !important;
-      }
-      .rc-top { background: #f0f0f0 !important; color: #000; }
-      .rc-name, .rc-label, .dr-name, .detail-label, .block-label, .block-max { color: #333 !important; }
-      .dr-max { color: #999 !important; }
-      .dr-score { color: #000 !important; }
-      .score-big { -webkit-text-fill-color: #1a1a2e; color: #1a1a2e; }
-      .score-denom { color: #666 !important; }
-      .progress-bar { display: none; }
-      .block { border: 1px solid #ddd !important; background: #f8f8f8 !important; }
-      .block-val { color: #1a1a2e !important; }
-      .badge-grade { background: #eee !important; color: #333 !important; border-color: #ccc !important; }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- الهيدر -->
-  <header class="page-header">
-    <div class="school-badge">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
-      </svg>
-      مدرسة سعد بن معاذ للتعليم الأساسي
-    </div>
-
-    <div class="icon-wrap">
-      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="40" cy="40" r="38" stroke="url(#g1)" stroke-width="1.5" opacity=".4"/>
-        <circle cx="40" cy="40" r="30" stroke="url(#g2)" stroke-width="1" opacity=".25"/>
-        <text x="40" y="53" text-anchor="middle" font-size="30" font-family="Amiri,serif" fill="url(#g3)">ن</text>
-        <defs>
-          <linearGradient id="g1" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#e2b96f"/><stop offset="1" stop-color="#4ecdc4"/>
-          </linearGradient>
-          <linearGradient id="g2" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#4ecdc4"/><stop offset="1" stop-color="#e2b96f"/>
-          </linearGradient>
-          <linearGradient id="g3" x1="20" y1="20" x2="60" y2="60" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#e2b96f"/><stop offset="1" stop-color="#4ecdc4"/>
-          </linearGradient>
-        </defs>
-      </svg>
-    </div>
-
-    <h1>بوابة نتائج الطلاب</h1>
-    <p>الصف الخامس — مادة اللغة العربية | ٢٠٢٥ / ٢٠٢٦</p>
-    <div class="divider"></div>
-  </header>
-
-  <!-- بحث -->
-  <div class="search-box">
-    <div class="input-row">
-      <div class="field">
-        <input
-          type="text"
-          id="studentId"
-          placeholder="أدخل الرقم التعريفي للطالب"
-          inputmode="numeric"
-          onkeypress="if(event.key==='Enter') search()"
-        />
-        <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="2" y="4" width="20" height="16" rx="3"/><path d="M8 4v16M12 9h4M12 13h4"/>
-        </svg>
-      </div>
-      <button class="btn-search" onclick="search()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
-        عرض
-      </button>
-    </div>
-    <div id="msg" class="msg"></div>
-  </div>
-
-  <!-- بطاقة النتيجة -->
-  <div class="result-card" id="resultCard">
-
-    <div class="rc-top">
-      <div class="rc-label">اسم الطالب</div>
-      <div class="rc-name" id="rName">—</div>
-      <span class="badge-grade" id="rBadge">—</span>
-    </div>
-
-    <div class="score-hero">
-      <div class="score-big" id="rTotal">0</div>
-      <div class="score-denom">/100</div>
-    </div>
-    <div class="progress-bar">
-      <div class="progress-fill" id="rBar" style="width:0%"></div>
-    </div>
-
-    <div class="two-blocks">
-      <div class="block">
-        <div class="block-label">أعمال الفصل</div>
-        <div class="block-val class-work" id="rWork">—</div>
-        <div class="block-max">من 60</div>
-      </div>
-      <div class="block">
-        <div class="block-label">الاختبار النهائي</div>
-        <div class="block-val final-exam" id="rFinal">—</div>
-        <div class="block-max">من 40</div>
-      </div>
-    </div>
-
-    <div class="score-details">
-      <div class="detail-label">تفاصيل أعمال الفصل</div>
-      <div class="detail-rows">
-        <div class="detail-row">
-          <span class="dr-name">العرض الشفوي</span>
-          <span class="dr-max">من 10</span>
-          <span class="dr-score" id="d-oral">—</span>
-        </div>
-        <div class="detail-row">
-          <span class="dr-name">الواجب المنزلي</span>
-          <span class="dr-max">من 5</span>
-          <span class="dr-score" id="d-hw">—</span>
-        </div>
-        <div class="detail-row">
-          <span class="dr-name">التسميع والاستماع</span>
-          <span class="dr-max">من 5</span>
-          <span class="dr-score" id="d-listen">—</span>
-        </div>
-        <div class="detail-row">
-          <span class="dr-name">الاختبار القصير الأول</span>
-          <span class="dr-max">من 15</span>
-          <span class="dr-score" id="d-ex1">—</span>
-        </div>
-        <div class="detail-row">
-          <span class="dr-name">الاختبار القصير الثاني</span>
-          <span class="dr-max">من 15</span>
-          <span class="dr-score" id="d-ex2">—</span>
-        </div>
-        <div class="detail-row">
-          <span class="dr-name">التعبير الكتابي</span>
-          <span class="dr-max">من 10</span>
-          <span class="dr-score" id="d-write">—</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="rc-footer">
-      <button class="btn-print" onclick="printResult()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
-          <rect x="6" y="14" width="12" height="8"/>
-        </svg>
-        طباعة النتيجة
-      </button>
-    </div>
-  </div>
-
-  <footer class="page-footer">
-    الأستاذ خليل البلوشي &nbsp;·&nbsp; جميع الحقوق محفوظة © 2025
-  </footer>
-
-<script>
-  const SHEET = "https://docs.google.com/spreadsheets/d/1bY6sJ2CaLy7olcCpmX6V7HMuoGZIC6G9VcPWpk0eFGw/gviz/tq?tqx=out:json";
-  let db = {};
-  let busy = false;
-  let currentId = null;
-
-  /* ── تحميل البيانات ── */
-  async function loadData() {
-    if (busy) return;
-    busy = true;
-    showMsg("جاري تحميل البيانات...", "loading");
-    try {
-      const r = await fetch(SHEET);
-      const t = await r.text();
-      const json = JSON.parse(
-        t.replace("/*O_o*/","")
-         .replace("google.visualization.Query.setResponse(","")
-         .replace(");","")
-      );
-      db = {};
-      (json.table.rows || []).forEach(row => {
-        const c = row.c;
-        if (!c || !c[0] || !c[0].v) return;
-        const id = c[0].v.toString().trim();
-        db[id] = {
-          name:      c[1]?.v ?? "—",
-          oral:      c[2]?.v ?? 0,
-          homework:  c[3]?.v ?? 0,
-          listening: c[4]?.v ?? 0,
-          exam1:     c[5]?.v ?? 0,
-          exam2:     c[6]?.v ?? 0,
-          writing:   c[7]?.v ?? 0,
-          final:     c[9]?.v ?? 0,
-        };
-        db[id].classWork =
-          (parseFloat(db[id].oral)||0) + (parseFloat(db[id].homework)||0) +
-          (parseFloat(db[id].listening)||0) + (parseFloat(db[id].exam1)||0) +
-          (parseFloat(db[id].exam2)||0) + (parseFloat(db[id].writing)||0);
-      });
-      clearMsg();
-    } catch(e) {
-      showMsg("تعذّر تحميل البيانات. تحقق من الاتصال.", "error");
-    } finally { busy = false; }
-  }
-
-  /* ── إخفاء / إظهار الرسائل ── */
-  function showMsg(txt, type) {
-    const el = document.getElementById("msg");
-    el.className = "msg " + type;
-    if (type === "loading") {
-      el.innerHTML = `<div class="spinner"></div><span>${txt}</span>`;
-    } else if (type === "error") {
-      el.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg><span>${txt}</span>`;
-    } else {
-      el.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span>${txt}</span>`;
-    }
-  }
-  function clearMsg() { const el = document.getElementById("msg"); el.className = "msg"; el.innerHTML = ""; }
-
-  /* ── تلوين الدرجة ── */
-  function scoreColor(val, max) {
-    if (val === "—") return "dash";
-    const pct = val / max;
-    if (pct >= .8) return "high";
-    if (pct >= .5) return "mid";
-    return "low";
-  }
-
-  function fmt(v) { return (v === -1 || v == null) ? "—" : v; }
-
-  /* ── التقدير ── */
-  function grade(s) {
-    if (s >= 90) return { text:"ممتاز", cls:"a" };
-    if (s >= 80) return { text:"جيد جداً", cls:"b" };
-    if (s >= 65) return { text:"جيد", cls:"c" };
-    if (s >= 50) return { text:"مقبول", cls:"d" };
-    return { text:"يحتاج تحسين", cls:"e" };
-  }
-
-  /* ── بحث ── */
-  function search() {
-    const id = document.getElementById("studentId").value.trim();
-    const card = document.getElementById("resultCard");
-
-    if (!id) { showMsg("الرجاء إدخال الرقم التعريفي للطالب.", "error"); return; }
-    if (!db[id]) { showMsg("الرقم غير موجود في قاعدة البيانات.", "error"); card.classList.remove("show"); return; }
-
-    clearMsg();
-    currentId = id;
-    const st = db[id];
-    const total = st.classWork + (parseFloat(st.final)||0);
-    const g = grade(total);
-
-    document.getElementById("rName").textContent   = st.name;
-    document.getElementById("rTotal").textContent  = total;
-    document.getElementById("rWork").textContent   = fmt(st.classWork);
-    document.getElementById("rFinal").textContent  = fmt(st.final);
-
-    const badge = document.getElementById("rBadge");
-    badge.textContent = g.text;
-    badge.className = "badge-grade " + g.cls;
-
-    setTimeout(() => {
-      document.getElementById("rBar").style.width = total + "%";
-    }, 100);
-
-    const fields = [
-      { id: "d-oral",   val: fmt(st.oral),      max: 10 },
-      { id: "d-hw",     val: fmt(st.homework),   max: 5  },
-      { id: "d-listen", val: fmt(st.listening),  max: 5  },
-      { id: "d-ex1",    val: fmt(st.exam1),      max: 15 },
-      { id: "d-ex2",    val: fmt(st.exam2),      max: 15 },
-      { id: "d-write",  val: fmt(st.writing),    max: 10 },
-    ];
-    fields.forEach(f => {
-      const el = document.getElementById(f.id);
-      el.textContent = f.val;
-      el.className = "dr-score " + scoreColor(f.val, f.max);
-    });
-
-    card.classList.remove("show");
-    void card.offsetWidth;
-    card.classList.add("show");
-  }
-
-  /* ── طباعة ── */
-  function printResult() { window.print(); }
-
-  /* ── تهيئة ── */
-  loadData();
-</script>
 </body>
 </html>
